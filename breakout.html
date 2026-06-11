@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakout: Cyber Shield | Adam Hassan</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Additional styles merged from breakout.html enhancements */
+        html { scroll-behavior: smooth; }
+
+        .project-image-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .spotlight-section {
+            background: rgba(0,0,0,0.15);
+            border-radius: 12px;
+            padding: 2.5em;
+            margin: 2em 0;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            margin-top: 1.5em;
+        }
+
+        .controls-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .controls-list li {
+            margin-bottom: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8em;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .controls-list li:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .feature-icon {
+            height: 28px;
+            width: auto;
+            vertical-align: middle;
+            transition: transform 0.3s ease;
+        }
+
+        .controls-list li:hover .feature-icon {
+            transform: scale(1.2) rotate(-3deg);
+        }
+
+        .brick-showcase {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .brick-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .brick-item img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .brick-item:hover img {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .brick-label {
+            font-size: 0.8em;
+            margin-top: 8px;
+            color: #9bf1ff;
+            font-weight: 500;
+        }
+
+        .gallery-grid-real {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5em;
+            margin-top: 1.5em;
+        }
+
+        .gallery-item-real {
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .gallery-item-real:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(120, 160, 255, 0.25);
+        }
+
+        .gallery-item-real img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .gallery-caption {
+            text-align: center;
+            margin-top: 0.8em;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .tech-features {
+            columns: 1;
+            list-style-position: inside;
+            line-height: 2.2em;
+            margin-bottom: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .tech-features li {
+            position: relative;
+            padding-left: 1.5em;
+        }
+
+        .tech-features li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #9bf1ff;
+        }
+
+        .project-link-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+
+        .project-link-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 18px rgba(120, 160, 255, 0.55);
+        }
+
+        .download-section {
+            margin-top: 2em;
+            display: flex;
+            gap: 1em;
+            flex-wrap: wrap;
+        }
+
+        @media screen and (max-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery-grid-real {
+                grid-template-columns: 1fr;
+            }
+            .brick-showcase {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">AH</a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="projects.html" class="nav-link active">Projects</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <!-- Project Header -->
+        <section class="project-header">
+            <div class="container">
+                <div class="project-breadcrumb">
+                    <a href="projects.html">Projects</a>
+                    <span>/</span>
+                    <span>Breakout: Cyber Shield</span>
+                </div>
+                <h1 class="project-page-title">Breakout: Cyber Shield</h1>
+                <p class="project-page-subtitle">An advanced arcade game developed with Python and Pygame featuring multiple levels, custom physics, progressive difficulty scaling, and a fully reactive UI layer.</p>
+                <div class="project-meta">
+                    <span class="project-date">2025</span>
+                    <span class="project-type">Game Development</span>
+                    <span class="project-type">Semester 1</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Hero Image -->
+        <section class="project-hero-image">
+            <div class="container">
+                <div class="project-image-large gradient-bg-2">
+                    <img src="images/game_start.png" alt="Cyber Shield Start Screen" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Overview -->
+        <section class="project-details">
+            <div class="container">
+                <div class="project-details-grid">
+                    <div class="project-main-content">
+                        <h2 class="gradient-text">Project Overview</h2>
+                        <p>
+                            Developed during the initial programming modules, this project reimagines the retro Breakout arcade game with a sleek cyber theme and modern object-oriented code architectures. The objective is to secure the network wall by reflecting payloads, cracking structural firewalls, and clearing dynamic matrix hazards.
+                        </p>
+                        <p>
+                            Breakout: Cyber Shield is a modern reimagining of the classic Atari Breakout arcade game, 
+                            infused with a cyberpunk aesthetic and enhanced gameplay mechanics. Developed during my first 
+                            semester using Python and Pygame, this project demonstrates fundamental game development 
+                            concepts and object-oriented programming principles.
+                        </p>
+                        <p>
+                            The game features a neon-soaked digital world where players control a shield (paddle) to 
+                            deflect energy orbs and break through cyber barriers. Each level introduces new challenges, 
+                            power-ups, and visual effects that keep the gameplay engaging and dynamic.
+                        </p>
+
+                        <div class="download-section">
+                            <a href="https://codeload.github.com/3llam123/breakout-cyber-shield/zip/refs/heads/main" class="project-link-btn primary" target="_blank" rel="noopener">
+                                <span>⬇️</span> Download Game File
+                            </a>
+                            <a href="https://github.com/3llam123/breakout-cyber-shield" target="_blank" rel="noopener" class="project-link-btn">
+                                <span>💻</span> View Source Trees
+                            </a>
+                        </div>
+
+                        <h3>Key Features</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <strong>Dynamic Particle Effects:</strong> Explosive brick destruction with 
+                                color-coded particle systems and screen shake effects
+                            </li>
+                            <li>
+                                <strong>Power-Up System:</strong> Collectible power-ups including multi-ball, 
+                                extended paddle, laser beams, and slow-motion
+                            </li>
+                            <li>
+                                <strong>Progressive Difficulty:</strong> Intelligent level design with increasing 
+                                ball speed, complex brick patterns, and moving obstacles
+                            </li>
+                            <li>
+                                <strong>Score & Combo System:</strong> Chain reactions and combo multipliers 
+                                for high-score chasing
+                            </li>
+                            <li>
+                                <strong>Retro-Synth Soundtrack:</strong> Dynamic audio that responds to gameplay 
+                                intensity
+                            </li>
+                            <li>
+                                <strong>High Score Persistence:</strong> Local leaderboard with player initials
+                            </li>
+                        </ul>
+
+                        <h3>Core Gameplay Systems</h3>
+                        <div class="spotlight-section">
+                            <p>
+                                The engine implements custom directional rebounding calculations based on ball-to-paddle contact vectors, providing precise control over angle execution. Dynamic level environments generate random arrangements of structural defense firewalls (bricks), requiring varied impacts to breach.
+                            </p>
+                        </div>
+
+                        <h3>My Role</h3>
+                        <p>
+                            This was a solo project where I handled all aspects of development including game design, 
+                            programming, asset creation, and testing. I implemented the physics engine, collision 
+                            detection system, particle manager, and complete UI flow from menu to game over screens.
+                        </p>
+
+                        <h3>Technical Highlights</h3>
+                        <p>
+                            The game engine uses a custom entity-component system for game objects. Collision detection 
+                            employs AABB (Axis-Aligned Bounding Box) with predictive resolution for smooth ball physics. 
+                            The particle system uses object pooling for performance optimization, maintaining 60fps even 
+                            with hundreds of active particles.
+                        </p>
+
+                        <!-- System Controls & Sprites Layout -->
+                        <h3>System Controls & Sprites Layout</h3>
+                        <p>
+                            The control interface is fully integrated into Pygame's polling framework. Players utilize keypress flags for horizontal movement acceleration, with emergency options to manipulate matrix parameters during runtime operations.
+                        </p>
+                        
+                        <div class="controls-grid">
+                            <div>
+                                <h4>Controls Schema</h4>
+                                <ul class="controls-list">
+                                    <li>
+                                        <img src="images/paddle.png" alt="Paddle Sprite" class="feature-icon paddle-icon" /> 
+                                        <div>
+                                            <strong>Left Arrow / A & Right Arrow / D:</strong><br>
+                                            <span style="font-size: 0.9em; opacity: 0.8;">Accelerate paddle left/right</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <img src="images/ball.png" alt="Ball Sprite" class="feature-icon" /> 
+                                        <div>
+                                            <strong>Spacebar:</strong><br>
+                                            <span style="font-size: 0.9em; opacity: 0.8;">Release initial payload or launch active powerups</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <img src="images/game_powerup.png" alt="Powerup Capsule Sprite" class="feature-icon" /> 
+                                        <div>
+                                            <strong>System Drops:</strong><br>
+                                            <span style="font-size: 0.9em; opacity: 0.8;">Secure falling core powerups to boost structural sizes</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="width: 28px; text-align: center; font-size: 1.2em;">⏸️</div>
+                                        <div>
+                                            <strong>Escape:</strong><br>
+                                            <span style="font-size: 0.9em; opacity: 0.8;">Pause system runtime state matrix</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4>Defensive Matrix Array Components</h4>
+                                <p style="font-size: 0.9em; margin-bottom: 1em;">Firewall layers scale through dynamic resilience values represented by health-point asset matrices:</p>
+                                <div class="brick-showcase">
+                                    <div class="brick-item">
+                                        <img src="images/brick_hp1.png" alt="Low HP Brick" />
+                                        <div class="brick-label">Low Security</div>
+                                    </div>
+                                    <div class="brick-item">
+                                        <img src="images/brick_hp2.png" alt="Medium HP Brick" />
+                                        <div class="brick-label">Medium Security</div>
+                                    </div>
+                                    <div class="brick-item">
+                                        <img src="images/brick_hp3.png" alt="High HP Brick" />
+                                        <div class="brick-label">High Security</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="project-sidebar">
+                        <div class="sidebar-card">
+                            <h4>Technologies Used</h4>
+                            <div class="tech-stack">
+                                <span class="tech-item">Python 3.11</span>
+                                <span class="tech-item">Pygame</span>
+                                <span class="tech-item">Object-Oriented Design</span>
+                                <span class="tech-item">Git</span>
+                            </div>
+                            <ul class="tech-features" style="margin-top: 1.5em;">
+                                <li>Python</li>
+                                <li>Pygame</li>
+                                <li>Object-Oriented Programming</li>
+                                <li>Collision Detection</li>
+                                <li>Game Loop</li>
+                                <li>Event Handling</li>
+                                <li>Score Management</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-card">
+                            <h4>Project Links</h4>
+                            <div class="project-links">
+                                <a href="https://github.com/3llam123/breakout-cyber-shield" target="_blank" rel="noopener" class="project-link-btn">
+                                    <span>💻</span> View on GitHub
+                                </a>
+                                <a href="#" class="project-link-btn">
+                                    <span>▶️</span> Watch Demo
+                                </a>
+                                <a href="https://codeload.github.com/3llam123/breakout-cyber-shield/zip/refs/heads/main" class="project-link-btn" target="_blank" rel="noopener">
+                                    <span>⬇️</span> Download Game
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-card">
+                            <h4>Project Info</h4>
+                            <div class="project-info-list">
+                                <div class="info-item">
+                                    <span class="info-label">Course</span>
+                                    <span class="info-value">Introduction to Programming</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Language</span>
+                                    <span class="info-value">Python</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Framework</span>
+                                    <span class="info-value">Pygame</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">University</span>
+                                    <span class="info-value">SRH University</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Duration</span>
+                                    <span class="info-value">Semester 1</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Team Size</span>
+                                    <span class="info-value">Solo Project</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Developer</span>
+                                    <span class="info-value">Adam Hassan</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Status</span>
+                                    <span class="info-value status-completed">Completed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="project-gallery">
+            <div class="container">
+                <h2 class="section-title">Interface Environment Showcase</h2>
+                <p style="text-align: center; margin-bottom: 2em; opacity: 0.8;">Real-time game instances displaying matrix layouts, defensive assets, and active structural layers.</p>
+                <div class="gallery-grid-real">
+                    <div class="gallery-item-real">
+                        <img src="images/game_start.png" alt="Game Start Screen Preview" />
+                        <div class="gallery-caption">Game Menu Layout</div>
+                    </div>
+                    <div class="gallery-item-real">
+                        <img src="images/game_level.png" alt="Active Gameplay Environment" />
+                        <div class="gallery-caption">Active Core Level Matrix</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© Adam Hassan 2026. Built with passion for engineering. SRH University — Advanced Programming Portfolio</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
