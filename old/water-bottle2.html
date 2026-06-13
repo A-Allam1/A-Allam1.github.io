@@ -112,14 +112,6 @@
             .gallery-grid-real {
                 grid-template-columns: 1fr;
             }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-        }
-        @media screen and (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr !important;
-            }
         }
     </style>
 </head>
@@ -153,8 +145,7 @@
                 <h1 class="project-page-title">Water Bottle Production Line Simulation</h1>
                 <p class="project-page-subtitle">Advanced Programming Final Project</p>
                 <div class="project-meta">
-                    <span class="project-date">2026</span>
-                    <span class="project-type">Python</span>
+                    <span class="project-date">2024</span>
                     <span class="project-type">Industrial Automation</span>
                 </div>
             </div>
@@ -165,30 +156,6 @@
             <div class="container">
                 <div class="project-image-large" style="overflow: hidden;">
                     <img src="images/HMI V6.png" alt="Water Bottle Production Line HMI Dashboard" style="width:100%; height:100%; object-fit:cover; border-radius:12px;" />
-                </div>
-            </div>
-        </section>
-
-        <!-- Project Statistics -->
-        <section class="project-stats" style="padding: 2em 0; background: rgba(255,255,255,0.02);">
-            <div class="container">
-                <div class="stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5em;">
-                    <div class="stat-card" style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.5em; font-weight: 700; color: #9bf1ff; font-family: 'Space Grotesk', sans-serif;">11</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">Production Stages</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.5em; font-weight: 700; color: #9bf1ff; font-family: 'Space Grotesk', sans-serif;">5</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">QC Stations</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.5em; font-weight: 700; color: #9bf1ff; font-family: 'Space Grotesk', sans-serif;">1</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">Rework Station</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.5em; font-weight: 700; color: #9bf1ff; font-family: 'Space Grotesk', sans-serif;">5</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">KPIs Monitored</div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -253,11 +220,6 @@
                         <div class="architecture-box">
                             <p>The project follows a layered architecture consisting of a Human Machine Interface (HMI) layer and a Production Logic layer.</p>
 
-                            <div style="margin: 1.5em 0; text-align: center;">
-                                <img src="images/architecture-diagram.png" alt="System Architecture Diagram" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);" />
-                                <p style="font-size: 0.85em; opacity: 0.7; margin-top: 0.5em;">System Architecture Diagram — HMI Layer & Production Logic Layer</p>
-                            </div>
-
                             <div class="layer-box">
                                 <h4>🖥️ HMI Layer (Human Machine Interface)</h4>
                                 <p>Provides monitoring and control functionality for operators. Displays real-time production data, statistics, quality metrics, and system status.</p>
@@ -273,30 +235,6 @@
                             <p style="margin-top: 1.5em; font-style: italic; opacity: 0.8;">
                                 This separation improves maintainability, scalability, and code organization.
                             </p>
-                        </div>
-
-                        <h3>Object-Oriented Programming Concepts</h3>
-                        <div class="architecture-box">
-                            <div class="layer-box">
-                                <h4>📦 Core Classes</h4>
-                                <ul style="list-style: none; padding-left: 0; line-height: 2em;">
-                                    <li>• <strong>Bottle</strong> — Represents individual bottle objects with properties (ID, status, defects, stage)</li>
-                                    <li>• <strong>ProductionLine</strong> — Manages the complete production workflow, stations, and bottle routing</li>
-                                    <li>• <strong>WaterBottleHMI</strong> — Handles the graphical interface, event processing, and dashboard updates</li>
-                                    <li>• <strong>QualityControl</strong> — Implements inspection logic and defect classification</li>
-                                    <li>• <strong>ReportManager</strong> — Handles CSV export, production history, and statistics generation</li>
-                                </ul>
-                            </div>
-
-                            <div class="layer-box">
-                                <h4>🔧 OOP Principles Applied</h4>
-                                <ul style="list-style: none; padding-left: 0; line-height: 2em;">
-                                    <li>• <strong>Encapsulation</strong> — Each class encapsulates its own data and behavior (e.g., Bottle manages its own state)</li>
-                                    <li>• <strong>Composition</strong> — ProductionLine is composed of multiple station objects and Bottle collections</li>
-                                    <li>• <strong>Abstraction</strong> — HMI abstracts complex production logic behind simple interface methods</li>
-                                    <li>• <strong>Modular Design</strong> — Separation of concerns between HMI, logic, and data layers enables independent testing</li>
-                                </ul>
-                            </div>
                         </div>
 
                         <h3>Production Workflow</h3>
@@ -372,6 +310,7 @@
                             <h4>Technologies Used</h4>
                             <div class="tech-stack">
                                 <span class="tech-item">Python</span>
+                                <span class="tech-item">Tkinter</span>
                                 <span class="tech-item">Object-Oriented Programming (OOP)</span>
                                 <span class="tech-item">CSV Reporting</span>
                                 <span class="tech-item">Industrial Automation Concepts</span>
@@ -424,39 +363,6 @@
             </div>
         </section>
 
-        <!-- Simulation Results -->
-        <section class="project-results" style="padding: 3em 0; background: rgba(255,255,255,0.02);">
-            <div class="container">
-                <h2 class="section-title">Simulation Results</h2>
-                <div class="stats-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5em; margin-top: 1.5em;">
-                    <div class="stat-card" style="background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: #4ade80; font-family: 'Space Grotesk', sans-serif;">166</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">Bottles Created</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: #667eea; font-family: 'Space Grotesk', sans-serif;">102</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">Bottles Shipped</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: #ef4444; font-family: 'Space Grotesk', sans-serif;">63</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">Rejected</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: #f59e0b; font-family: 'Space Grotesk', sans-serif;">15</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">Reworked</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 1.5em; text-align: center;">
-                        <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: #8b5cf6; font-family: 'Space Grotesk', sans-serif;">75%</div>
-                        <div class="stat-label" style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-top: 0.5em;">Efficiency</div>
-                    </div>
-                </div>
-                <div style="margin-top: 2em; text-align: center;">
-                    <img src="images/Production Statistics Dashboard.png" alt="Simulation Results Dashboard" style="max-width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
-                    <p style="font-size: 0.9em; opacity: 0.7; margin-top: 0.8em;">Production Statistics Dashboard — Real-time simulation results</p>
-                </div>
-            </div>
-        </section>
-
         <!-- Gallery Section -->
         <section class="project-gallery">
             <div class="container">
@@ -465,27 +371,27 @@
                 <div class="gallery-grid-real">
                     <div class="gallery-item-real">
                         <img src="images/System Ready.png" alt="System Ready - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">System Ready</div>
+                        <div class="gallery-caption">System Ready</div>
                     </div>
                     <div class="gallery-item-real">
                         <img src="images/Bottle Moving Through Production.png" alt="Bottle Processing - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Bottle Processing</div>
+                        <div class="gallery-caption">Bottle Processing</div>
                     </div>
                     <div class="gallery-item-real">
                         <img src="images/Rework Event.png" alt="Rework Event - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Rework Event</div>
+                        <div class="gallery-caption">Rework Event</div>
                     </div>
                     <div class="gallery-item-real">
                         <img src="images/Rejected Bottle.png" alt="Rejected Bottle - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Rejected Bottle</div>
+                        <div class="gallery-caption">Rejected Bottle</div>
                     </div>
                     <div class="gallery-item-real">
                         <img src="images/Production Statistics Dashboard.png" alt="Production Statistics Dashboard - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Production Statistics Dashboard</div>
+                        <div class="gallery-caption">Production Statistics Dashboard</div>
                     </div>
                     <div class="gallery-item-real">
                         <img src="images/Production History and Quality Log.png" alt="Production History and Quality Log - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Production History and Quality Log</div>
+                        <div class="gallery-caption">Production History and Quality Log</div>
                     </div>
                 </div>
             </div>
