@@ -8,140 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
-    <style>
-        .projects-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .project-row {
-            display: flex;
-            align-items: stretch;
-            background: rgba(30, 30, 40, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .project-row:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .project-screenshot {
-            flex: 0 0 280px;
-            min-height: 220px;
-            position: relative;
-        }
-
-        .project-screenshot .project-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 220px;
-        }
-
-        .project-screenshot .project-icon {
-            font-size: 3rem;
-        }
-
-        .project-details {
-            flex: 1;
-            padding: 1.75rem 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .project-details .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .project-details .project-title {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: #f0f0f5;
-        }
-
-        .project-details .project-description {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #a0a0b0;
-            margin-bottom: 1rem;
-        }
-
-        .project-details .project-features-preview {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 1.25rem 0;
-        }
-
-        .project-details .project-features-preview li {
-            font-size: 0.9rem;
-            color: #b0b0c0;
-            padding: 0.2rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .project-details .project-features-preview li::before {
-            content: "→";
-            color: #6366f1;
-            font-weight: 600;
-        }
-
-        .project-details .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: #818cf8;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: color 0.2s ease;
-            margin-top: auto;
-        }
-
-        .project-details .project-link:hover {
-            color: #a5b4fc;
-        }
-
-        .project-details .project-link svg {
-            transition: transform 0.2s ease;
-        }
-
-        .project-details .project-link:hover svg {
-            transform: translateX(4px);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .project-row {
-                flex-direction: column;
-            }
-            .project-screenshot {
-                flex: none;
-                width: 100%;
-                min-height: 160px;
-            }
-            .project-details {
-                padding: 1.25rem;
-            }
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -171,15 +37,15 @@
 
         <section class="all-projects">
             <div class="container">
-                <div class="projects-stack">
+                <div class="projects-grid">
                     <!-- Project 1 -->
-                    <article class="project-row">
-                        <div class="project-screenshot">
+                    <article class="project-card project-card-large">
+                        <div class="project-image">
                             <div class="project-placeholder gradient-bg-1">
                                 <span class="project-icon">🏭</span>
                             </div>
                         </div>
-                        <div class="project-details">
+                        <div class="project-info">
                             <div class="project-tags">
                                 <span class="tag">Python</span>
                                 <span class="tag">Automation</span>
@@ -207,13 +73,13 @@
                     </article>
 
                     <!-- Project 2 -->
-                    <article class="project-row">
-                        <div class="project-screenshot">
+                    <article class="project-card project-card-large">
+                        <div class="project-image">
                             <div class="project-placeholder gradient-bg-2">
                                 <span class="project-icon">🎮</span>
                             </div>
                         </div>
-                        <div class="project-details">
+                        <div class="project-info">
                             <div class="project-tags">
                                 <span class="tag">Python</span>
                                 <span class="tag">Pygame</span>
@@ -241,13 +107,14 @@
                     </article>
 
                     <!-- Project 3 -->
-                    <article class="project-row">
-                        <div class="project-screenshot">
+                    <article class="project-card project-card-large">
+                        <div class="project-image">
                             <div class="project-placeholder gradient-bg-3">
                                 <span class="project-icon">🧮</span>
                             </div>
                         </div>
-                        <div class="project-details">
+
+                        <div class="project-info">
                             <div class="project-tags">
                                 <span class="tag">HTML</span>
                                 <span class="tag">CSS</span>
@@ -255,7 +122,11 @@
                                 <span class="tag">Linear Algebra</span>
                                 <span class="tag">Calculator</span>
                             </div>
-                            <h3 class="project-title">Eigenvalue & Eigenvector Calculator</h3>
+
+                            <h3 class="project-title">
+                                Eigenvalue & Eigenvector Calculator
+                            </h3>
+
                             <p class="project-description">
                                 An interactive web application that calculates eigenvalues,
                                 eigenvectors, matrix diagonalization, matrix powers, matrix
@@ -264,11 +135,13 @@
                                 verification procedures, and mathematical explanations to
                                 help students understand linear algebra concepts.
                             </p>
+
                             <ul class="project-features-preview">
                                 <li>Step-by-step eigenvalue calculations</li>
                                 <li>Diagonalization and matrix powers</li>
                                 <li>Interactive mathematical visualizations</li>
                             </ul>
+
                             <a href="eigen_calculator.html" class="project-link">
                                 View Full Project
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
