@@ -11,51 +11,43 @@
     <link rel="icon" type="image/png" href="images/favicon.png">
 
     <style>
-        .workflow-diagram {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 2em;
-            margin: 1.5em 0;
-        }
-        .workflow-step {
-            display: flex;
-            align-items: center;
-            gap: 1em;
-            padding: 0.8em 1.2em;
-            margin: 0.4em 0;
-            background: rgba(255,255,255,0.04);
-            border-radius: 8px;
-            border-left: 3px solid #667eea;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        .workflow-step:hover {
-            transform: translateX(5px);
-            background: rgba(255,255,255,0.07);
-        }
-        .workflow-arrow {
-            text-align: center;
-            color: #9bf1ff;
-            font-size: 1.2em;
-            padding: 0.3em 0;
-        }
-        .workflow-rework {
-            border-left-color: #f59e0b;
-            background: rgba(245, 158, 11, 0.05);
-        }
-        .rework-label {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            padding: 0.2em 0.6em;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: 600;
-            margin-left: auto;
-        }
         .feature-check {
             color: #4ade80;
             margin-right: 0.5em;
+        }
+        .info-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5em;
+            margin: 1.5em 0;
+        }
+        .file-list {
+            list-style: none;
+            padding-left: 0;
+            line-height: 1.9em;
+        }
+        .file-list code {
+            color: #9bf1ff;
+        }
+        .data-flow-simple {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6em;
+            align-items: center;
+            margin-top: 1em;
+        }
+        .flow-card {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 8px;
+            padding: 0.8em 1em;
+            color: #9bf1ff;
+            font-weight: 600;
+        }
+        .flow-arrow {
+            color: #4ade80;
+            font-weight: 700;
         }
         .gallery-grid-real {
             display: grid;
@@ -68,11 +60,6 @@
             padding: 8px;
             background: rgba(0,0,0,0.2);
             border-radius: 8px;
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-        }
-        .gallery-item-real:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px rgba(120, 160, 255, 0.25);
         }
         .gallery-item-real img {
             width: 100%;
@@ -83,44 +70,12 @@
         .gallery-caption {
             text-align: center;
             margin-top: 0.8em;
-            font-size: 0.9em;
-            color: rgba(255,255,255,0.7);
-        }
-        .architecture-box {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 2em;
-            margin: 1.5em 0;
-        }
-        .layer-box {
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            border-radius: 8px;
-            padding: 1.2em;
-            margin: 0.8em 0;
-        }
-        .layer-box h4 {
-            color: #9bf1ff;
-            margin-bottom: 0.5em;
-        }
-        .layer-arrow {
-            text-align: center;
-            font-size: 1.5em;
-            color: #667eea;
-            margin: 0.3em 0;
+            font-size: 0.95em;
+            color: rgba(255,255,255,0.75);
         }
         @media screen and (max-width: 768px) {
             .gallery-grid-real {
                 grid-template-columns: 1fr;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-        }
-        @media screen and (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr !important;
             }
         }
     </style>
@@ -144,7 +99,6 @@
     </nav>
 
     <main class="page-content">
-        <!-- Project Header -->
         <section class="project-header">
             <div class="container">
                 <div class="project-breadcrumb">
@@ -157,193 +111,85 @@
                 <div class="project-meta">
                     <span class="project-date">2026</span>
                     <span class="project-type">Python</span>
-                    <span class="project-type">Industrial Automation</span>
+                    <span class="project-type">Tkinter HMI</span>
+                    <span class="project-type">InfluxDB</span>
+                    <span class="project-type">Grafana</span>
                 </div>
             </div>
         </section>
 
-        <!-- Project Hero Image -->
         <section class="project-hero-image">
             <div class="container">
                 <div class="project-image-large" style="overflow: hidden;">
-                    <img src="images/HMI V6.png" alt="Water Bottle Production Line HMI Dashboard" style="width:100%; height:100%; object-fit:cover; border-radius:12px;" />
+                    <img src="images/HMI V7.png" alt="Water Bottle Production Line HMI V7" style="width:100%; height:100%; object-fit:cover; border-radius:12px;" />
                 </div>
             </div>
         </section>
 
-        
-
-        <!-- Project Overview -->
         <section class="project-details">
             <div class="container">
                 <div class="project-details-grid">
                     <div class="project-main-content">
                         <h2 class="gradient-text">Project Overview</h2>
                         <p>
-                            This project is a Water Bottle Production Line Simulation developed as the final project for the Advanced Programming course at SRH University.
+                            This project is a Python simulation of a water bottle production line. It follows bottles through creation, quality checks, filling, capping, labeling, packaging, and shipping.
                         </p>
                         <p>
-                            The system simulates a complete industrial manufacturing process from bottle creation to final shipment. Bottles pass through multiple production stages including filling, cap installation, labeling, quality inspection, packaging, and shipping.
+                            The backend logic is written in Python using object-oriented programming. The HMI was built with Tkinter and includes Start, Stop, Reset, and Export CSV controls. It also displays live counters, machine state, current stage, quality log, production history, rework, and rejection results.
                         </p>
                         <p>
-                            The application features a real-time Human Machine Interface (HMI) developed using Python Tkinter. Operators can monitor production statistics, track bottle movement through the line, identify defects, manage rework operations, and export production reports.
-                        </p>
-                        <p>
-                            The project demonstrates Object-Oriented Programming principles, industrial automation concepts, process control logic, quality management systems, and dashboard development.
+                            The project also sends live data to InfluxDB and visualizes it in Grafana. Docker Compose is used to run InfluxDB and Grafana locally. The system does not control real hardware; sensor values and defects are simulated for the programming assignment.
                         </p>
 
                         <h3>Key Features</h3>
                         <ul class="feature-list">
-                            <li><span class="feature-check">✓</span> Continuous Production Simulation</li>
-                            <li><span class="feature-check">✓</span> Bottle Creation and Processing</li>
-                            <li><span class="feature-check">✓</span> Multiple Quality Control Stations
-                                <ul style="margin-top: 0.5em; margin-left: 1.5em; list-style: none;">
-                                    <li>• Bottle QC</li>
-                                    <li>• Fill QC</li>
-                                    <li>• Cap QC</li>
-                                    <li>• Label QC</li>
-                                    <li>• Final QC</li>
-                                </ul>
-                            </li>
-                            <li><span class="feature-check">✓</span> Rework Station for Recoverable Defects</li>
-                            <li><span class="feature-check">✓</span> Automatic Rejection of Critical Defects</li>
-                            <li><span class="feature-check">✓</span> Real-Time HMI Dashboard</li>
-                            <li><span class="feature-check">✓</span> Production Statistics and KPIs</li>
-                            <li><span class="feature-check">✓</span> Production History Tracking</li>
-                            <li><span class="feature-check">✓</span> CSV Report Export</li>
-                            <li><span class="feature-check">✓</span> Industrial Manufacturing Workflow Visualization</li>
+                            <li><span class="feature-check">✓</span> Continuous water bottle production simulation</li>
+                            <li><span class="feature-check">✓</span> Tkinter HMI with Start, Stop, Reset, and Export CSV</li>
+                            <li><span class="feature-check">✓</span> Quality checks at Bottle QC, Fill QC, Cap QC, Label QC, and Final QC</li>
+                            <li><span class="feature-check">✓</span> Rework handling for correctable defects</li>
+                            <li><span class="feature-check">✓</span> Final rejection handling for failed bottles</li>
+                            <li><span class="feature-check">✓</span> Production counters, KPIs, runtime, and CSV export</li>
+                            <li><span class="feature-check">✓</span> InfluxDB storage and Grafana dashboard visualization</li>
                         </ul>
 
-                        <h3>My Role</h3>
-                        <p><strong>Project Developer</strong></p>
-                        <p>
-                            Designed and implemented the complete Water Bottle Production Line Simulation using Python.
-                        </p>
-                        <p>
-                            Developed the Human Machine Interface (HMI) using Tkinter.
-                        </p>
-                        <p>
-                            Implemented production logic, quality control inspections, defect handling, rework operations, KPI calculations, production history tracking, and CSV reporting.
-                        </p>
-                        <p>
-                            Created the software architecture, testing procedures, project documentation, and portfolio presentation.
-                        </p>
+                        <h3>Actual Project Files</h3>
+                        <div class="info-box">
+                            <ul class="file-list">
+                                <li>• <code>production_lineV7.py</code> — backend simulation, bottle class, production counters, QC, rework, rejection, KPIs, and CSV export.</li>
+                                <li>• <code>hmi_v7.py</code> — Tkinter HMI used to control and monitor the simulation.</li>
+                                <li>• <code>producer.py</code> — reads <code>telemetry_state.json</code> and sends values to InfluxDB.</li>
+                                <li>• <code>docker-compose.yml</code> — starts InfluxDB and Grafana containers.</li>
+                                <li>• <code>production_report_v7.csv</code> — exported production history from the simulation.</li>
+                            </ul>
+                        </div>
 
-                        <h3>System Architecture</h3>
-                        <div class="architecture-box">
-                            <p>The project follows a layered architecture consisting of a Human Machine Interface (HMI) layer and a Production Logic layer.</p>
-
-                            <div style="margin: 1.5em 0; text-align: center;">
-                                <img src="images/architecture-diagram.png" alt="System Architecture Diagram" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);" />
-                                <p style="font-size: 0.85em; opacity: 0.7; margin-top: 0.5em;">System Architecture Diagram — HMI Layer & Production Logic Layer</p>
+                        <h3>Data Flow</h3>
+                        <div class="info-box">
+                            <p>The project uses a simple monitoring pipeline:</p>
+                            <div class="data-flow-simple">
+                                <span class="flow-card">HMI</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-card">telemetry_state.json</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-card">producer.py</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-card">InfluxDB</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-card">Grafana</span>
                             </div>
-
-                            <div class="layer-box">
-                                <h4>🖥️ HMI Layer (Human Machine Interface)</h4>
-                                <p>Provides monitoring and control functionality for operators. Displays real-time production data, statistics, quality metrics, and system status.</p>
-                            </div>
-
-                            <div class="layer-arrow">↓</div>
-
-                            <div class="layer-box">
-                                <h4>⚙️ Production Logic Layer</h4>
-                                <p>Manages bottle processing, quality control stations, rework operations, production statistics, and CSV reporting.</p>
-                            </div>
-
-                            <p style="margin-top: 1.5em; font-style: italic; opacity: 0.8;">
-                                This separation improves maintainability, scalability, and code organization.
+                            <p style="margin-top: 1em; opacity: 0.8;">
+                                The HMI runs the simulation and writes the latest state to a JSON file. The producer reads this file once per second and sends production, sensor, and machine-state values to InfluxDB. Grafana then reads the data from InfluxDB and displays the dashboard.
                             </p>
                         </div>
 
-                        <h3>Object-Oriented Programming Concepts</h3>
-                        <div class="architecture-box">
-                            <div class="layer-box">
-                                <h4>📦 Core Classes</h4>
-                                <ul style="list-style: none; padding-left: 0; line-height: 2em;">
-                                    <li>• <strong>Bottle</strong> — Represents individual bottle objects with properties (ID, status, defects, stage)</li>
-                                    <li>• <strong>ProductionLine</strong> — Manages the complete production workflow, stations, and bottle routing</li>
-                                    <li>• <strong>WaterBottleHMI</strong> — Handles the graphical interface, event processing, and dashboard updates</li>
-                                    <li>• <strong>QualityControl</strong> — Implements inspection logic and defect classification</li>
-                                    <li>• <strong>ReportManager</strong> — Handles CSV export, production history, and statistics generation</li>
-                                </ul>
-                            </div>
-
-                            <div class="layer-box">
-                                <h4>🔧 OOP Principles Applied</h4>
-                                <ul style="list-style: none; padding-left: 0; line-height: 2em;">
-                                    <li>• <strong>Encapsulation</strong> — Each class encapsulates its own data and behavior (e.g., Bottle manages its own state)</li>
-                                    <li>• <strong>Composition</strong> — ProductionLine is composed of multiple station objects and Bottle collections</li>
-                                    <li>• <strong>Abstraction</strong> — HMI abstracts complex production logic behind simple interface methods</li>
-                                    <li>• <strong>Modular Design</strong> — Separation of concerns between HMI, logic, and data layers enables independent testing</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <h3>Production Workflow</h3>
-                        <div class="workflow-diagram">
-                            <div class="workflow-step">
-                                <span>1</span>
-                                <strong>Bottle Creation</strong>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>2</span>
-                                <strong>Bottle QC</strong>
-                                <span class="rework-label">REWORK PATH</span>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>3</span>
-                                <strong>Water Filling</strong>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>4</span>
-                                <strong>Fill QC</strong>
-                                <span class="rework-label">REWORK PATH</span>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>5</span>
-                                <strong>Cap Installation</strong>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>6</span>
-                                <strong>Cap QC</strong>
-                                <span class="rework-label">REWORK PATH</span>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>7</span>
-                                <strong>Label Application</strong>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>8</span>
-                                <strong>Label QC</strong>
-                                <span class="rework-label">REWORK PATH</span>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>9</span>
-                                <strong>Final QC</strong>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step">
-                                <span>10</span>
-                                <strong>Packaging</strong>
-                            </div>
-                            <div class="workflow-arrow">↓</div>
-                            <div class="workflow-step" style="border-left-color: #4ade80; background: rgba(74, 222, 128, 0.05);">
-                                <span>11</span>
-                                <strong>Shipped</strong>
-                            </div>
-
-                            <div style="margin-top: 2em; padding-top: 1.5em; border-top: 1px solid rgba(255,255,255,0.1);">
-                                <p style="color: #f59e0b; font-weight: 600; margin-bottom: 0.8em;">↻ Rework Station Path:</p>
-                                <p style="opacity: 0.8;">Bottle QC → Fill QC → Cap QC → Label QC → <strong style="color: #f59e0b;">Rework Station</strong></p>
-                            </div>
+                        <h3>Production Stages</h3>
+                        <div class="info-box">
+                            <p>
+                                Bottle Creation → Bottle QC → Water Filling → Fill QC → Cap Installation → Cap QC → Label Application → Label QC → Final QC → Packaging → Shipping
+                            </p>
+                            <p style="opacity: 0.8;">
+                                Defects before Final QC can be sent to rework. Final QC failures are rejected and removed from the production process.
+                            </p>
                         </div>
                     </div>
 
@@ -352,28 +198,25 @@
                             <h4>Technologies Used</h4>
                             <div class="tech-stack">
                                 <span class="tech-item">Python</span>
-                                <span class="tech-item">Object-Oriented Programming (OOP)</span>
-                                <span class="tech-item">CSV Reporting</span>
-                                <span class="tech-item">Industrial Automation Concepts</span>
-                                <span class="tech-item">Production Simulation</span>
-                                <span class="tech-item">Quality Control Systems</span>
+                                <span class="tech-item">Object-Oriented Programming</span>
+                                <span class="tech-item">Tkinter</span>
+                                <span class="tech-item">CSV Export</span>
+                                <span class="tech-item">JSON Telemetry</span>
+                                <span class="tech-item">InfluxDB</span>
+                                <span class="tech-item">Grafana</span>
+                                <span class="tech-item">Docker Compose</span>
+                                <span class="tech-item">GitHub Pages</span>
                             </div>
                         </div>
 
                         <div class="sidebar-card">
                             <h4>Project Links</h4>
                             <div class="project-links">
-                                <a href="https://github.com/A-Allam1" target="_blank" rel="noopener" class="project-link-btn">
+                                <a href="https://github.com/A-Allam1/WaterBottleProductionLine" target="_blank" rel="noopener" class="project-link-btn">
                                     <span>💻</span> GitHub Repository
                                 </a>
-                                <a href="#" class="project-link-btn">
-                                    <span>📄</span> Project Report PDF
-                                </a>
-                                <a href="#" class="project-link-btn">
-                                    <span>📐</span> Architecture Diagram
-                                </a>
-                                <a href="#" class="project-link-btn">
-                                    <span>📊</span> Production Report CSV
+                                <a href="projects.html" class="project-link-btn">
+                                    <span>📁</span> Back to Projects
                                 </a>
                             </div>
                         </div>
@@ -390,12 +233,12 @@
                                     <span class="info-value">SRH University</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Duration</span>
-                                    <span class="info-value">2 Semester</span>
+                                    <span class="info-label">Instructor</span>
+                                    <span class="info-value">Esteban Pozo</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Status</span>
-                                    <span class="info-value status-completed">not Completed</span>
+                                    <span class="info-value status-completed">Completed</span>
                                 </div>
                             </div>
                         </div>
@@ -404,37 +247,18 @@
             </div>
         </section>
 
-    
-
-        <!-- Gallery Section -->
         <section class="project-gallery">
             <div class="container">
-                <h2 class="section-title">Project Gallery</h2>
-                <p style="text-align: center; margin-bottom: 2em; opacity: 0.8;">Screenshots from HMI V6 showing various system states and dashboards.</p>
+                <h2 class="section-title">Project Screenshots</h2>
+                <p style="text-align: center; margin-bottom: 2em; opacity: 0.8;">Two final screenshots from the project: the HMI and the Grafana dashboard.</p>
                 <div class="gallery-grid-real">
                     <div class="gallery-item-real">
-                        <img src="images/System Ready.png" alt="System Ready - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">System Ready</div>
+                        <img src="images/HMI V7.png" alt="HMI V7 during production" />
+                        <div class="gallery-caption">HMI V7 showing the production line, counters, KPIs, quality log, and production history.</div>
                     </div>
                     <div class="gallery-item-real">
-                        <img src="images/Bottle Moving Through Production.png" alt="Bottle Processing - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Bottle Processing</div>
-                    </div>
-                    <div class="gallery-item-real">
-                        <img src="images/Rework Event.png" alt="Rework Event - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Rework Event</div>
-                    </div>
-                    <div class="gallery-item-real">
-                        <img src="images/Rejected Bottle.png" alt="Rejected Bottle - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Rejected Bottle</div>
-                    </div>
-                    <div class="gallery-item-real">
-                        <img src="images/Production Statistics Dashboard.png" alt="Production Statistics Dashboard - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Production Statistics Dashboard</div>
-                    </div>
-                    <div class="gallery-item-real">
-                        <img src="images/Production History and Quality Log.png" alt="Production History and Quality Log - HMI V6" />
-                        <div class="gallery-caption" style="font-size: 1.1em; font-weight: 600; color: rgba(255,255,255,0.9);">Production History and Quality Log</div>
+                        <img src="images/grafana-dashboard.png" alt="Grafana dashboard" />
+                        <div class="gallery-caption">Grafana dashboard showing live production counters, quality KPIs, runtime, sensor values, and machine state.</div>
                     </div>
                 </div>
             </div>
@@ -443,7 +267,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>© Adam Hassan 2026. Built with passion for engineering. SRH University — Advanced Programming Portfolio</p>
+            <p>© Adam Hassan 2026. SRH University — Advanced Programming Portfolio</p>
         </div>
     </footer>
 
