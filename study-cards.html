@@ -2082,16 +2082,277 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* User-friendly design refresh: clearer spacing, stronger contrast, better mobile ergonomics */
+    :root {
+      --bg: #0f1224;
+      --panel: #ffffff;
+      --panel-strong: #f7f8ff;
+      --text: #f8faff;
+      --muted: #d7dcf8;
+      --muted-2: #b9c1e8;
+      --border: rgba(255, 255, 255, 0.18);
+      --border-strong: rgba(255, 255, 255, 0.34);
+      --primary: #7c8cff;
+      --primary-strong: #aab4ff;
+      --yellow: #ffd84a;
+      --green: #55d08b;
+      --red: #ff7676;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      --radius: 24px;
+      --radius-sm: 16px;
+    }
+
+    body {
+      line-height: 1.5;
+      background:
+        radial-gradient(circle at top left, rgba(124, 140, 255, 0.22), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(85, 208, 139, 0.13), transparent 34rem),
+        linear-gradient(180deg, #11142a 0%, #0f1224 100%);
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+      z-index: 100;
+      transform: translateY(-160%);
+      border-radius: 999px;
+      background: var(--yellow);
+      color: #11142a;
+      padding: 10px 16px;
+      font-weight: 950;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .app {
+      width: min(1440px, calc(100% - 40px));
+      gap: 24px;
+    }
+
+    .topbar {
+      background: rgba(21, 25, 52, 0.82);
+      backdrop-filter: blur(18px);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .brand {
+      padding: 8px 6px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+    }
+
+    .nav {
+      background: rgba(255, 255, 255, 0.06);
+      gap: 6px;
+    }
+
+    .nav-button,
+    .sidebar-folder-button,
+    .new-folder-button {
+      min-height: 46px;
+      color: #e7eaff;
+    }
+
+    .nav-button:hover,
+    .sidebar-folder-button:hover,
+    .new-folder-button:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-button[aria-selected="true"] {
+      color: #11142a;
+      background: linear-gradient(135deg, var(--yellow), #fff0a3);
+    }
+
+    .panel,
+    .learn-card,
+    .flash-card,
+    .empty-state,
+    .modal {
+      background: linear-gradient(180deg, rgba(44, 50, 87, 0.96), rgba(33, 39, 72, 0.96));
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .panel-header {
+      padding: 30px 32px 0;
+    }
+
+    .panel-body {
+      padding: 24px 32px 32px;
+    }
+
+    .section-title {
+      letter-spacing: -0.045em;
+      max-width: 780px;
+    }
+
+    .section-subtitle {
+      color: #d8ddfb;
+      max-width: 760px;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      background: rgba(8, 11, 30, 0.62);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: #aeb7de;
+    }
+
+    .textarea {
+      white-space: pre-wrap;
+    }
+
+    .btn,
+    .small-button,
+    .clear-button {
+      min-height: 48px;
+    }
+
+    .btn-primary {
+      color: #11142a;
+      background: linear-gradient(135deg, var(--yellow), #fff0a3);
+    }
+
+    .btn-secondary,
+    .small-button {
+      background: rgba(255, 255, 255, 0.10);
+      border-color: rgba(255, 255, 255, 0.20);
+    }
+
+    .card-row,
+    .library-card,
+    .history-card,
+    .stat-card,
+    .session-summary-item,
+    .answer-choice,
+    .match-option,
+    .deck-choice,
+    .setup-option {
+      background: rgba(8, 11, 30, 0.36);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .library-card:hover,
+    .card-row:hover,
+    .history-card:hover,
+    .deck-choice:hover,
+    .setup-option:hover {
+      border-color: rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .flash-card,
+    .learn-card {
+      min-height: clamp(360px, 58vh, 560px);
+    }
+
+    .flash-hint,
+    .flash-keyboard-help,
+    .form-help,
+    .file-help {
+      color: #c3c9ec;
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        width: min(100% - 24px, 980px);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 12px;
+        z-index: 40;
+        max-height: none;
+      }
+
+      .nav {
+        scrollbar-width: thin;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app {
+        width: 100%;
+      }
+
+      .topbar {
+        top: 0;
+        background: rgba(17, 20, 42, 0.96);
+        backdrop-filter: blur(16px);
+      }
+
+      main {
+        width: min(100% - 24px, 980px);
+        margin-top: 18px;
+      }
+
+      .brand-logo {
+        width: 36px;
+        height: 36px;
+      }
+
+      .nav {
+        border-radius: 18px;
+      }
+
+      .nav-button {
+        min-height: 44px;
+      }
+
+      .section-title {
+        font-size: clamp(28px, 8vw, 40px);
+      }
+
+      .panel-header,
+      .panel-body,
+      .learn-card {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .btn,
+      .button-row .btn,
+      .small-button,
+      .clear-button {
+        width: 100%;
+        min-height: 50px;
+      }
+
+      .flash-card,
+      .learn-card {
+        min-height: auto;
+      }
+
+      .toast {
+        width: calc(100% - 24px);
+        justify-content: space-between;
+        border-radius: 18px;
+      }
+    }
+
   </style>
 </head>
 
 <body>
+  <a class="skip-link" href="#mainContent">Skip to content</a>
   <div class="app">
     <header class="topbar">
-      <div class="sidebar-top-actions" aria-hidden="true">
-        <button class="sidebar-icon-button" type="button" title="Menu">☰</button>
-        <span class="sidebar-search-mark">Q</span>
-      </div>
 
       <div class="brand" aria-label="Study Cards">
         <div class="brand-logo" aria-hidden="true">S</div>
@@ -2099,13 +2360,9 @@
       </div>
 
       <nav class="nav" aria-label="Study navigation" role="tablist">
-        <button class="nav-button" id="tab-library" type="button" role="tab" aria-selected="true" aria-controls="libraryView" tabindex="0" data-view-target="library"><span class="nav-icon" aria-hidden="true">⌂</span><span>My Library</span></button>
+        <button class="nav-button" id="tab-library" type="button" role="tab" aria-selected="true" aria-controls="libraryView" tabindex="0" data-view-target="library"><span class="nav-icon" aria-hidden="true">⌂</span><span>Study Sets</span></button>
         <button class="nav-button" id="tab-import" type="button" role="tab" aria-selected="false" aria-controls="importView" tabindex="-1" data-view-target="import"><span class="nav-icon" aria-hidden="true">＋</span><span>Import</span></button>
 
-        <div class="sidebar-divider" aria-hidden="true"></div>
-        <div class="sidebar-section-title">Your folders</div>
-        <div class="folder-list" id="folderNavList" aria-label="Library folders"></div>
-        <button class="new-folder-button" id="newFolderButton" type="button"><span class="folder-icon" aria-hidden="true">＋</span><span>New folder</span></button>
 
         <div class="sidebar-divider" aria-hidden="true"></div>
         <div class="sidebar-section-title">Start here</div>
@@ -2114,12 +2371,10 @@
         <button class="nav-button" id="tab-test" type="button" role="tab" aria-selected="false" aria-controls="testView" tabindex="-1" data-view-target="test"><span class="nav-icon" aria-hidden="true">✓</span><span>Test</span></button>
         <button class="nav-button" id="tab-match" type="button" role="tab" aria-selected="false" aria-controls="matchView" tabindex="-1" data-view-target="match"><span class="nav-icon" aria-hidden="true">⋈</span><span>Match</span></button>
         <button class="nav-button" id="tab-write" type="button" role="tab" aria-selected="false" aria-controls="writeView" tabindex="-1" data-view-target="write"><span class="nav-icon" aria-hidden="true">✎</span><span>Write</span></button>
-        <button class="nav-button" id="tab-history" type="button" role="tab" aria-selected="false" aria-controls="historyView" tabindex="-1" data-view-target="history"><span class="nav-icon" aria-hidden="true">◷</span><span>History</span></button>
-        <button class="nav-button" id="tab-export" type="button" role="tab" aria-selected="false" aria-controls="exportView" tabindex="-1" data-view-target="export"><span class="nav-icon" aria-hidden="true">⇩</span><span>Export</span></button>
       </nav>
     </header>
 
-    <main>
+    <main id="mainContent" tabindex="-1">
       <section class="view" id="importView" role="tabpanel" aria-labelledby="tab-import" hidden>
         <div class="hero-grid">
           <div class="panel">
@@ -2204,8 +2459,8 @@
       <section class="view active" id="libraryView" role="tabpanel" aria-labelledby="tab-library">
         <div class="panel">
           <div class="panel-header">
-            <h1 class="section-title">My Library</h1>
-            <p class="section-subtitle">Drag in multiple .txt files. Each file becomes one study set, and the deck name is taken from the file name.</p>
+            <h1 class="section-title">Study Sets</h1>
+            <p class="section-subtitle">Seven SI study sets are ready to use. You can still drag in your own .txt files for this session, and nothing is saved automatically.</p>
           </div>
 
           <div class="panel-body">
@@ -2213,8 +2468,8 @@
               <div class="library-drop-zone" id="libraryDropZone" role="button" tabindex="0" aria-label="Drag text files here or choose files">
                 <div>
                   <div class="drop-icon" aria-hidden="true">+</div>
-                  <h2>Drag .txt files here</h2>
-                  <p>Drop one file or many files at once, or <label class="inline-file-label" for="libraryFileInput">choose files</label>. Each file should use the same Quizlet-style format.</p>
+                  <h2>SI study sets are ready</h2>
+                  <p>Open a built-in pack below, or <label class="inline-file-label" for="libraryFileInput">choose .txt files</label> to add your own cards for this session.</p>
                   <input class="file-input" id="libraryFileInput" type="file" accept=".txt,text/plain" multiple />
                 </div>
               </div>
@@ -2237,13 +2492,13 @@
                     <option value="emptyline">Empty line</option>
                   </select>
                 </div>
-                <div class="form-help">File names become deck names. Example: <strong>biology-unit-1.txt</strong> becomes <strong>biology-unit-1</strong>.</div>
+                <div class="form-help">File names become set names. Example: <strong>biology-unit-1.txt</strong> becomes <strong>biology-unit-1</strong>.</div>
               </div>
             </div>
 
-            <div class="library-import-status" id="libraryImportStatus" aria-live="polite">No files imported yet. Drag .txt files here to build your library.</div>
+            <div class="library-import-status" id="libraryImportStatus" aria-live="polite">7 built-in SI study sets are ready. Choose Open, Learn, or Flashcards below.</div>
 
-            <h2 class="library-heading">Your study sets</h2>
+            <h2 class="library-heading">Available study sets</h2>
             <div class="library-list" id="libraryList" aria-live="polite"></div>
           </div>
         </div>
@@ -2318,45 +2573,6 @@
         <div id="writeContent"></div>
       </section>
 
-      <section class="view" id="historyView" role="tabpanel" aria-labelledby="tab-history" hidden>
-        <div class="panel">
-          <div class="panel-header">
-            <h1 class="section-title">Practice history</h1>
-            <p class="section-subtitle">Every Learn, Test, Write, Match, and Flashcard practice you finish is saved here and mirrored into Google Sheets.</p>
-          </div>
-          <div class="panel-body">
-            <div class="history-list" id="historyList" aria-live="polite"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="view" id="exportView" role="tabpanel" aria-labelledby="tab-export" hidden>
-        <div class="panel">
-          <div class="panel-header">
-            <h1 class="section-title">Export cards</h1>
-            <p class="section-subtitle">
-              Copy your cards back into Quizlet import format, download a .txt file, or save a full JSON backup with progress data.
-            </p>
-          </div>
-
-          <div class="panel-body">
-            <textarea class="textarea" id="exportText" readonly aria-label="Export text"></textarea>
-
-            <div class="export-tools">
-              <button class="btn btn-primary" id="copyExportButton" type="button">Copy Export Text</button>
-              <button class="btn btn-secondary" id="downloadExportButton" type="button">Download .txt</button>
-              <button class="btn btn-secondary" id="downloadBackupButton" type="button">Download Backup .json</button>
-            </div>
-
-            <div class="backup-box">
-              <div>
-                <div class="file-name">Why backup?</div>
-                <div class="file-help">Browser storage is convenient, but a downloaded backup protects your cards and review progress if the browser clears site data.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   </div>
 
@@ -2409,6 +2625,1139 @@
         "What is the SI base unit of luminous intensity?\tcandela, cd",
         "What does candela, cd measure?\tluminous intensity"
       ].join("\n");
+
+      const BUILT_IN_STUDY_SETS = [
+        {
+                "id": "builtin-si-base-units",
+                "name": "Pack 1 — SI Base Units",
+                "cards": [
+                        {
+                                "term": "What is the SI base unit of time?",
+                                "definition": "second"
+                        },
+                        {
+                                "term": "What does second measure?",
+                                "definition": "time"
+                        },
+                        {
+                                "term": "What is the symbol for second?",
+                                "definition": "s"
+                        },
+                        {
+                                "term": "What unit has the symbol s?",
+                                "definition": "second"
+                        },
+                        {
+                                "term": "What is the SI base unit of length?",
+                                "definition": "metre"
+                        },
+                        {
+                                "term": "What does metre measure?",
+                                "definition": "length"
+                        },
+                        {
+                                "term": "What is the symbol for metre?",
+                                "definition": "m"
+                        },
+                        {
+                                "term": "What unit has the symbol m?",
+                                "definition": "metre"
+                        },
+                        {
+                                "term": "What is the SI base unit of mass?",
+                                "definition": "kilogram"
+                        },
+                        {
+                                "term": "What does kilogram measure?",
+                                "definition": "mass"
+                        },
+                        {
+                                "term": "What is the symbol for kilogram?",
+                                "definition": "kg"
+                        },
+                        {
+                                "term": "What unit has the symbol kg?",
+                                "definition": "kilogram"
+                        },
+                        {
+                                "term": "What is the SI base unit of electric current?",
+                                "definition": "ampere"
+                        },
+                        {
+                                "term": "What does ampere measure?",
+                                "definition": "electric current"
+                        },
+                        {
+                                "term": "What is the symbol for ampere?",
+                                "definition": "A"
+                        },
+                        {
+                                "term": "What unit has the symbol A?",
+                                "definition": "ampere"
+                        },
+                        {
+                                "term": "What is the SI base unit of thermodynamic temperature?",
+                                "definition": "kelvin"
+                        },
+                        {
+                                "term": "What does kelvin measure?",
+                                "definition": "thermodynamic temperature"
+                        },
+                        {
+                                "term": "What is the symbol for kelvin?",
+                                "definition": "K"
+                        },
+                        {
+                                "term": "What unit has the symbol K?",
+                                "definition": "kelvin"
+                        },
+                        {
+                                "term": "What is the SI base unit of amount of substance?",
+                                "definition": "mole"
+                        },
+                        {
+                                "term": "What does mole measure?",
+                                "definition": "amount of substance"
+                        },
+                        {
+                                "term": "What is the symbol for mole?",
+                                "definition": "mol"
+                        },
+                        {
+                                "term": "What unit has the symbol mol?",
+                                "definition": "mole"
+                        },
+                        {
+                                "term": "What is the SI base unit of luminous intensity?",
+                                "definition": "candela"
+                        },
+                        {
+                                "term": "What does candela measure?",
+                                "definition": "luminous intensity"
+                        },
+                        {
+                                "term": "What is the symbol for candela?",
+                                "definition": "cd"
+                        },
+                        {
+                                "term": "What unit has the symbol cd?",
+                                "definition": "candela"
+                        }
+                ]
+        },
+        {
+                "id": "builtin-si-prefixes",
+                "name": "Pack 2 — SI Prefixes",
+                "cards": [
+                        {
+                                "term": "What prefix means 10^30?",
+                                "definition": "quetta, Q"
+                        },
+                        {
+                                "term": "What does quetta, Q mean?",
+                                "definition": "10^30"
+                        },
+                        {
+                                "term": "What prefix means 10^27?",
+                                "definition": "ronna, R"
+                        },
+                        {
+                                "term": "What does ronna, R mean?",
+                                "definition": "10^27"
+                        },
+                        {
+                                "term": "What prefix means 10^24?",
+                                "definition": "yotta, Y"
+                        },
+                        {
+                                "term": "What does yotta, Y mean?",
+                                "definition": "10^24"
+                        },
+                        {
+                                "term": "What prefix means 10^21?",
+                                "definition": "zetta, Z"
+                        },
+                        {
+                                "term": "What does zetta, Z mean?",
+                                "definition": "10^21"
+                        },
+                        {
+                                "term": "What prefix means 10^18?",
+                                "definition": "exa, E"
+                        },
+                        {
+                                "term": "What does exa, E mean?",
+                                "definition": "10^18"
+                        },
+                        {
+                                "term": "What prefix means 10^15?",
+                                "definition": "peta, P"
+                        },
+                        {
+                                "term": "What does peta, P mean?",
+                                "definition": "10^15"
+                        },
+                        {
+                                "term": "What prefix means 10^12?",
+                                "definition": "tera, T"
+                        },
+                        {
+                                "term": "What does tera, T mean?",
+                                "definition": "10^12"
+                        },
+                        {
+                                "term": "What prefix means 10^9?",
+                                "definition": "giga, G"
+                        },
+                        {
+                                "term": "What does giga, G mean?",
+                                "definition": "10^9"
+                        },
+                        {
+                                "term": "What prefix means 10^6?",
+                                "definition": "mega, M"
+                        },
+                        {
+                                "term": "What does mega, M mean?",
+                                "definition": "10^6"
+                        },
+                        {
+                                "term": "What prefix means 10^3?",
+                                "definition": "kilo, k"
+                        },
+                        {
+                                "term": "What does kilo, k mean?",
+                                "definition": "10^3"
+                        },
+                        {
+                                "term": "What prefix means 10^2?",
+                                "definition": "hecto, h"
+                        },
+                        {
+                                "term": "What does hecto, h mean?",
+                                "definition": "10^2"
+                        },
+                        {
+                                "term": "What prefix means 10^1?",
+                                "definition": "deca, da"
+                        },
+                        {
+                                "term": "What does deca, da mean?",
+                                "definition": "10^1"
+                        },
+                        {
+                                "term": "What prefix means 10^-1?",
+                                "definition": "deci, d"
+                        },
+                        {
+                                "term": "What does deci, d mean?",
+                                "definition": "10^-1"
+                        },
+                        {
+                                "term": "What prefix means 10^-2?",
+                                "definition": "centi, c"
+                        },
+                        {
+                                "term": "What does centi, c mean?",
+                                "definition": "10^-2"
+                        },
+                        {
+                                "term": "What prefix means 10^-3?",
+                                "definition": "milli, m"
+                        },
+                        {
+                                "term": "What does milli, m mean?",
+                                "definition": "10^-3"
+                        },
+                        {
+                                "term": "What prefix means 10^-6?",
+                                "definition": "micro, µ"
+                        },
+                        {
+                                "term": "What does micro, µ mean?",
+                                "definition": "10^-6"
+                        },
+                        {
+                                "term": "What prefix means 10^-9?",
+                                "definition": "nano, n"
+                        },
+                        {
+                                "term": "What does nano, n mean?",
+                                "definition": "10^-9"
+                        },
+                        {
+                                "term": "What prefix means 10^-12?",
+                                "definition": "pico, p"
+                        },
+                        {
+                                "term": "What does pico, p mean?",
+                                "definition": "10^-12"
+                        },
+                        {
+                                "term": "What prefix means 10^-15?",
+                                "definition": "femto, f"
+                        },
+                        {
+                                "term": "What does femto, f mean?",
+                                "definition": "10^-15"
+                        },
+                        {
+                                "term": "What prefix means 10^-18?",
+                                "definition": "atto, a"
+                        },
+                        {
+                                "term": "What does atto, a mean?",
+                                "definition": "10^-18"
+                        },
+                        {
+                                "term": "What prefix means 10^-21?",
+                                "definition": "zepto, z"
+                        },
+                        {
+                                "term": "What does zepto, z mean?",
+                                "definition": "10^-21"
+                        },
+                        {
+                                "term": "What prefix means 10^-24?",
+                                "definition": "yocto, y"
+                        },
+                        {
+                                "term": "What does yocto, y mean?",
+                                "definition": "10^-24"
+                        },
+                        {
+                                "term": "What prefix means 10^-27?",
+                                "definition": "ronto, r"
+                        },
+                        {
+                                "term": "What does ronto, r mean?",
+                                "definition": "10^-27"
+                        },
+                        {
+                                "term": "What prefix means 10^-30?",
+                                "definition": "quecto, q"
+                        },
+                        {
+                                "term": "What does quecto, q mean?",
+                                "definition": "10^-30"
+                        }
+                ]
+        },
+        {
+                "id": "builtin-defining-constants",
+                "name": "Pack 3 — Defining Constants",
+                "cards": [
+                        {
+                                "term": "What constant fixes the second?",
+                                "definition": "Cs-133 hyperfine frequency, Delta nu_Cs"
+                        },
+                        {
+                                "term": "What does Delta nu_Cs fix?",
+                                "definition": "second"
+                        },
+                        {
+                                "term": "What is Delta nu_Cs?",
+                                "definition": "Cs-133 hyperfine frequency"
+                        },
+                        {
+                                "term": "What is the exact value of Delta nu_Cs?",
+                                "definition": "9,192,631,770 Hz"
+                        },
+                        {
+                                "term": "What constant fixes the metre?",
+                                "definition": "speed of light, c"
+                        },
+                        {
+                                "term": "What does c fix?",
+                                "definition": "metre"
+                        },
+                        {
+                                "term": "What is c?",
+                                "definition": "speed of light"
+                        },
+                        {
+                                "term": "What is the exact speed of light?",
+                                "definition": "299,792,458 m s^-1"
+                        },
+                        {
+                                "term": "What is the rounded speed of light?",
+                                "definition": "3.00 x 10^8 m/s"
+                        },
+                        {
+                                "term": "What constant fixes the kilogram?",
+                                "definition": "Planck constant, h"
+                        },
+                        {
+                                "term": "What does h fix?",
+                                "definition": "kilogram"
+                        },
+                        {
+                                "term": "What is h?",
+                                "definition": "Planck constant"
+                        },
+                        {
+                                "term": "What is the exact Planck constant?",
+                                "definition": "6.62607015 x 10^-34 J s"
+                        },
+                        {
+                                "term": "What is the rounded Planck constant?",
+                                "definition": "6.63 x 10^-34 J s"
+                        },
+                        {
+                                "term": "What constant fixes the ampere?",
+                                "definition": "elementary charge, e"
+                        },
+                        {
+                                "term": "What does e fix?",
+                                "definition": "ampere"
+                        },
+                        {
+                                "term": "What is e?",
+                                "definition": "elementary charge"
+                        },
+                        {
+                                "term": "What is the exact elementary charge?",
+                                "definition": "1.602176634 x 10^-19 C"
+                        },
+                        {
+                                "term": "What is the rounded elementary charge?",
+                                "definition": "1.60 x 10^-19 C"
+                        },
+                        {
+                                "term": "What constant fixes the kelvin?",
+                                "definition": "Boltzmann constant, k or k_B"
+                        },
+                        {
+                                "term": "What does k or k_B fix?",
+                                "definition": "kelvin"
+                        },
+                        {
+                                "term": "What is k or k_B?",
+                                "definition": "Boltzmann constant"
+                        },
+                        {
+                                "term": "What is the exact Boltzmann constant?",
+                                "definition": "1.380649 x 10^-23 J K^-1"
+                        },
+                        {
+                                "term": "What constant fixes the mole?",
+                                "definition": "Avogadro constant, N_A"
+                        },
+                        {
+                                "term": "What does N_A fix?",
+                                "definition": "mole"
+                        },
+                        {
+                                "term": "What is N_A?",
+                                "definition": "Avogadro constant"
+                        },
+                        {
+                                "term": "What is the exact Avogadro constant?",
+                                "definition": "6.02214076 x 10^23 mol^-1"
+                        },
+                        {
+                                "term": "What is the rounded Avogadro constant?",
+                                "definition": "6.02 x 10^23 mol^-1"
+                        },
+                        {
+                                "term": "What constant fixes the candela?",
+                                "definition": "luminous efficacy, K_cd"
+                        },
+                        {
+                                "term": "What does K_cd fix?",
+                                "definition": "candela"
+                        },
+                        {
+                                "term": "What is K_cd?",
+                                "definition": "luminous efficacy"
+                        },
+                        {
+                                "term": "What is the exact luminous efficacy?",
+                                "definition": "683 lm W^-1"
+                        }
+                ]
+        },
+        {
+                "id": "builtin-derived-units",
+                "name": "Pack 4 — Derived Units",
+                "cards": [
+                        {
+                                "term": "What is the symbol for radian?",
+                                "definition": "rad"
+                        },
+                        {
+                                "term": "What unit has the symbol rad?",
+                                "definition": "radian"
+                        },
+                        {
+                                "term": "What are radian base units?",
+                                "definition": "m/m = 1"
+                        },
+                        {
+                                "term": "What is the symbol for steradian?",
+                                "definition": "sr"
+                        },
+                        {
+                                "term": "What unit has the symbol sr?",
+                                "definition": "steradian"
+                        },
+                        {
+                                "term": "What are steradian base units?",
+                                "definition": "m^2/m^2 = 1"
+                        },
+                        {
+                                "term": "What is the symbol for hertz?",
+                                "definition": "Hz"
+                        },
+                        {
+                                "term": "What unit has the symbol Hz?",
+                                "definition": "hertz"
+                        },
+                        {
+                                "term": "What are hertz base units?",
+                                "definition": "s^-1"
+                        },
+                        {
+                                "term": "What is the symbol for newton?",
+                                "definition": "N"
+                        },
+                        {
+                                "term": "What unit has the symbol N?",
+                                "definition": "newton"
+                        },
+                        {
+                                "term": "What are newton base units?",
+                                "definition": "kg m s^-2"
+                        },
+                        {
+                                "term": "What is the symbol for pascal?",
+                                "definition": "Pa"
+                        },
+                        {
+                                "term": "What unit has the symbol Pa?",
+                                "definition": "pascal"
+                        },
+                        {
+                                "term": "What are pascal base units?",
+                                "definition": "kg m^-1 s^-2"
+                        },
+                        {
+                                "term": "What is the symbol for joule?",
+                                "definition": "J"
+                        },
+                        {
+                                "term": "What unit has the symbol J?",
+                                "definition": "joule"
+                        },
+                        {
+                                "term": "What are joule base units?",
+                                "definition": "kg m^2 s^-2"
+                        },
+                        {
+                                "term": "What is the symbol for watt?",
+                                "definition": "W"
+                        },
+                        {
+                                "term": "What unit has the symbol W?",
+                                "definition": "watt"
+                        },
+                        {
+                                "term": "What are watt base units?",
+                                "definition": "kg m^2 s^-3"
+                        },
+                        {
+                                "term": "What is the symbol for coulomb?",
+                                "definition": "C"
+                        },
+                        {
+                                "term": "What unit has the symbol C?",
+                                "definition": "coulomb"
+                        },
+                        {
+                                "term": "What are coulomb base units?",
+                                "definition": "A s"
+                        },
+                        {
+                                "term": "What is the symbol for volt?",
+                                "definition": "V"
+                        },
+                        {
+                                "term": "What unit has the symbol V?",
+                                "definition": "volt"
+                        },
+                        {
+                                "term": "What are volt base units?",
+                                "definition": "kg m^2 s^-3 A^-1"
+                        },
+                        {
+                                "term": "What is the symbol for farad?",
+                                "definition": "F"
+                        },
+                        {
+                                "term": "What unit has the symbol F?",
+                                "definition": "farad"
+                        },
+                        {
+                                "term": "What are farad base units?",
+                                "definition": "kg^-1 m^-2 s^4 A^2"
+                        },
+                        {
+                                "term": "What is the symbol for ohm?",
+                                "definition": "Ω"
+                        },
+                        {
+                                "term": "What unit has the symbol Ω?",
+                                "definition": "ohm"
+                        },
+                        {
+                                "term": "What are ohm base units?",
+                                "definition": "kg m^2 s^-3 A^-2"
+                        },
+                        {
+                                "term": "What is the symbol for siemens?",
+                                "definition": "S"
+                        },
+                        {
+                                "term": "What unit has the symbol S?",
+                                "definition": "siemens"
+                        },
+                        {
+                                "term": "What are siemens base units?",
+                                "definition": "kg^-1 m^-2 s^3 A^2"
+                        },
+                        {
+                                "term": "What is the symbol for weber?",
+                                "definition": "Wb"
+                        },
+                        {
+                                "term": "What unit has the symbol Wb?",
+                                "definition": "weber"
+                        },
+                        {
+                                "term": "What are weber base units?",
+                                "definition": "kg m^2 s^-2 A^-1"
+                        },
+                        {
+                                "term": "What is the symbol for tesla?",
+                                "definition": "T"
+                        },
+                        {
+                                "term": "What unit has the symbol T?",
+                                "definition": "tesla"
+                        },
+                        {
+                                "term": "What are tesla base units?",
+                                "definition": "kg s^-2 A^-1"
+                        },
+                        {
+                                "term": "What is the symbol for henry?",
+                                "definition": "H"
+                        },
+                        {
+                                "term": "What unit has the symbol H?",
+                                "definition": "henry"
+                        },
+                        {
+                                "term": "What are henry base units?",
+                                "definition": "kg m^2 s^-2 A^-2"
+                        },
+                        {
+                                "term": "What is the symbol for degree Celsius?",
+                                "definition": "°C"
+                        },
+                        {
+                                "term": "What unit has the symbol °C?",
+                                "definition": "degree Celsius"
+                        },
+                        {
+                                "term": "What is degree Celsius related to in SI?",
+                                "definition": "kelvin, K"
+                        },
+                        {
+                                "term": "What is the symbol for lumen?",
+                                "definition": "lm"
+                        },
+                        {
+                                "term": "What unit has the symbol lm?",
+                                "definition": "lumen"
+                        },
+                        {
+                                "term": "What are lumen base units?",
+                                "definition": "cd sr"
+                        },
+                        {
+                                "term": "What is the symbol for lux?",
+                                "definition": "lx"
+                        },
+                        {
+                                "term": "What unit has the symbol lx?",
+                                "definition": "lux"
+                        },
+                        {
+                                "term": "What are lux base units?",
+                                "definition": "cd m^-2"
+                        },
+                        {
+                                "term": "What is the symbol for becquerel?",
+                                "definition": "Bq"
+                        },
+                        {
+                                "term": "What unit has the symbol Bq?",
+                                "definition": "becquerel"
+                        },
+                        {
+                                "term": "What are becquerel base units?",
+                                "definition": "s^-1"
+                        },
+                        {
+                                "term": "What is the symbol for gray?",
+                                "definition": "Gy"
+                        },
+                        {
+                                "term": "What unit has the symbol Gy?",
+                                "definition": "gray"
+                        },
+                        {
+                                "term": "What are gray base units?",
+                                "definition": "m^2 s^-2"
+                        },
+                        {
+                                "term": "What is the symbol for sievert?",
+                                "definition": "Sv"
+                        },
+                        {
+                                "term": "What unit has the symbol Sv?",
+                                "definition": "sievert"
+                        },
+                        {
+                                "term": "What are sievert base units?",
+                                "definition": "m^2 s^-2"
+                        },
+                        {
+                                "term": "What is the symbol for katal?",
+                                "definition": "kat"
+                        },
+                        {
+                                "term": "What unit has the symbol kat?",
+                                "definition": "katal"
+                        },
+                        {
+                                "term": "What are katal base units?",
+                                "definition": "mol s^-1"
+                        }
+                ]
+        },
+        {
+                "id": "builtin-si-rules",
+                "name": "Pack 5 — SI Rules",
+                "cards": [
+                        {
+                                "term": "What is a measurement in physics?",
+                                "definition": "number x unit"
+                        },
+                        {
+                                "term": "What does Q = {Q}[Q] mean?",
+                                "definition": "physical quantity = numerical value x unit"
+                        },
+                        {
+                                "term": "What is the rule for units in calculations?",
+                                "definition": "units multiply, divide, and cancel like algebra"
+                        },
+                        {
+                                "term": "What does SI coherence mean?",
+                                "definition": "derived units come from base units with numerical factor 1"
+                        },
+                        {
+                                "term": "Are SI unit names capitalized?",
+                                "definition": "No, unit names are lowercase unless at the start of a sentence."
+                        },
+                        {
+                                "term": "Are SI symbols case-sensitive?",
+                                "definition": "Yes"
+                        },
+                        {
+                                "term": "Do SI symbols take plural s?",
+                                "definition": "No"
+                        },
+                        {
+                                "term": "Is 5 kgs correct?",
+                                "definition": "No, correct is 5 kg"
+                        },
+                        {
+                                "term": "Is 10 newtons correct?",
+                                "definition": "Yes, when written as a word"
+                        },
+                        {
+                                "term": "Is 10 Ns correct for 10 newtons?",
+                                "definition": "No, correct symbol is 10 N"
+                        },
+                        {
+                                "term": "What is the correct symbol for kilogram?",
+                                "definition": "kg"
+                        },
+                        {
+                                "term": "What is the correct symbol for pascal?",
+                                "definition": "Pa"
+                        },
+                        {
+                                "term": "What is the correct symbol for kelvin?",
+                                "definition": "K"
+                        },
+                        {
+                                "term": "What is the correct symbol for kilo?",
+                                "definition": "k"
+                        },
+                        {
+                                "term": "What is the difference between k and K?",
+                                "definition": "k = kilo, K = kelvin"
+                        },
+                        {
+                                "term": "What is the difference between m and M?",
+                                "definition": "m = metre or milli, M = mega"
+                        },
+                        {
+                                "term": "What is the only SI base unit with a prefix in its name?",
+                                "definition": "kilogram"
+                        },
+                        {
+                                "term": "Why is kilogram unusual?",
+                                "definition": "it already contains kilo"
+                        },
+                        {
+                                "term": "What is the SI rule for squared units?",
+                                "definition": "square the conversion factor too"
+                        },
+                        {
+                                "term": "What is the SI rule for cubed units?",
+                                "definition": "cube the conversion factor too"
+                        },
+                        {
+                                "term": "What is the common cm^3 mistake?",
+                                "definition": "forgetting to cube 10^-2"
+                        },
+                        {
+                                "term": "Why is 1 cm^3 = 10^-6 m^3?",
+                                "definition": "because (10^-2 m)^3 = 10^-6 m^3"
+                        }
+                ]
+        },
+        {
+                "id": "builtin-unit-conversions",
+                "name": "Pack 6 — Unit Conversions",
+                "cards": [
+                        {
+                                "term": "What is 1 km in metres?",
+                                "definition": "1000 m"
+                        },
+                        {
+                                "term": "What is 1000 m in kilometres?",
+                                "definition": "1 km"
+                        },
+                        {
+                                "term": "What is 1 m in centimetres?",
+                                "definition": "100 cm"
+                        },
+                        {
+                                "term": "What is 1 cm in metres?",
+                                "definition": "10^-2 m"
+                        },
+                        {
+                                "term": "What is 1 m in millimetres?",
+                                "definition": "1000 mm"
+                        },
+                        {
+                                "term": "What is 1 mm in metres?",
+                                "definition": "10^-3 m"
+                        },
+                        {
+                                "term": "What is 1 µm in metres?",
+                                "definition": "10^-6 m"
+                        },
+                        {
+                                "term": "What is 1 nm in metres?",
+                                "definition": "10^-9 m"
+                        },
+                        {
+                                "term": "What is 1 pm in metres?",
+                                "definition": "10^-12 m"
+                        },
+                        {
+                                "term": "What is 1 kg in grams?",
+                                "definition": "1000 g"
+                        },
+                        {
+                                "term": "What is 1 g in kilograms?",
+                                "definition": "10^-3 kg"
+                        },
+                        {
+                                "term": "What is 1 mg in kilograms?",
+                                "definition": "10^-6 kg"
+                        },
+                        {
+                                "term": "What is 1 tonne in kilograms?",
+                                "definition": "1000 kg"
+                        },
+                        {
+                                "term": "What is 1 minute in seconds?",
+                                "definition": "60 s"
+                        },
+                        {
+                                "term": "What is 1 hour in seconds?",
+                                "definition": "3600 s"
+                        },
+                        {
+                                "term": "What is 1 day in seconds?",
+                                "definition": "86400 s"
+                        },
+                        {
+                                "term": "What is 1 cm^2 in m^2?",
+                                "definition": "10^-4 m^2"
+                        },
+                        {
+                                "term": "What is 1 mm^2 in m^2?",
+                                "definition": "10^-6 m^2"
+                        },
+                        {
+                                "term": "What is 1 cm^3 in m^3?",
+                                "definition": "10^-6 m^3"
+                        },
+                        {
+                                "term": "What is 1 mm^3 in m^3?",
+                                "definition": "10^-9 m^3"
+                        },
+                        {
+                                "term": "What is 1 litre in m^3?",
+                                "definition": "10^-3 m^3"
+                        },
+                        {
+                                "term": "What is 1 m^3 in litres?",
+                                "definition": "1000 L"
+                        },
+                        {
+                                "term": "What is 1 kJ in joules?",
+                                "definition": "1000 J"
+                        },
+                        {
+                                "term": "What is 1 MJ in joules?",
+                                "definition": "10^6 J"
+                        },
+                        {
+                                "term": "What is 1 mJ in joules?",
+                                "definition": "10^-3 J"
+                        },
+                        {
+                                "term": "What is 1 kW in watts?",
+                                "definition": "1000 W"
+                        },
+                        {
+                                "term": "What is 1 MW in watts?",
+                                "definition": "10^6 W"
+                        },
+                        {
+                                "term": "What is 1 mW in watts?",
+                                "definition": "10^-3 W"
+                        },
+                        {
+                                "term": "What is 1 kWh in joules?",
+                                "definition": "3.6 x 10^6 J"
+                        },
+                        {
+                                "term": "What is 1 eV in joules?",
+                                "definition": "1.602 x 10^-19 J"
+                        },
+                        {
+                                "term": "How do you convert Celsius to kelvin?",
+                                "definition": "K = °C + 273.15"
+                        },
+                        {
+                                "term": "How do you convert kelvin to Celsius?",
+                                "definition": "°C = K - 273.15"
+                        },
+                        {
+                                "term": "What is 1 km/h in m/s?",
+                                "definition": "1/3.6 m/s"
+                        },
+                        {
+                                "term": "What is 36 km/h in m/s?",
+                                "definition": "10 m/s"
+                        },
+                        {
+                                "term": "What is 1 m/s in km/h?",
+                                "definition": "3.6 km/h"
+                        }
+                ]
+        },
+        {
+                "id": "builtin-physics-symbols",
+                "name": "Pack 7 — Common Physics Symbols for SI Problems",
+                "cards": [
+                        {
+                                "term": "What does t usually mean?",
+                                "definition": "time"
+                        },
+                        {
+                                "term": "What is the SI unit of t?",
+                                "definition": "second, s"
+                        },
+                        {
+                                "term": "What does x usually mean?",
+                                "definition": "position or displacement"
+                        },
+                        {
+                                "term": "What is the SI unit of x?",
+                                "definition": "metre, m"
+                        },
+                        {
+                                "term": "What does d usually mean?",
+                                "definition": "distance"
+                        },
+                        {
+                                "term": "What is the SI unit of d?",
+                                "definition": "metre, m"
+                        },
+                        {
+                                "term": "What does s sometimes mean in mechanics?",
+                                "definition": "displacement"
+                        },
+                        {
+                                "term": "What is the SI unit of displacement?",
+                                "definition": "metre, m"
+                        },
+                        {
+                                "term": "What does m usually mean?",
+                                "definition": "mass"
+                        },
+                        {
+                                "term": "What is the SI unit of mass?",
+                                "definition": "kilogram, kg"
+                        },
+                        {
+                                "term": "What does v usually mean?",
+                                "definition": "velocity or speed"
+                        },
+                        {
+                                "term": "What is the SI unit of velocity?",
+                                "definition": "m/s"
+                        },
+                        {
+                                "term": "What does a usually mean?",
+                                "definition": "acceleration"
+                        },
+                        {
+                                "term": "What is the SI unit of acceleration?",
+                                "definition": "m/s^2"
+                        },
+                        {
+                                "term": "What does F usually mean?",
+                                "definition": "force"
+                        },
+                        {
+                                "term": "What is the SI unit of force?",
+                                "definition": "newton, N"
+                        },
+                        {
+                                "term": "What does W usually mean?",
+                                "definition": "work or weight, depending on context"
+                        },
+                        {
+                                "term": "What is the SI unit of work?",
+                                "definition": "joule, J"
+                        },
+                        {
+                                "term": "What is the SI unit of weight?",
+                                "definition": "newton, N"
+                        },
+                        {
+                                "term": "What does E usually mean?",
+                                "definition": "energy"
+                        },
+                        {
+                                "term": "What is the SI unit of energy?",
+                                "definition": "joule, J"
+                        },
+                        {
+                                "term": "What does P usually mean?",
+                                "definition": "power"
+                        },
+                        {
+                                "term": "What is the SI unit of power?",
+                                "definition": "watt, W"
+                        },
+                        {
+                                "term": "What does p usually mean?",
+                                "definition": "momentum"
+                        },
+                        {
+                                "term": "What is the SI unit of momentum?",
+                                "definition": "kg m/s"
+                        },
+                        {
+                                "term": "What does q or Q often mean?",
+                                "definition": "charge"
+                        },
+                        {
+                                "term": "What is the SI unit of charge?",
+                                "definition": "coulomb, C"
+                        },
+                        {
+                                "term": "What does I mean in electricity?",
+                                "definition": "electric current"
+                        },
+                        {
+                                "term": "What is the SI unit of current?",
+                                "definition": "ampere, A"
+                        },
+                        {
+                                "term": "What does V mean in electricity?",
+                                "definition": "voltage"
+                        },
+                        {
+                                "term": "What is the SI unit of voltage?",
+                                "definition": "volt, V"
+                        },
+                        {
+                                "term": "What does R often mean in circuits?",
+                                "definition": "resistance"
+                        },
+                        {
+                                "term": "What is the SI unit of resistance?",
+                                "definition": "ohm, Ω"
+                        },
+                        {
+                                "term": "What does C often mean in circuits?",
+                                "definition": "capacitance"
+                        },
+                        {
+                                "term": "What is the SI unit of capacitance?",
+                                "definition": "farad, F"
+                        },
+                        {
+                                "term": "What does f usually mean?",
+                                "definition": "frequency"
+                        },
+                        {
+                                "term": "What is the SI unit of frequency?",
+                                "definition": "hertz, Hz"
+                        },
+                        {
+                                "term": "What does T usually mean in waves?",
+                                "definition": "period"
+                        },
+                        {
+                                "term": "What is the SI unit of period?",
+                                "definition": "second, s"
+                        },
+                        {
+                                "term": "What does λ mean?",
+                                "definition": "wavelength"
+                        },
+                        {
+                                "term": "What is the SI unit of wavelength?",
+                                "definition": "metre, m"
+                        }
+                ]
+        }
+];
 
       const app = {
         cards: [],
@@ -2482,12 +3831,11 @@
         if (sheetStorage.enabled && Object.prototype.hasOwnProperty.call(sheetStorage.values, key)) {
           return sheetStorage.values[key];
         }
-        return localStorage.getItem(key);
+        return null;
       }
 
       function setStoredValue(key, value) {
-        localStorage.setItem(key, value);
-        sheetStorage.values[key] = value;
+        return;
       }
 
       function cacheElements() {
@@ -2503,9 +3851,7 @@
           learn: document.getElementById("learnView"),
           test: document.getElementById("testView"),
           match: document.getElementById("matchView"),
-          write: document.getElementById("writeView"),
-          history: document.getElementById("historyView"),
-          export: document.getElementById("exportView")
+          write: document.getElementById("writeView")
         };
 
         elements.termSeparator = document.getElementById("termSeparator");
@@ -2525,8 +3871,8 @@
         elements.libraryTermSeparator = document.getElementById("libraryTermSeparator");
         elements.libraryCardSeparator = document.getElementById("libraryCardSeparator");
         elements.libraryList = document.getElementById("libraryList");
-        elements.folderNavList = document.getElementById("folderNavList");
-        elements.newFolderButton = document.getElementById("newFolderButton");
+        elements.folderNavList = null;
+        elements.newFolderButton = null;
 
         elements.statsGrid = document.getElementById("statsGrid");
         elements.cardSearchInput = document.getElementById("cardSearchInput");
@@ -2549,13 +3895,13 @@
         elements.learnContent = document.getElementById("learnContent");
         elements.testContent = document.getElementById("testContent");
         elements.matchContent = document.getElementById("matchContent");
-        elements.historyList = document.getElementById("historyList");
+        elements.historyList = null;
         elements.writeContent = document.getElementById("writeContent");
 
-        elements.exportText = document.getElementById("exportText");
-        elements.copyExportButton = document.getElementById("copyExportButton");
-        elements.downloadExportButton = document.getElementById("downloadExportButton");
-        elements.downloadBackupButton = document.getElementById("downloadBackupButton");
+        elements.exportText = null;
+        elements.copyExportButton = null;
+        elements.downloadExportButton = null;
+        elements.downloadBackupButton = null;
 
         elements.toast = document.getElementById("toast");
 
@@ -2658,9 +4004,9 @@
         elements.matchContent.addEventListener("click", handleMatchClick);
         elements.matchContent.addEventListener("change", handleMatchSettingsChange);
 
-        elements.copyExportButton.addEventListener("click", copyExportText);
-        elements.downloadExportButton.addEventListener("click", downloadExportText);
-        elements.downloadBackupButton.addEventListener("click", downloadBackupJson);
+        if (elements.copyExportButton) { elements.copyExportButton.addEventListener("click", copyExportText); }
+        if (elements.downloadExportButton) { elements.downloadExportButton.addEventListener("click", downloadExportText); }
+        if (elements.downloadBackupButton) { elements.downloadBackupButton.addEventListener("click", downloadBackupJson); }
 
         elements.editForm.addEventListener("submit", saveEditForm);
         elements.cancelEditButton.addEventListener("click", closeEditModal);
@@ -2801,9 +4147,7 @@
                 name: deckName,
                 cards: cards,
                 createdAt: now,
-                updatedAt: now,
-                favorite: false,
-                folder: "Unfiled"
+                updatedAt: now
               };
 
               app.libraryDecks.unshift(deck);
@@ -2916,6 +4260,58 @@
         }
       }
 
+
+      function createBuiltInStudySets() {
+        const createdAt = "2026-07-08T00:00:00.000Z";
+
+        return BUILT_IN_STUDY_SETS.map(function (deck, deckIndex) {
+          return normalizeLibraryDeck({
+            id: deck.id,
+            name: deck.name,
+            builtIn: true,
+            createdAt: createdAt,
+            updatedAt: new Date(Date.parse(createdAt) - deckIndex * 1000).toISOString(),
+            cards: deck.cards.map(function (card, cardIndex) {
+              return {
+                id: deck.id + "-card-" + String(cardIndex + 1),
+                term: card.term,
+                definition: card.definition,
+                correct: 0,
+                wrong: 0,
+                createdAt: createdAt,
+                lastReviewed: null,
+                nextReview: createdAt,
+                streak: 0,
+                reviewLevel: 0
+              };
+            })
+          });
+        });
+      }
+
+      function ensureBuiltInStudySets(decks) {
+        const builtIns = createBuiltInStudySets();
+        const builtInIds = new Set(builtIns.map(function (deck) {
+          return deck.id;
+        }));
+        const userDecks = (Array.isArray(decks) ? decks : []).filter(function (deck) {
+          return deck && !deck.builtIn && !builtInIds.has(deck.id);
+        });
+
+        return builtIns.concat(userDecks);
+      }
+
+      function activateDefaultBuiltInSet() {
+        if (app.cards.length > 0 || app.activeDeckId || app.libraryDecks.length === 0) {
+          return;
+        }
+
+        app.activeDeckId = app.libraryDecks[0].id;
+        app.cards = cloneCards(app.libraryDecks[0].cards);
+        app.flash.selectedDeckIds = [app.activeDeckId];
+        resetFlashOrder();
+      }
+
       function loadCards() {
         const loaded = readStoragePayload(STORAGE_KEY) || readStoragePayload(LEGACY_STORAGE_KEY);
 
@@ -2963,39 +4359,39 @@
       }
 
       function loadLibrary() {
+        const builtInDecks = createBuiltInStudySets();
         const loaded = readStoragePayload(LIBRARY_STORAGE_KEY);
 
+        app.libraryFolders = [];
+
         if (!loaded || !Array.isArray(loaded.decks)) {
-          app.libraryDecks = [];
+          app.libraryDecks = builtInDecks;
+          activateDefaultBuiltInSet();
           return;
         }
 
-        app.libraryFolders = Array.isArray(loaded.folders) ? loaded.folders.filter(function (name) {
-          return typeof name === "string" && name.trim();
-        }).map(function (name) {
-          return name.trim();
-        }) : [];
-
-        app.libraryDecks = loaded.decks
+        const storedDecks = loaded.decks
           .filter(function (deck) {
             return deck && typeof deck.name === "string" && Array.isArray(deck.cards);
           })
           .map(function (deck) {
             return normalizeLibraryDeck(deck);
-          })
-          .sort(compareLibraryDecks);
+          });
+
+        app.libraryDecks = ensureBuiltInStudySets(storedDecks).sort(compareLibraryDecks);
 
         if (app.activeDeckId && !getLibraryDeckById(app.activeDeckId)) {
           app.activeDeckId = null;
           saveCards();
         }
+
+        activateDefaultBuiltInSet();
       }
 
       function saveLibrary() {
         const payload = {
           version: 1,
           decks: app.libraryDecks,
-          folders: app.libraryFolders,
           savedAt: new Date().toISOString()
         };
 
@@ -3004,19 +4400,11 @@
       }
 
       function loadHistory() {
-        const loaded = readStoragePayload(HISTORY_STORAGE_KEY);
-        app.practiceHistory = loaded && Array.isArray(loaded.history)
-          ? loaded.history.filter(function (entry) { return entry && typeof entry.type === "string"; })
-          : [];
+        app.practiceHistory = [];
       }
 
       function saveHistory() {
-        const payload = {
-          version: 1,
-          history: app.practiceHistory.slice(0, 300),
-          savedAt: new Date().toISOString()
-        };
-        setStoredValue(HISTORY_STORAGE_KEY, JSON.stringify(payload));
+        return;
       }
 
       function syncLibraryToSheets(payload) {
@@ -3024,27 +4412,7 @@
       }
 
       function recordPractice(type, data) {
-        const total = Number(data.total || 0);
-        const correct = Number(data.correct || 0);
-        const wrong = Math.max(0, Number(data.wrong || (total - correct)));
-        const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
-        const entry = {
-          id: createId(),
-          type: type,
-          date: new Date().toISOString(),
-          deckIds: Array.isArray(data.deckIds) ? data.deckIds : [],
-          deckNames: Array.isArray(data.deckNames) ? data.deckNames : getDeckNamesForIds(data.deckIds || []),
-          total: total,
-          correct: correct,
-          wrong: wrong,
-          accuracy: accuracy,
-          details: data.details || {}
-        };
-
-        app.practiceHistory.unshift(entry);
-        app.practiceHistory = app.practiceHistory.slice(0, 300);
-        saveHistory();
-        renderHistory();
+        return;
       }
 
       function getDeckNamesForIds(deckIds) {
@@ -3105,10 +4473,9 @@
           id: typeof deck.id === "string" && deck.id ? deck.id : createId(),
           name: deck.name.trim() || "Untitled set",
           cards: cards,
+          builtIn: Boolean(deck.builtIn),
           createdAt: typeof deck.createdAt === "string" ? deck.createdAt : now,
-          updatedAt: typeof deck.updatedAt === "string" ? deck.updatedAt : now,
-          favorite: Boolean(deck.favorite),
-          folder: typeof deck.folder === "string" && deck.folder.trim() ? deck.folder.trim() : "Unfiled"
+          updatedAt: typeof deck.updatedAt === "string" ? deck.updatedAt : now
         };
       }
 
@@ -3160,7 +4527,7 @@
           existingDeck.cards = cloneCards(app.cards);
           existingDeck.updatedAt = now;
           app.activeDeckId = existingDeck.id;
-          showToast("Library set updated.");
+          showToast("Study set updated for this session.");
         } else {
           const deck = {
             id: createId(),
@@ -3171,7 +4538,7 @@
           };
           app.libraryDecks.unshift(deck);
           app.activeDeckId = deck.id;
-          showToast("Saved to My Library.");
+          showToast("Added to study sets.");
         }
 
         app.libraryDecks.sort(compareLibraryDecks);
@@ -3181,78 +4548,19 @@
       }
 
       function renderSidebarLists() {
-        if (!elements.folderNavList) {
-          return;
-        }
-
-        const folderNames = getLibraryFolderNames();
-        const filter = app.libraryFilter || "all";
-        const folderButtons = [
-          { label: "Recent sets", icon: "◷", filter: "recent" },
-          { label: "Favorites", icon: "★", filter: "favorites" }
-        ].concat(folderNames.map(function (name) {
-          return { label: name, icon: "▢", filter: "folder:" + name };
-        }));
-
-        elements.folderNavList.innerHTML = folderButtons.map(function (item) {
-          return (
-            '<button class="sidebar-folder-button ' + (filter === item.filter ? 'active-filter' : '') + '" type="button" data-library-filter="' + escapeAttribute(item.filter) + '">' +
-              '<span class="folder-icon" aria-hidden="true">' + escapeHtml(item.icon) + '</span>' +
-              '<span>' + escapeHtml(item.label) + '</span>' +
-            '</button>'
-          );
-        }).join("");
+        return;
       }
 
       function getLibraryFolderNames() {
-        const names = new Set(["Physics", "Programming"]);
-        app.libraryFolders.forEach(function (name) {
-          if (name && name !== "Unfiled") {
-            names.add(name);
-          }
-        });
-        app.libraryDecks.forEach(function (deck) {
-          if (deck.folder && deck.folder !== "Unfiled") {
-            names.add(deck.folder);
-          }
-        });
-        return Array.from(names).sort(function (a, b) {
-          return a.localeCompare(b);
-        });
+        return [];
       }
 
       function getFilteredLibraryDecks() {
-        let decks = app.libraryDecks.slice().sort(compareLibraryDecks);
-        const filter = app.libraryFilter || "all";
-
-        if (filter === "favorites") {
-          decks = decks.filter(function (deck) {
-            return deck.favorite;
-          });
-        } else if (filter.indexOf("folder:") === 0) {
-          const folderName = filter.slice("folder:".length);
-          decks = decks.filter(function (deck) {
-            return (deck.folder || "Unfiled") === folderName;
-          });
-        } else if (filter === "recent") {
-          decks = decks.slice(0, 8);
-        }
-
-        return decks;
+        return app.libraryDecks.slice().sort(compareLibraryDecks);
       }
 
       function getLibraryFilterTitle() {
-        const filter = app.libraryFilter || "all";
-        if (filter === "favorites") {
-          return "Favorite sets";
-        }
-        if (filter === "recent") {
-          return "Recent sets";
-        }
-        if (filter.indexOf("folder:") === 0) {
-          return "Folder: " + filter.slice("folder:".length);
-        }
-        return "Your study sets";
+        return "Available study sets";
       }
 
       function renderLibrary() {
@@ -3271,7 +4579,7 @@
           elements.libraryList.innerHTML =
             '<div class="empty-state">' +
               '<h2>No study sets yet</h2>' +
-              '<p>Drag one or more .txt files into My Library. Each file will become a separate deck named after the file.</p>' +
+              '<p>The built-in SI study sets should appear here. You can also import .txt files for this session.</p>' +
             '</div>';
           return;
         }
@@ -3280,14 +4588,26 @@
           elements.libraryList.innerHTML =
             '<div class="empty-state">' +
               '<h2>No sets here yet</h2>' +
-              '<p>Try another folder or import a new file.</p>' +
+              '<p>Import a .txt file to add another study set.</p>' +
             '</div>';
           return;
         }
 
         elements.libraryList.innerHTML = visibleDecks.map(function (deck) {
           const isActive = deck.id === app.activeDeckId;
-          const folder = deck.folder || "Unfiled";
+          const builtInBadge = deck.builtIn ? '<span class="badge">Built-in SI pack</span>' : '<span class="badge">Custom set</span>';
+          const updatedBadge = deck.builtIn ? '' : '<span class="badge">Updated ' + escapeHtml(formatDateTime(deck.updatedAt)) + '</span>';
+          const renameControls = deck.builtIn ? '' : (
+            '<div class="library-rename-row">' +
+              '<input class="input library-name-input" type="text" value="' + escapeAttribute(deck.name) + '" aria-label="Rename ' + escapeAttribute(deck.name) + '" />' +
+              '<button class="small-button" type="button" data-library-action="rename-deck">Rename</button>' +
+            '</div>'
+          );
+          const extraActions = deck.builtIn ? '' : (
+            '<button class="small-button" type="button" data-library-action="duplicate-deck">Duplicate</button>' +
+            '<button class="small-button" type="button" data-library-action="delete-deck">Delete</button>'
+          );
+
           return (
             '<article class="library-card ' + (isActive ? "active-deck" : "") + '" data-deck-id="' + escapeAttribute(deck.id) + '">' +
               '<div class="library-card-main">' +
@@ -3297,23 +4617,16 @@
                 '</div>' +
                 '<div class="library-card-meta library-card-meta-row">' +
                   '<span class="badge">' + deck.cards.length + ' card' + (deck.cards.length === 1 ? '' : 's') + '</span>' +
-                  '<span class="badge">Updated ' + escapeHtml(formatDateTime(deck.updatedAt)) + '</span>' +
-                  '<span class="badge folder-tag">' + escapeHtml(folder) + '</span>' +
-                  (deck.favorite ? '<span class="badge mastered">Favorite</span>' : '') +
+                  builtInBadge +
+                  updatedBadge +
                 '</div>' +
-                '<div class="library-rename-row">' +
-                  '<input class="input library-name-input" type="text" value="' + escapeAttribute(deck.name) + '" aria-label="Rename ' + escapeAttribute(deck.name) + '" />' +
-                  '<button class="small-button" type="button" data-library-action="rename-deck">Save Name</button>' +
-                '</div>' +
+                renameControls +
               '</div>' +
               '<div class="library-card-actions">' +
-                '<button class="small-button ' + (deck.favorite ? 'favorite-active' : '') + '" type="button" data-library-action="favorite-deck">★</button>' +
                 '<button class="small-button" type="button" data-library-action="load-deck">Open</button>' +
                 '<button class="small-button" type="button" data-library-action="learn-deck">Learn</button>' +
                 '<button class="small-button" type="button" data-library-action="flash-deck">Flashcards</button>' +
-                '<button class="small-button" type="button" data-library-action="folder-deck">Folder</button>' +
-                '<button class="small-button" type="button" data-library-action="duplicate-deck">Duplicate</button>' +
-                '<button class="small-button" type="button" data-library-action="delete-deck">Delete</button>' +
+                extraActions +
               '</div>' +
             '</article>'
           );
@@ -3350,16 +4663,6 @@
 
         if (action === "flash-deck") {
           prepareFlashcardsWithDecks([deckId]);
-          return;
-        }
-
-        if (action === "favorite-deck") {
-          toggleFavoriteDeck(deckId);
-          return;
-        }
-
-        if (action === "folder-deck") {
-          moveDeckToFolder(deckId);
           return;
         }
 
@@ -3434,6 +4737,12 @@
         if (!deck) {
           return;
         }
+
+        if (deck.builtIn) {
+          showToast("Built-in sets can be opened directly.");
+          return;
+        }
+
         const now = new Date().toISOString();
         const copy = {
           id: createId(),
@@ -3443,9 +4752,7 @@
             return card;
           }),
           createdAt: now,
-          updatedAt: now,
-          favorite: false,
-          folder: deck.folder || "Unfiled"
+          updatedAt: now
         };
         app.libraryDecks.unshift(copy);
         saveLibrary();
@@ -3457,7 +4764,7 @@
         const deck = getLibraryDeckById(deckId);
 
         if (!deck) {
-          showToast("Library set not found.");
+          showToast("Study set not found.");
           return;
         }
 
@@ -3569,7 +4876,6 @@
           renderStats();
           renderCards();
           renderLibrary();
-          renderExport();
         }
 
         return app.cards.slice();
@@ -3590,7 +4896,7 @@
               '<div class="deck-picker-header">' +
                 '<h3 class="deck-picker-title">' + escapeHtml(title || "Choose flashcard sets") + '</h3>' +
               '</div>' +
-              '<div class="deck-picker-empty">Import .txt files into My Library first.</div>' +
+              '<div class="deck-picker-empty">Import .txt files into Study Sets first.</div>' +
             '</div>'
           );
         }
@@ -3611,7 +4917,7 @@
                     '<span class="deck-choice-icon" aria-hidden="true">▱</span>' +
                     '<span class="deck-choice-main">' +
                       '<span class="deck-choice-title">' + escapeHtml(deck.name) + '</span>' +
-                      '<span class="deck-choice-subtitle">' + cardCount + ' term' + (cardCount === 1 ? '' : 's') + ' • by you</span>' +
+                      '<span class="deck-choice-subtitle">' + cardCount + ' term' + (cardCount === 1 ? '' : 's') + ' • ' + (deck.builtIn ? 'Built-in SI pack' : 'Custom set') + '</span>' +
                     '</span>' +
                     '<span class="deck-choice-toggle" aria-hidden="true"></span>' +
                   '</label>'
@@ -3639,7 +4945,12 @@
         const deck = getLibraryDeckById(deckId);
 
         if (!deck) {
-          showToast("Library set not found.");
+          showToast("Study set not found.");
+          return;
+        }
+
+        if (deck.builtIn) {
+          showToast("Built-in sets cannot be overwritten.");
           return;
         }
 
@@ -3655,7 +4966,7 @@
         saveLibrary();
         saveCards();
         renderLibrary();
-        showToast("Saved over “" + deck.name + "”.");
+        showToast("Updated “" + deck.name + "”.");
       }
 
       function renameLibraryDeck(deckId, newName) {
@@ -3663,7 +4974,12 @@
         const name = String(newName || "").trim();
 
         if (!deck) {
-          showToast("Library set not found.");
+          showToast("Study set not found.");
+          return;
+        }
+
+        if (deck.builtIn) {
+          showToast("Built-in sets cannot be renamed.");
           return;
         }
 
@@ -3696,6 +5012,12 @@
 
         clearUndoLibraryDelete();
         const deletedDeck = app.libraryDecks[index];
+
+        if (deletedDeck.builtIn) {
+          showToast("Built-in sets cannot be deleted.");
+          return;
+        }
+
         app.libraryDecks.splice(index, 1);
 
         if (app.activeDeckId === deletedDeck.id) {
@@ -3842,14 +5164,6 @@
           renderLibrary();
         }
 
-        if (viewName === "history") {
-          renderHistory();
-        }
-
-        if (viewName === "export") {
-          renderExport();
-        }
-
         if (viewName === "flashcards") {
           ensureFlashOrder();
           renderFlashcards();
@@ -3880,8 +5194,6 @@
         renderCards();
         renderFlashcards();
         renderLearn();
-        renderHistory();
-        renderExport();
       }
 
       function renderHeader() {
@@ -4185,7 +5497,7 @@
           } else {
             elements.cardList.innerHTML = createEmptyStateHtml(
               "No cards yet",
-              "Go to My Library or Import to add your first study set."
+              "Go to Study Sets or Import to add your first study set."
             );
           }
           return;
@@ -4687,7 +5999,7 @@
           elements.flashProgress.textContent = "0 / 0";
           elements.flashCardContent.innerHTML = createSmallEmptyFlashHtml(
             "No cards yet",
-            "Choose a set from My Library first."
+            "Choose a set from Study Sets first."
           );
           setFlashControlsDisabled(true);
           return;
@@ -5900,6 +7212,9 @@
       }
 
       function renderExport() {
+        if (!elements.exportText) {
+          return;
+        }
         elements.exportText.value = app.cards.map(function (card) {
           return card.term + "\t" + card.definition;
         }).join("\n");
@@ -6051,7 +7366,7 @@
         return (
           '<div class="empty-state open-set-state">' +
             '<h2>Choose a set to view cards</h2>' +
-            '<p>Your cards page shows the currently open set. Pick one below or go to My Library.</p>' +
+            '<p>Your cards page shows the currently open set. Pick one below or go to Study Sets.</p>' +
             '<div class="mini-deck-list">' +
               decks.map(function (deck) {
                 return (
