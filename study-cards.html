@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Cards</title>
+
+  <style>
+    :root {
+      --bg: #0b0928;
+      --panel: #383d5c;
+      --panel-strong: #41476a;
+      --text: #ffffff;
+      --muted: #c9cce5;
+      --muted-2: #9ea3c7;
+      --border: rgba(255, 255, 255, 0.16);
+      --border-strong: rgba(255, 255, 255, 0.26);
+      --primary: #6c7cff;
+      --primary-strong: #8d98ff;
+      --yellow: #ffda3d;
+      --green: #45b56f;
+      --red: #f06464;
+      --orange: #ffb84d;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --transition: 180ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(108, 124, 255, 0.18), transparent 36rem),
+        radial-gradient(circle at bottom right, rgba(69, 181, 111, 0.12), transparent 36rem),
+        var(--bg);
+    }
+
+    button,
+    textarea,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    [role="tab"]:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+    .app {
+      width: min(1420px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      justify-content: space-between;
+      margin-bottom: 34px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 180px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), #42d98b);
+      box-shadow: 0 0 26px rgba(108, 124, 255, 0.6);
+      font-weight: 900;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.045);
+      border-radius: 999px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-button {
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+    }
+
+    .nav-button:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.075);
+    }
+
+    .nav-button[aria-selected="true"] {
+      color: #10132d;
+      background: var(--yellow);
+      box-shadow: 0 10px 30px rgba(255, 218, 61, 0.22);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 180px;
+      justify-content: flex-end;
+    }
+
+    .mini-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .mini-stat strong {
+      color: var(--text);
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      transition: background var(--transition), border var(--transition), transform var(--transition);
+    }
+
+    .icon-button:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-strong);
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: fade-in 190ms ease;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(62, 68, 104, 0.98), rgba(53, 58, 90, 0.98));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel-header {
+      padding: 28px 30px 0;
+    }
+
+    .panel-body {
+      padding: 28px 30px 30px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+    }
+
+    .section-title-sm {
+      font-size: 30px;
+    }
+
+    .section-subtitle {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 720px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .select,
+    .input,
+    .textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.46);
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      outline: none;
+      transition: border var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+
+    .select,
+    .input {
+      min-height: 48px;
+      padding: 0 14px;
+    }
+
+    .textarea {
+      min-height: 260px;
+      resize: vertical;
+      padding: 16px;
+      line-height: 1.55;
+      tab-size: 2;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .select:focus,
+    .input:focus,
+    .textarea:focus {
+      border-color: rgba(141, 152, 255, 0.9);
+      box-shadow: 0 0 0 4px rgba(108, 124, 255, 0.17);
+      background: rgba(11, 9, 40, 0.64);
+    }
+
+    .file-import-box,
+    .backup-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: 1px dashed rgba(255, 255, 255, 0.26);
+      background: rgba(11, 9, 40, 0.28);
+    }
+
+    .file-input {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .file-name {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .file-help,
+    .form-help {
+      color: var(--muted-2);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 8px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .button-row.compact {
+      margin-top: 0;
+    }
+
+    .center-actions {
+      justify-content: center;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 0 18px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: #10132d;
+      background: var(--yellow);
+      box-shadow: 0 14px 30px rgba(255, 218, 61, 0.22);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.13);
+      border-color: var(--border-strong);
+    }
+
+    .btn-danger {
+      color: #fff;
+      background: rgba(240, 100, 100, 0.18);
+      border: 1px solid rgba(240, 100, 100, 0.45);
+    }
+
+    .preview-box {
+      margin-top: 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.35);
+      padding: 16px;
+      min-height: 92px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .preview-summary {
+      color: var(--text);
+      font-weight: 900;
+    }
+
+    .preview-card {
+      padding: 13px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-card:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .preview-term {
+      color: var(--text);
+      font-weight: 850;
+    }
+
+    .preview-definition {
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .preview-warning {
+      color: #ffd89b;
+      margin-top: 12px;
+      font-weight: 800;
+    }
+
+    .preview-error-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: #ffd0d0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat-card {
+      border-radius: 18px;
+      background: rgba(11, 9, 40, 0.35);
+      border: 1px solid var(--border);
+      padding: 18px;
+    }
+
+    .stat-label {
+      color: var(--muted-2);
+      font-weight: 850;
+      font-size: 13px;
+    }
+
+    .stat-value {
+      margin-top: 8px;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 950;
+    }
+
+    .spacer-md {
+      height: 24px;
+    }
+
+    .cards-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .cards-toolbar .input {
+      max-width: 420px;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.28);
+    }
+
+    .card-text-label {
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .card-text-value {
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .card-meta {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .badge.due {
+      color: #10132d;
+      background: var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    .badge.mastered {
+      color: #dffff0;
+      border-color: rgba(69, 181, 111, 0.55);
+      background: rgba(69, 181, 111, 0.18);
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .small-button {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 999px;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      font-weight: 900;
+      transition: background var(--transition), border var(--transition), transform var(--transition);
+    }
+
+    .small-button:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .small-button.favorite-active {
+      color: #10132d;
+      background: var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    .study-shell {
+      width: min(960px, 100%);
+      margin: 0 auto;
+    }
+
+    .flash-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .flash-card {
+      min-height: 420px;
+      width: 100%;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(65, 71, 106, 0.98), rgba(54, 60, 92, 0.98));
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      padding: 34px;
+      text-align: center;
+      user-select: none;
+      transition: transform var(--transition), border var(--transition), background var(--transition);
+    }
+
+    .flash-card:hover:not(:disabled) {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+    }
+
+    .flash-content {
+      width: 100%;
+    }
+
+    .flash-label {
+      color: var(--primary-strong);
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .flash-text {
+      font-size: clamp(28px, 4.2vw, 52px);
+      line-height: 1.18;
+      letter-spacing: -0.055em;
+      font-weight: 850;
+      overflow-wrap: anywhere;
+    }
+
+    .flash-text.small {
+      font-size: clamp(28px, 4vw, 42px);
+    }
+
+    .flash-hint {
+      color: var(--muted-2);
+      font-weight: 800;
+      margin-top: 32px;
+    }
+
+    .learn-top {
+      width: min(960px, 100%);
+      margin: 0 auto 24px;
+    }
+
+    .quiz-progress {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-badge {
+      width: 50px;
+      height: 50px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 18px;
+    }
+
+    .progress-badge.start {
+      background: rgba(69, 181, 111, 0.75);
+    }
+
+    .progress-track {
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.32);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--primary));
+      transition: width 280ms ease;
+    }
+
+    .learn-card {
+      width: min(960px, 100%);
+      min-height: 460px;
+      margin: 0 auto;
+      padding: 34px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(65, 71, 106, 0.98), rgba(54, 60, 92, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .learn-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 36px;
+    }
+
+    .learn-meta-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .speaker-button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+    }
+
+    .learn-question {
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.25;
+      letter-spacing: -0.045em;
+      min-height: 112px;
+      overflow-wrap: anywhere;
+    }
+
+    .answer-title {
+      margin: 34px 0 16px;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 16px;
+    }
+
+    .answer-choice {
+      min-height: 72px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      background: rgba(11, 9, 40, 0.16);
+      color: var(--text);
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      align-items: center;
+      text-align: left;
+      padding: 14px 18px;
+      transition: border var(--transition), background var(--transition), transform var(--transition);
+    }
+
+    .answer-choice:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: rgba(141, 152, 255, 0.75);
+      background: rgba(108, 124, 255, 0.12);
+    }
+
+    .answer-choice-number {
+      font-weight: 950;
+      color: var(--text);
+    }
+
+    .answer-choice-text {
+      font-size: 18px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .answer-choice.correct {
+      background: rgba(69, 181, 111, 0.22);
+      border-color: rgba(69, 181, 111, 0.95);
+    }
+
+    .answer-choice.wrong {
+      background: rgba(240, 100, 100, 0.22);
+      border-color: rgba(240, 100, 100, 0.95);
+    }
+
+    .learn-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .learn-feedback {
+      color: var(--muted);
+      font-weight: 850;
+      min-height: 24px;
+      overflow-wrap: anywhere;
+    }
+
+    .learn-feedback.correct {
+      color: #8dffb5;
+    }
+
+    .learn-feedback.wrong {
+      color: #ffb0b0;
+    }
+
+    .empty-state {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 42px;
+      text-align: center;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.055);
+      box-shadow: var(--shadow);
+    }
+
+    .empty-state h2 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: -0.05em;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 12px auto 0;
+      max-width: 560px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(120%);
+      background: rgba(255, 255, 255, 0.96);
+      color: #121530;
+      border-radius: 999px;
+      padding: 10px 12px 10px 18px;
+      font-weight: 950;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.38);
+      transition: transform 220ms ease;
+      z-index: 50;
+      max-width: calc(100% - 32px);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast button {
+      border: 0;
+      color: #10132d;
+      background: var(--yellow);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 950;
+    }
+
+    .export-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .done-score {
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .score-number {
+      font-size: clamp(58px, 9vw, 108px);
+      line-height: 0.9;
+      font-weight: 950;
+      letter-spacing: -0.08em;
+    }
+
+    .score-caption {
+      color: var(--muted);
+      font-weight: 850;
+      font-size: 18px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(5, 4, 20, 0.72);
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .modal-backdrop.hidden {
+      display: none;
+    }
+
+    .modal {
+      width: min(640px, 100%);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(62, 68, 104, 1), rgba(53, 58, 90, 1));
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .modal h2 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.05em;
+    }
+
+    .modal-form {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 980px) {
+      .topbar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .brand,
+      .topbar-actions {
+        min-width: 0;
+        justify-content: center;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field-grid,
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card-row {
+        grid-template-columns: 1fr;
+      }
+
+      .card-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        width: min(100% - 20px, 1420px);
+        padding-top: 16px;
+      }
+
+      .panel-header,
+      .panel-body,
+      .learn-card {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .field-grid,
+      .stats-grid,
+      .answer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .file-import-box,
+      .backup-box {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .cards-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .cards-toolbar .input {
+        max-width: none;
+      }
+
+      .flash-card {
+        min-height: 340px;
+        padding: 22px;
+      }
+
+      .learn-card {
+        min-height: auto;
+      }
+
+      .answer-choice {
+        grid-template-columns: 36px minmax(0, 1fr);
+      }
+
+      .learn-footer {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .modal {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand" aria-label="Study Cards">
+        <div class="brand-logo" aria-hidden="true">S</div>
+        <div class="brand-title">Study Cards</div>
+      </div>
+
+      <nav class="nav" aria-label="Study modes" role="tablist">
+        <button class="nav-button" id="tab-import" type="button" role="tab" aria-selected="true" aria-controls="importView" tabindex="0" data-view-target="import">Import</button>
+        <button class="nav-button" id="tab-cards" type="button" role="tab" aria-selected="false" aria-controls="cardsView" tabindex="-1" data-view-target="cards">Cards</button>
+        <button class="nav-button" id="tab-flashcards" type="button" role="tab" aria-selected="false" aria-controls="flashcardsView" tabindex="-1" data-view-target="flashcards">Flashcards</button>
+        <button class="nav-button" id="tab-learn" type="button" role="tab" aria-selected="false" aria-controls="learnView" tabindex="-1" data-view-target="learn">Learn</button>
+        <button class="nav-button" id="tab-export" type="button" role="tab" aria-selected="false" aria-controls="exportView" tabindex="-1" data-view-target="export">Export</button>
+      </nav>
+
+      <div class="topbar-actions">
+        <div class="mini-stat" aria-live="polite">
+          Cards
+          <strong id="headerCardCount">0</strong>
+        </div>
+        <button class="icon-button" id="resetAllButton" type="button" title="Delete all cards" aria-label="Delete all cards">
+          ✕
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="view active" id="importView" role="tabpanel" aria-labelledby="tab-import">
+        <div class="hero-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <h1 class="section-title">Import your study text.</h1>
+              <p class="section-subtitle">
+                Paste text in Quizlet format or upload a .txt file. Use a tab between the question and answer, and use a new line between cards.
+              </p>
+            </div>
+
+            <div class="panel-body">
+              <div class="field-grid">
+                <div class="field">
+                  <label for="termSeparator">Separator between term and definition</label>
+                  <select class="select" id="termSeparator">
+                    <option value="tab" selected>Tab</option>
+                    <option value="comma">Comma</option>
+                    <option value="semicolon">Semicolon</option>
+                    <option value="pipe">Pipe |</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="cardSeparator">Separator between cards</label>
+                  <select class="select" id="cardSeparator">
+                    <option value="newline" selected>New line</option>
+                    <option value="emptyline">Empty line</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="importMode">Import mode</label>
+                  <select class="select" id="importMode">
+                    <option value="replace" selected>Replace current cards</option>
+                    <option value="append">Append to current cards</option>
+                  </select>
+                </div>
+              </div>
+
+              <textarea class="textarea" id="importText" spellcheck="false" aria-label="Import text"></textarea>
+
+              <div class="file-import-box">
+                <div>
+                  <div class="file-name" id="importFileName">No .txt file selected.</div>
+                  <div class="file-help">Choose a .txt file and its content will be placed in the import box above.</div>
+                </div>
+
+                <div>
+                  <input class="file-input" id="importFileInput" type="file" accept=".txt,text/plain" />
+                  <label class="btn btn-secondary" for="importFileInput">Choose .txt File</label>
+                </div>
+              </div>
+
+              <div class="button-row">
+                <button class="btn btn-primary" id="importButton" type="button">Import Cards</button>
+                <button class="btn btn-secondary" id="previewButton" type="button">Preview</button>
+                <button class="btn btn-secondary" id="loadSampleButton" type="button">Load Sample</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel">
+            <div class="panel-header">
+              <h2 class="section-title section-title-sm">Preview</h2>
+              <p class="section-subtitle">Preview checks that your separators are correct before importing and shows skipped lines.</p>
+            </div>
+
+            <div class="panel-body">
+              <div class="preview-box" id="previewBox" aria-live="polite">
+                Paste your cards, choose a .txt file, or press Preview.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="cardsView" role="tabpanel" aria-labelledby="tab-cards" hidden>
+        <div class="panel">
+          <div class="panel-header">
+            <h1 class="section-title">Your cards</h1>
+            <p class="section-subtitle">Search, edit, favorite, delete, and review what is due next.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <div class="spacer-md" aria-hidden="true"></div>
+
+            <div class="cards-toolbar">
+              <input class="input" id="cardSearchInput" type="search" placeholder="Search cards..." aria-label="Search cards" />
+              <div class="button-row compact">
+                <button class="btn btn-secondary" id="studyFavoritesButton" type="button">Study Favorites</button>
+                <button class="btn btn-secondary" id="studyAllButton" type="button">Study All</button>
+              </div>
+            </div>
+
+            <div class="card-list" id="cardList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="flashcardsView" role="tabpanel" aria-labelledby="tab-flashcards" hidden>
+        <div class="study-shell">
+          <div class="flash-progress" id="flashProgress" aria-live="polite">0 / 0</div>
+
+          <button class="flash-card" id="flashCardButton" type="button" aria-label="Flip flashcard">
+            <div class="flash-content" id="flashCardContent"></div>
+          </button>
+
+          <div class="button-row center-actions">
+            <button class="btn btn-secondary" id="previousFlashButton" type="button">Previous</button>
+            <button class="btn btn-primary" id="flipFlashButton" type="button">Flip</button>
+            <button class="btn btn-secondary" id="nextFlashButton" type="button">Next</button>
+            <button class="btn btn-secondary" id="shuffleFlashButton" type="button">Shuffle</button>
+          </div>
+
+          <div class="button-row center-actions">
+            <button class="btn btn-secondary" id="markLearningButton" type="button">Still learning</button>
+            <button class="btn btn-secondary" id="markKnownButton" type="button">I know this</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="learnView" role="tabpanel" aria-labelledby="tab-learn" hidden>
+        <div class="learn-top" id="learnTop"></div>
+        <div id="learnContent"></div>
+      </section>
+
+      <section class="view" id="exportView" role="tabpanel" aria-labelledby="tab-export" hidden>
+        <div class="panel">
+          <div class="panel-header">
+            <h1 class="section-title">Export cards</h1>
+            <p class="section-subtitle">
+              Copy your cards back into Quizlet import format, download a .txt file, or save a full JSON backup with progress data.
+            </p>
+          </div>
+
+          <div class="panel-body">
+            <textarea class="textarea" id="exportText" readonly aria-label="Export text"></textarea>
+
+            <div class="export-tools">
+              <button class="btn btn-primary" id="copyExportButton" type="button">Copy Export Text</button>
+              <button class="btn btn-secondary" id="downloadExportButton" type="button">Download .txt</button>
+              <button class="btn btn-secondary" id="downloadBackupButton" type="button">Download Backup .json</button>
+            </div>
+
+            <div class="backup-box">
+              <div>
+                <div class="file-name">Why backup?</div>
+                <div class="file-help">Browser storage is convenient, but a downloaded backup protects your cards and review progress if the browser clears site data.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal-backdrop hidden" id="editModal" role="presentation">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+      <h2 id="editModalTitle">Edit card</h2>
+      <form class="modal-form" id="editForm">
+        <div class="field">
+          <label for="editTerm">Term</label>
+          <textarea class="textarea" id="editTerm" rows="4"></textarea>
+        </div>
+        <div class="field">
+          <label for="editDefinition">Definition</label>
+          <textarea class="textarea" id="editDefinition" rows="4"></textarea>
+        </div>
+        <div class="form-help">Saving keeps the card’s progress, favorites, and review schedule.</div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="cancelEditButton" type="button">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE_KEY = "study_cards_app_v2";
+      const LEGACY_STORAGE_KEY = "study_cards_app_v1";
+      const REVIEW_INTERVAL_DAYS = [1, 2, 4, 7, 14, 30, 60];
+
+      const SAMPLE_IMPORT_TEXT = [
+        "What is the SI base unit of time?\tsecond, s",
+        "What does second, s measure?\ttime",
+        "What is the SI base unit of length?\tmetre, m",
+        "What does metre, m measure?\tlength",
+        "What is the SI base unit of mass?\tkilogram, kg",
+        "What does kilogram, kg measure?\tmass",
+        "What is the SI base unit of electric current?\tampere, A",
+        "What does ampere, A measure?\telectric current",
+        "What is the SI base unit of thermodynamic temperature?\tkelvin, K",
+        "What does kelvin, K measure?\tthermodynamic temperature",
+        "What is the SI base unit of amount of substance?\tmole, mol",
+        "What does mole, mol measure?\tamount of substance",
+        "What is the SI base unit of luminous intensity?\tcandela, cd",
+        "What does candela, cd measure?\tluminous intensity"
+      ].join("\n");
+
+      const app = {
+        cards: [],
+        activeView: "import",
+        cardFilter: "all",
+        editingCardId: null,
+        lastFocusedElement: null,
+        undoDelete: null,
+        flash: {
+          order: [],
+          index: 0,
+          flipped: false
+        },
+        learn: createEmptyLearnState()
+      };
+
+      const elements = {};
+
+      document.addEventListener("DOMContentLoaded", init);
+
+      function init() {
+        cacheElements();
+        loadCards();
+        bindEvents();
+
+        resetFlashOrder();
+        renderAll();
+
+        if (elements.importText.value.trim()) {
+          previewImport();
+        }
+      }
+
+      function cacheElements() {
+        elements.headerCardCount = document.getElementById("headerCardCount");
+        elements.resetAllButton = document.getElementById("resetAllButton");
+
+        elements.navButtons = Array.from(document.querySelectorAll('[role="tab"][data-view-target]'));
+        elements.views = {
+          import: document.getElementById("importView"),
+          cards: document.getElementById("cardsView"),
+          flashcards: document.getElementById("flashcardsView"),
+          learn: document.getElementById("learnView"),
+          export: document.getElementById("exportView")
+        };
+
+        elements.termSeparator = document.getElementById("termSeparator");
+        elements.cardSeparator = document.getElementById("cardSeparator");
+        elements.importMode = document.getElementById("importMode");
+        elements.importText = document.getElementById("importText");
+        elements.importFileInput = document.getElementById("importFileInput");
+        elements.importFileName = document.getElementById("importFileName");
+        elements.importButton = document.getElementById("importButton");
+        elements.previewButton = document.getElementById("previewButton");
+        elements.loadSampleButton = document.getElementById("loadSampleButton");
+        elements.previewBox = document.getElementById("previewBox");
+
+        elements.statsGrid = document.getElementById("statsGrid");
+        elements.cardSearchInput = document.getElementById("cardSearchInput");
+        elements.cardList = document.getElementById("cardList");
+        elements.studyFavoritesButton = document.getElementById("studyFavoritesButton");
+        elements.studyAllButton = document.getElementById("studyAllButton");
+
+        elements.flashProgress = document.getElementById("flashProgress");
+        elements.flashCardButton = document.getElementById("flashCardButton");
+        elements.flashCardContent = document.getElementById("flashCardContent");
+        elements.previousFlashButton = document.getElementById("previousFlashButton");
+        elements.flipFlashButton = document.getElementById("flipFlashButton");
+        elements.nextFlashButton = document.getElementById("nextFlashButton");
+        elements.shuffleFlashButton = document.getElementById("shuffleFlashButton");
+        elements.markLearningButton = document.getElementById("markLearningButton");
+        elements.markKnownButton = document.getElementById("markKnownButton");
+
+        elements.learnTop = document.getElementById("learnTop");
+        elements.learnContent = document.getElementById("learnContent");
+
+        elements.exportText = document.getElementById("exportText");
+        elements.copyExportButton = document.getElementById("copyExportButton");
+        elements.downloadExportButton = document.getElementById("downloadExportButton");
+        elements.downloadBackupButton = document.getElementById("downloadBackupButton");
+
+        elements.toast = document.getElementById("toast");
+
+        elements.editModal = document.getElementById("editModal");
+        elements.editForm = document.getElementById("editForm");
+        elements.editTerm = document.getElementById("editTerm");
+        elements.editDefinition = document.getElementById("editDefinition");
+        elements.cancelEditButton = document.getElementById("cancelEditButton");
+      }
+
+      function bindEvents() {
+        elements.navButtons.forEach(function (button, index) {
+          button.addEventListener("click", function () {
+            switchView(button.dataset.viewTarget, { focusTab: false });
+          });
+
+          button.addEventListener("keydown", function (event) {
+            handleTabKeydown(event, index);
+          });
+        });
+
+        elements.resetAllButton.addEventListener("click", resetAllCards);
+
+        elements.previewButton.addEventListener("click", previewImport);
+        elements.importButton.addEventListener("click", importCards);
+        elements.loadSampleButton.addEventListener("click", function () {
+          elements.importText.value = SAMPLE_IMPORT_TEXT;
+          elements.importFileInput.value = "";
+          elements.importFileName.textContent = "No .txt file selected.";
+          previewImport();
+          showToast("Sample cards loaded.");
+        });
+
+        elements.importFileInput.addEventListener("change", handleImportFileChange);
+        elements.termSeparator.addEventListener("change", previewImport);
+        elements.cardSeparator.addEventListener("change", previewImport);
+        elements.importText.addEventListener("input", debounce(previewImport, 180));
+
+        elements.cardSearchInput.addEventListener("input", renderCards);
+
+        elements.studyFavoritesButton.addEventListener("click", function () {
+          app.cardFilter = "favorites";
+          resetFlashOrder();
+          switchView("flashcards");
+        });
+
+        elements.studyAllButton.addEventListener("click", function () {
+          app.cardFilter = "all";
+          resetFlashOrder();
+          switchView("flashcards");
+        });
+
+        elements.cardList.addEventListener("click", handleCardListClick);
+
+        elements.flashCardButton.addEventListener("click", flipFlashCard);
+        elements.flipFlashButton.addEventListener("click", flipFlashCard);
+        elements.previousFlashButton.addEventListener("click", previousFlashCard);
+        elements.nextFlashButton.addEventListener("click", nextFlashCard);
+        elements.shuffleFlashButton.addEventListener("click", shuffleFlashCards);
+        elements.markLearningButton.addEventListener("click", function () {
+          markCurrentFlashCard(false);
+        });
+        elements.markKnownButton.addEventListener("click", function () {
+          markCurrentFlashCard(true);
+        });
+
+        elements.learnContent.addEventListener("click", handleLearnClick);
+
+        elements.copyExportButton.addEventListener("click", copyExportText);
+        elements.downloadExportButton.addEventListener("click", downloadExportText);
+        elements.downloadBackupButton.addEventListener("click", downloadBackupJson);
+
+        elements.editForm.addEventListener("submit", saveEditForm);
+        elements.cancelEditButton.addEventListener("click", closeEditModal);
+        elements.editModal.addEventListener("click", function (event) {
+          if (event.target === elements.editModal) {
+            closeEditModal();
+          }
+        });
+
+        document.addEventListener("keydown", handleKeyboardShortcuts);
+      }
+
+      function handleTabKeydown(event, currentIndex) {
+        const lastIndex = elements.navButtons.length - 1;
+        let nextIndex = currentIndex;
+
+        if (event.key === "ArrowRight") {
+          nextIndex = currentIndex === lastIndex ? 0 : currentIndex + 1;
+        } else if (event.key === "ArrowLeft") {
+          nextIndex = currentIndex === 0 ? lastIndex : currentIndex - 1;
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = lastIndex;
+        } else {
+          return;
+        }
+
+        event.preventDefault();
+        const nextButton = elements.navButtons[nextIndex];
+        switchView(nextButton.dataset.viewTarget, { focusTab: true });
+      }
+
+      function handleImportFileChange(event) {
+        const file = event.target.files && event.target.files[0];
+
+        if (!file) {
+          elements.importFileName.textContent = "No .txt file selected.";
+          return;
+        }
+
+        const fileName = file.name || "Selected file";
+        const isTextFile = file.type === "text/plain" || fileName.toLowerCase().endsWith(".txt");
+
+        if (!isTextFile) {
+          elements.importFileInput.value = "";
+          elements.importFileName.textContent = "No .txt file selected.";
+          showToast("Please choose a .txt file.");
+          return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function () {
+          elements.importText.value = String(reader.result || "");
+          elements.importFileName.textContent = fileName;
+          previewImport();
+          showToast(".txt file loaded.");
+        };
+
+        reader.onerror = function () {
+          elements.importFileInput.value = "";
+          elements.importFileName.textContent = "No .txt file selected.";
+          showToast("Could not read the selected file.");
+        };
+
+        reader.readAsText(file);
+      }
+
+      function loadCards() {
+        const loaded = readStoragePayload(STORAGE_KEY) || readStoragePayload(LEGACY_STORAGE_KEY);
+
+        if (!loaded || !Array.isArray(loaded.cards)) {
+          app.cards = [];
+          return;
+        }
+
+        app.cards = loaded.cards
+          .filter(function (card) {
+            return card && typeof card.term === "string" && typeof card.definition === "string";
+          })
+          .map(function (card) {
+            return normalizeCard(card);
+          });
+
+        saveCards();
+      }
+
+      function readStoragePayload(key) {
+        try {
+          const rawData = localStorage.getItem(key);
+
+          if (!rawData) {
+            return null;
+          }
+
+          return JSON.parse(rawData);
+        } catch (error) {
+          console.error("Could not load saved cards:", error);
+          return null;
+        }
+      }
+
+      function saveCards() {
+        const payload = {
+          version: 2,
+          cards: app.cards,
+          savedAt: new Date().toISOString()
+        };
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      }
+
+      function normalizeCard(card) {
+        const createdAt = typeof card.createdAt === "string" ? card.createdAt : new Date().toISOString();
+
+        return {
+          id: typeof card.id === "string" && card.id ? card.id : createId(),
+          term: card.term.trim(),
+          definition: card.definition.trim(),
+          correct: Number.isFinite(card.correct) ? card.correct : 0,
+          wrong: Number.isFinite(card.wrong) ? card.wrong : 0,
+          favorite: Boolean(card.favorite),
+          createdAt: createdAt,
+          lastReviewed: typeof card.lastReviewed === "string" ? card.lastReviewed : null,
+          nextReview: typeof card.nextReview === "string" ? card.nextReview : createdAt,
+          streak: Number.isFinite(card.streak) ? card.streak : 0,
+          reviewLevel: Number.isFinite(card.reviewLevel) ? card.reviewLevel : 0
+        };
+      }
+
+      function createCard(term, definition) {
+        const now = new Date().toISOString();
+
+        return {
+          id: createId(),
+          term: term.trim(),
+          definition: definition.trim(),
+          correct: 0,
+          wrong: 0,
+          favorite: false,
+          createdAt: now,
+          lastReviewed: null,
+          nextReview: now,
+          streak: 0,
+          reviewLevel: 0
+        };
+      }
+
+      function createEmptyLearnState() {
+        return {
+          active: false,
+          total: 0,
+          queue: [],
+          currentId: null,
+          options: [],
+          selectedIndex: null,
+          locked: false,
+          history: []
+        };
+      }
+
+      function createId() {
+        if (window.crypto && typeof window.crypto.randomUUID === "function") {
+          return window.crypto.randomUUID();
+        }
+
+        return "card_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2);
+      }
+
+      function switchView(viewName, options) {
+        const settings = options || {};
+
+        if (!elements.views[viewName]) {
+          return;
+        }
+
+        app.activeView = viewName;
+
+        elements.navButtons.forEach(function (button) {
+          const isSelected = button.dataset.viewTarget === viewName;
+          button.setAttribute("aria-selected", String(isSelected));
+          button.tabIndex = isSelected ? 0 : -1;
+
+          if (isSelected && settings.focusTab) {
+            button.focus();
+          }
+        });
+
+        Object.keys(elements.views).forEach(function (key) {
+          const isActive = key === viewName;
+          elements.views[key].classList.toggle("active", isActive);
+          elements.views[key].hidden = !isActive;
+        });
+
+        if (viewName === "export") {
+          renderExport();
+        }
+
+        if (viewName === "flashcards") {
+          ensureFlashOrder();
+          renderFlashcards();
+        }
+
+        if (viewName === "learn") {
+          renderLearn();
+        }
+      }
+
+      function renderAll() {
+        renderHeader();
+        renderStats();
+        renderCards();
+        renderFlashcards();
+        renderLearn();
+        renderExport();
+      }
+
+      function renderHeader() {
+        elements.headerCardCount.textContent = String(app.cards.length);
+      }
+
+      function parseImportText(text, termSeparatorValue, cardSeparatorValue) {
+        const separator = getTermSeparator(termSeparatorValue);
+        const normalizedText = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
+        const result = {
+          cards: [],
+          errors: []
+        };
+
+        if (!normalizedText) {
+          return result;
+        }
+
+        const rawCards = cardSeparatorValue === "emptyline"
+          ? normalizedText.split(/\n\s*\n+/g)
+          : normalizedText.split(/\n+/g);
+
+        rawCards.forEach(function (rawCard, index) {
+          const line = rawCard.trim();
+          const label = cardSeparatorValue === "emptyline" ? "Block " + (index + 1) : "Line " + (index + 1);
+
+          if (!line) {
+            return;
+          }
+
+          const separatorIndex = line.indexOf(separator);
+
+          if (separatorIndex === -1) {
+            result.errors.push({
+              label: label,
+              message: "Missing separator",
+              text: line
+            });
+            return;
+          }
+
+          const term = line.slice(0, separatorIndex).trim();
+          const definition = line.slice(separatorIndex + separator.length).trim();
+
+          if (!term || !definition) {
+            result.errors.push({
+              label: label,
+              message: "Missing term or definition",
+              text: line
+            });
+            return;
+          }
+
+          result.cards.push({
+            term: term,
+            definition: definition
+          });
+        });
+
+        return result;
+      }
+
+      function getTermSeparator(value) {
+        const separators = {
+          tab: "\t",
+          comma: ",",
+          semicolon: ";",
+          pipe: "|"
+        };
+
+        return separators[value] || "\t";
+      }
+
+      function previewImport() {
+        const parsed = parseImportText(
+          elements.importText.value,
+          elements.termSeparator.value,
+          elements.cardSeparator.value
+        );
+
+        if (parsed.cards.length === 0 && parsed.errors.length === 0) {
+          elements.previewBox.innerHTML = "No valid cards found. Make sure every line has a term, then a separator, then a definition.";
+          return;
+        }
+
+        const previewCards = parsed.cards.slice(0, 6);
+        const moreCount = parsed.cards.length - previewCards.length;
+        const errorPreview = parsed.errors.slice(0, 5);
+        const moreErrors = parsed.errors.length - errorPreview.length;
+
+        elements.previewBox.innerHTML = [
+          '<div class="preview-summary">' + parsed.cards.length + " valid card" + (parsed.cards.length === 1 ? "" : "s") + " detected.</div>",
+          previewCards.map(function (card) {
+            return (
+              '<div class="preview-card">' +
+                '<div class="preview-term">' + escapeHtml(card.term) + "</div>" +
+                '<div class="preview-definition">' + escapeHtml(card.definition) + "</div>" +
+              "</div>"
+            );
+          }).join(""),
+          moreCount > 0 ? '<div class="preview-card">+' + moreCount + " more cards</div>" : "",
+          parsed.errors.length > 0 ? createImportErrorsHtml(errorPreview, moreErrors, parsed.errors.length) : ""
+        ].join("");
+      }
+
+      function createImportErrorsHtml(errors, moreErrors, totalErrors) {
+        return (
+          '<div class="preview-warning">' + totalErrors + " skipped item" + (totalErrors === 1 ? "" : "s") + ".</div>" +
+          '<ul class="preview-error-list">' +
+            errors.map(function (error) {
+              return "<li>" + escapeHtml(error.label + ": " + error.message + " — " + shortenText(error.text, 80)) + "</li>";
+            }).join("") +
+            (moreErrors > 0 ? "<li>+" + moreErrors + " more skipped</li>" : "") +
+          "</ul>"
+        );
+      }
+
+      function importCards() {
+        const parsed = parseImportText(
+          elements.importText.value,
+          elements.termSeparator.value,
+          elements.cardSeparator.value
+        );
+
+        if (parsed.cards.length === 0) {
+          showToast("No valid cards found.");
+          previewImport();
+          return;
+        }
+
+        const newCards = parsed.cards.map(function (card) {
+          return createCard(card.term, card.definition);
+        });
+
+        if (elements.importMode.value === "append") {
+          app.cards = app.cards.concat(newCards);
+        } else {
+          app.cards = newCards;
+        }
+
+        app.cardFilter = "all";
+        resetFlashOrder();
+        resetLearnSession();
+        saveCards();
+        renderAll();
+        switchView("cards");
+
+        if (parsed.errors.length > 0) {
+          showToast(newCards.length + " imported, " + parsed.errors.length + " skipped.");
+        } else {
+          showToast(newCards.length + " card" + (newCards.length === 1 ? "" : "s") + " imported.");
+        }
+      }
+
+      function resetAllCards() {
+        if (app.cards.length === 0) {
+          showToast("There are no cards to delete.");
+          return;
+        }
+
+        const confirmed = window.confirm("Delete all cards? This cannot be undone.");
+
+        if (!confirmed) {
+          return;
+        }
+
+        clearUndoDelete();
+        app.cards = [];
+        app.cardFilter = "all";
+        resetFlashOrder();
+        resetLearnSession();
+        saveCards();
+        renderAll();
+        switchView("import");
+        showToast("All cards deleted.");
+      }
+
+      function getStudyCards() {
+        const filtered = app.cardFilter === "favorites"
+          ? app.cards.filter(function (card) {
+            return card.favorite;
+          })
+          : app.cards.slice();
+
+        return filtered.sort(compareReviewPriority);
+      }
+
+      function compareReviewPriority(firstCard, secondCard) {
+        const firstDue = isCardDue(firstCard) ? 1 : 0;
+        const secondDue = isCardDue(secondCard) ? 1 : 0;
+
+        if (firstDue !== secondDue) {
+          return secondDue - firstDue;
+        }
+
+        const firstDifficulty = firstCard.wrong - firstCard.correct;
+        const secondDifficulty = secondCard.wrong - secondCard.correct;
+
+        if (firstDifficulty !== secondDifficulty) {
+          return secondDifficulty - firstDifficulty;
+        }
+
+        return new Date(firstCard.nextReview || 0) - new Date(secondCard.nextReview || 0);
+      }
+
+      function renderStats() {
+        const total = app.cards.length;
+        const attempts = app.cards.reduce(function (sum, card) {
+          return sum + card.correct + card.wrong;
+        }, 0);
+
+        const correct = app.cards.reduce(function (sum, card) {
+          return sum + card.correct;
+        }, 0);
+
+        const due = app.cards.filter(isCardDue).length;
+        const mastered = app.cards.filter(isCardMastered).length;
+        const learning = app.cards.filter(function (card) {
+          return card.correct + card.wrong > 0 && !isCardMastered(card);
+        }).length;
+        const accuracy = attempts === 0 ? 0 : Math.round((correct / attempts) * 100);
+
+        const stats = [
+          { label: "Cards", value: total },
+          { label: "Due now", value: due },
+          { label: "Mastered", value: mastered },
+          { label: "Learning", value: learning },
+          { label: "Accuracy", value: accuracy + "%" }
+        ];
+
+        elements.statsGrid.innerHTML = stats.map(function (stat) {
+          return (
+            '<div class="stat-card">' +
+              '<div class="stat-label">' + escapeHtml(stat.label) + "</div>" +
+              '<div class="stat-value">' + escapeHtml(String(stat.value)) + "</div>" +
+            "</div>"
+          );
+        }).join("");
+      }
+
+      function renderCards() {
+        const query = elements.cardSearchInput.value.trim().toLowerCase();
+
+        const filteredCards = app.cards
+          .filter(function (card) {
+            if (!query) {
+              return true;
+            }
+
+            return (
+              card.term.toLowerCase().includes(query) ||
+              card.definition.toLowerCase().includes(query)
+            );
+          })
+          .sort(compareReviewPriority);
+
+        if (app.cards.length === 0) {
+          elements.cardList.innerHTML = createEmptyStateHtml(
+            "No cards yet",
+            "Go to Import, paste your study text, and import your first set."
+          );
+          return;
+        }
+
+        if (filteredCards.length === 0) {
+          elements.cardList.innerHTML = createEmptyStateHtml(
+            "No matching cards",
+            "Try searching for another term or definition."
+          );
+          return;
+        }
+
+        elements.cardList.innerHTML = filteredCards.map(function (card) {
+          return (
+            '<article class="card-row" data-card-id="' + escapeAttribute(card.id) + '">' +
+              '<div>' +
+                '<div class="card-text-label">Term</div>' +
+                '<div class="card-text-value">' + escapeHtml(card.term) + "</div>" +
+              "</div>" +
+              '<div>' +
+                '<div class="card-text-label">Definition</div>' +
+                '<div class="card-text-value">' + escapeHtml(card.definition) + "</div>" +
+              "</div>" +
+              '<div class="card-actions">' +
+                '<button class="small-button ' + (card.favorite ? "favorite-active" : "") + '" type="button" data-action="toggle-favorite" aria-label="' + (card.favorite ? "Remove favorite" : "Add favorite") + '" title="Favorite">★</button>' +
+                '<button class="small-button" type="button" data-action="edit-card">Edit</button>' +
+                '<button class="small-button" type="button" data-action="delete-card">Delete</button>' +
+              "</div>" +
+              '<div class="card-meta">' + createCardMetaHtml(card) + "</div>" +
+            "</article>"
+          );
+        }).join("");
+      }
+
+      function createCardMetaHtml(card) {
+        const badges = [];
+
+        if (card.favorite) {
+          badges.push('<span class="badge">★ Favorite</span>');
+        }
+
+        if (isCardDue(card)) {
+          badges.push('<span class="badge due">Due now</span>');
+        } else {
+          badges.push('<span class="badge">Next: ' + escapeHtml(formatDateTime(card.nextReview)) + "</span>");
+        }
+
+        if (isCardMastered(card)) {
+          badges.push('<span class="badge mastered">Mastered</span>');
+        } else if (card.correct + card.wrong === 0) {
+          badges.push('<span class="badge">New</span>');
+        } else {
+          badges.push('<span class="badge">Streak: ' + escapeHtml(String(card.streak || 0)) + "</span>");
+        }
+
+        badges.push('<span class="badge">' + escapeHtml(card.correct + " correct / " + card.wrong + " missed") + "</span>");
+
+        return badges.join("");
+      }
+
+      function handleCardListClick(event) {
+        const actionButton = event.target.closest("[data-action]");
+
+        if (!actionButton) {
+          return;
+        }
+
+        const cardRow = actionButton.closest("[data-card-id]");
+
+        if (!cardRow) {
+          return;
+        }
+
+        const card = getCardById(cardRow.dataset.cardId);
+
+        if (!card) {
+          return;
+        }
+
+        if (actionButton.dataset.action === "toggle-favorite") {
+          card.favorite = !card.favorite;
+          saveCards();
+          renderAll();
+          showToast(card.favorite ? "Card added to favorites." : "Card removed from favorites.");
+        }
+
+        if (actionButton.dataset.action === "edit-card") {
+          openEditModal(card.id, actionButton);
+        }
+
+        if (actionButton.dataset.action === "delete-card") {
+          deleteCard(card.id);
+        }
+      }
+
+      function openEditModal(cardId, triggerElement) {
+        const card = getCardById(cardId);
+
+        if (!card) {
+          return;
+        }
+
+        app.editingCardId = cardId;
+        app.lastFocusedElement = triggerElement || document.activeElement;
+        elements.editTerm.value = card.term;
+        elements.editDefinition.value = card.definition;
+        elements.editModal.classList.remove("hidden");
+        elements.editTerm.focus();
+      }
+
+      function closeEditModal() {
+        app.editingCardId = null;
+        elements.editModal.classList.add("hidden");
+
+        if (app.lastFocusedElement && typeof app.lastFocusedElement.focus === "function") {
+          app.lastFocusedElement.focus();
+        }
+      }
+
+      function saveEditForm(event) {
+        event.preventDefault();
+
+        const card = getCardById(app.editingCardId);
+        const term = elements.editTerm.value.trim();
+        const definition = elements.editDefinition.value.trim();
+
+        if (!card) {
+          closeEditModal();
+          return;
+        }
+
+        if (!term || !definition) {
+          showToast("Term and definition are required.");
+          return;
+        }
+
+        card.term = term;
+        card.definition = definition;
+        saveCards();
+        renderAll();
+        closeEditModal();
+        showToast("Card updated.");
+      }
+
+      function deleteCard(cardId) {
+        const index = app.cards.findIndex(function (card) {
+          return card.id === cardId;
+        });
+
+        if (index === -1) {
+          return;
+        }
+
+        clearUndoDelete();
+
+        const deletedCard = app.cards[index];
+        app.cards.splice(index, 1);
+        app.undoDelete = {
+          card: deletedCard,
+          index: index,
+          timeoutId: null
+        };
+
+        resetFlashOrder();
+        resetLearnSession();
+        saveCards();
+        renderAll();
+
+        showToast("Card deleted.", {
+          actionLabel: "Undo",
+          onAction: undoDeleteCard,
+          duration: 6000
+        });
+
+        app.undoDelete.timeoutId = window.setTimeout(clearUndoDelete, 6000);
+      }
+
+      function undoDeleteCard() {
+        if (!app.undoDelete) {
+          return;
+        }
+
+        const index = Math.min(app.undoDelete.index, app.cards.length);
+        app.cards.splice(index, 0, app.undoDelete.card);
+        clearUndoDelete();
+        resetFlashOrder();
+        saveCards();
+        renderAll();
+        showToast("Card restored.");
+      }
+
+      function clearUndoDelete() {
+        if (app.undoDelete && app.undoDelete.timeoutId) {
+          window.clearTimeout(app.undoDelete.timeoutId);
+        }
+
+        app.undoDelete = null;
+      }
+
+      function resetFlashOrder() {
+        app.flash.order = getStudyCards().map(function (card) {
+          return card.id;
+        });
+        app.flash.index = 0;
+        app.flash.flipped = false;
+      }
+
+      function ensureFlashOrder() {
+        const studyCards = getStudyCards();
+        const validIds = new Set(studyCards.map(function (card) {
+          return card.id;
+        }));
+
+        const filteredOrder = app.flash.order.filter(function (id) {
+          return validIds.has(id);
+        });
+
+        if (filteredOrder.length !== studyCards.length) {
+          resetFlashOrder();
+          return;
+        }
+
+        app.flash.order = filteredOrder;
+
+        if (app.flash.index >= app.flash.order.length) {
+          app.flash.index = Math.max(0, app.flash.order.length - 1);
+        }
+      }
+
+      function getCurrentFlashCard() {
+        ensureFlashOrder();
+
+        if (app.flash.order.length === 0) {
+          return null;
+        }
+
+        return getCardById(app.flash.order[app.flash.index]);
+      }
+
+      function renderFlashcards() {
+        ensureFlashOrder();
+
+        const studyCards = getStudyCards();
+        const card = getCurrentFlashCard();
+
+        if (app.cards.length === 0) {
+          elements.flashProgress.textContent = "0 / 0";
+          elements.flashCardContent.innerHTML = createSmallEmptyFlashHtml(
+            "No cards yet",
+            "Import cards first."
+          );
+          setFlashControlsDisabled(true);
+          return;
+        }
+
+        if (studyCards.length === 0 && app.cardFilter === "favorites") {
+          elements.flashProgress.textContent = "0 / 0";
+          elements.flashCardContent.innerHTML = createSmallEmptyFlashHtml(
+            "No favorite cards",
+            "Favorite some cards in the Cards page first."
+          );
+          setFlashControlsDisabled(true);
+          return;
+        }
+
+        if (!card) {
+          elements.flashProgress.textContent = "0 / 0";
+          elements.flashCardContent.innerHTML = createSmallEmptyFlashHtml(
+            "No card selected",
+            "Try shuffling or returning to all cards."
+          );
+          setFlashControlsDisabled(true);
+          return;
+        }
+
+        const sideLabel = app.flash.flipped ? "Definition" : "Term";
+        const text = app.flash.flipped ? card.definition : card.term;
+        const dueLabel = isCardDue(card) ? "Due now" : "Next review: " + formatDateTime(card.nextReview);
+
+        elements.flashProgress.textContent = (app.flash.index + 1) + " / " + app.flash.order.length + " · " + dueLabel;
+
+        elements.flashCardContent.innerHTML =
+          '<div class="flash-label">' + sideLabel + "</div>" +
+          '<div class="flash-text">' + escapeHtml(text) + "</div>" +
+          '<div class="flash-hint">Click the card or press Space to flip</div>';
+
+        setFlashControlsDisabled(false);
+
+        elements.previousFlashButton.disabled = app.flash.order.length <= 1;
+        elements.nextFlashButton.disabled = app.flash.order.length <= 1;
+        elements.shuffleFlashButton.disabled = app.flash.order.length <= 1;
+      }
+
+      function setFlashControlsDisabled(disabled) {
+        elements.previousFlashButton.disabled = disabled;
+        elements.flipFlashButton.disabled = disabled;
+        elements.nextFlashButton.disabled = disabled;
+        elements.shuffleFlashButton.disabled = disabled;
+        elements.markLearningButton.disabled = disabled;
+        elements.markKnownButton.disabled = disabled;
+        elements.flashCardButton.disabled = disabled;
+      }
+
+      function flipFlashCard() {
+        const card = getCurrentFlashCard();
+
+        if (!card) {
+          return;
+        }
+
+        app.flash.flipped = !app.flash.flipped;
+        renderFlashcards();
+      }
+
+      function previousFlashCard() {
+        if (app.flash.order.length <= 1) {
+          return;
+        }
+
+        app.flash.index = app.flash.index === 0
+          ? app.flash.order.length - 1
+          : app.flash.index - 1;
+
+        app.flash.flipped = false;
+        renderFlashcards();
+      }
+
+      function nextFlashCard() {
+        if (app.flash.order.length <= 1) {
+          return;
+        }
+
+        app.flash.index = (app.flash.index + 1) % app.flash.order.length;
+        app.flash.flipped = false;
+        renderFlashcards();
+      }
+
+      function shuffleFlashCards() {
+        const studyCards = getStudyCards();
+
+        if (studyCards.length <= 1) {
+          return;
+        }
+
+        app.flash.order = shuffleArray(studyCards.map(function (card) {
+          return card.id;
+        }));
+        app.flash.index = 0;
+        app.flash.flipped = false;
+        renderFlashcards();
+        showToast("Flashcards shuffled.");
+      }
+
+      function markCurrentFlashCard(isKnown) {
+        const card = getCurrentFlashCard();
+
+        if (!card) {
+          return;
+        }
+
+        updateReviewSchedule(card, isKnown);
+        saveCards();
+        renderHeader();
+        renderStats();
+        renderCards();
+        showToast(isKnown ? "Marked as known." : "Marked as still learning.");
+        nextFlashCard();
+      }
+
+      function updateReviewSchedule(card, isCorrect) {
+        const now = new Date();
+        card.lastReviewed = now.toISOString();
+
+        if (isCorrect) {
+          card.correct += 1;
+          card.streak = (card.streak || 0) + 1;
+          card.reviewLevel = Math.min((card.reviewLevel || 0) + 1, REVIEW_INTERVAL_DAYS.length - 1);
+
+          const intervalDays = REVIEW_INTERVAL_DAYS[card.reviewLevel];
+          card.nextReview = addDays(now, intervalDays).toISOString();
+        } else {
+          card.wrong += 1;
+          card.streak = 0;
+          card.reviewLevel = 0;
+          card.nextReview = addMinutes(now, 15).toISOString();
+        }
+      }
+
+      function resetLearnSession() {
+        app.learn = createEmptyLearnState();
+      }
+
+      function startLearnSession(cardIds) {
+        const ids = Array.isArray(cardIds) && cardIds.length > 0
+          ? cardIds.slice()
+          : getStudyCards().map(function (card) {
+            return card.id;
+          });
+
+        if (ids.length === 0) {
+          showToast("No cards available for Learn mode.");
+          return;
+        }
+
+        app.learn.active = true;
+        app.learn.total = ids.length;
+        app.learn.queue = shuffleArray(ids);
+        app.learn.currentId = null;
+        app.learn.options = [];
+        app.learn.selectedIndex = null;
+        app.learn.locked = false;
+        app.learn.history = [];
+
+        goToNextLearnQuestion();
+      }
+
+      function goToNextLearnQuestion() {
+        if (!app.learn.active) {
+          renderLearn();
+          return;
+        }
+
+        app.learn.selectedIndex = null;
+        app.learn.locked = false;
+
+        if (app.learn.queue.length === 0) {
+          app.learn.currentId = null;
+          app.learn.options = [];
+          renderLearn();
+          saveCards();
+          renderStats();
+          renderCards();
+          return;
+        }
+
+        app.learn.currentId = app.learn.queue.shift();
+        const card = getCardById(app.learn.currentId);
+
+        if (!card) {
+          goToNextLearnQuestion();
+          return;
+        }
+
+        app.learn.options = buildLearnOptions(card);
+        renderLearn();
+      }
+
+      function buildLearnOptions(card) {
+        const definitions = [];
+        const seen = new Set();
+
+        function addDefinition(definition) {
+          const normalized = definition.trim().toLowerCase();
+
+          if (!normalized || seen.has(normalized)) {
+            return;
+          }
+
+          seen.add(normalized);
+          definitions.push(definition);
+        }
+
+        addDefinition(card.definition);
+
+        shuffleArray(app.cards.slice()).forEach(function (candidate) {
+          if (candidate.id !== card.id) {
+            addDefinition(candidate.definition);
+          }
+        });
+
+        return shuffleArray(definitions.slice(0, Math.min(4, definitions.length)));
+      }
+
+      function renderLearn() {
+        if (app.cards.length === 0) {
+          elements.learnTop.innerHTML = "";
+          elements.learnContent.innerHTML = createEmptyStateHtml(
+            "No cards yet",
+            "Import cards first, then come back to Learn mode."
+          );
+          return;
+        }
+
+        const studyCards = getStudyCards();
+
+        if (studyCards.length === 0 && app.cardFilter === "favorites") {
+          elements.learnTop.innerHTML = "";
+          elements.learnContent.innerHTML = createEmptyStateHtml(
+            "No favorite cards",
+            "Favorite some cards first or switch back to Study All."
+          );
+          return;
+        }
+
+        if (!app.learn.active) {
+          const dueCount = studyCards.filter(isCardDue).length;
+          elements.learnTop.innerHTML = "";
+          elements.learnContent.innerHTML =
+            '<div class="empty-state">' +
+              "<h2>Ready to learn?</h2>" +
+              "<p>Answer multiple-choice questions from your imported cards. Due and difficult cards are prioritized first. " + dueCount + " card" + (dueCount === 1 ? " is" : "s are") + " due now.</p>" +
+              '<div class="button-row center-actions">' +
+                '<button class="btn btn-primary" type="button" data-learn-action="start">Start Learn</button>' +
+                '<button class="btn btn-secondary" type="button" data-learn-action="start-favorites">Learn Favorites</button>' +
+              "</div>" +
+            "</div>";
+          return;
+        }
+
+        renderLearnProgress();
+
+        if (!app.learn.currentId) {
+          renderLearnComplete();
+          return;
+        }
+
+        const card = getCardById(app.learn.currentId);
+
+        if (!card) {
+          renderLearnComplete();
+          return;
+        }
+
+        const correctDefinition = card.definition;
+        const feedback = getLearnFeedback(correctDefinition);
+
+        elements.learnContent.innerHTML =
+          '<div class="learn-card">' +
+            '<div class="learn-meta">' +
+              '<div class="learn-meta-left">' +
+                "<span>Term</span>" +
+                '<button class="speaker-button" type="button" data-learn-action="speak-current" aria-label="Read term aloud" title="Read term aloud">🔊</button>' +
+              "</div>" +
+              '<span>' + escapeHtml(isCardDue(card) ? "Due now" : "Review later") + "</span>" +
+            "</div>" +
+            '<div class="learn-question">' + escapeHtml(card.term) + "</div>" +
+            '<div class="answer-title">Choose an answer</div>' +
+            '<div class="answer-grid">' +
+              app.learn.options.map(function (option, index) {
+                return createAnswerChoiceHtml(option, index, correctDefinition);
+              }).join("") +
+            "</div>" +
+            '<div class="learn-footer">' +
+              '<div class="learn-feedback ' + feedback.className + '">' + escapeHtml(feedback.text) + "</div>" +
+              '<div class="button-row compact">' +
+                '<button class="btn btn-secondary" type="button" data-learn-action="favorite-current">★ Favorite</button>' +
+                '<button class="btn btn-secondary" type="button" data-learn-action="dont-know" ' + (app.learn.locked ? "disabled" : "") + ">Don't know?</button>" +
+              "</div>" +
+            "</div>" +
+          "</div>";
+      }
+
+      function renderLearnProgress() {
+        const completed = app.learn.history.length;
+        const total = Math.max(app.learn.total, 1);
+        const percent = Math.min(100, Math.round((completed / total) * 100));
+
+        elements.learnTop.innerHTML =
+          '<div class="quiz-progress">' +
+            '<div class="progress-badge start">' + completed + "</div>" +
+            '<div class="progress-track" aria-label="Learn progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + percent + '">' +
+              '<div class="progress-fill"></div>' +
+            "</div>" +
+            '<div class="progress-badge">' + app.learn.total + "</div>" +
+          "</div>";
+
+        const fill = elements.learnTop.querySelector(".progress-fill");
+        if (fill) {
+          fill.style.width = percent + "%";
+        }
+      }
+
+      function renderLearnComplete() {
+        const total = app.learn.history.length;
+        const correct = app.learn.history.filter(function (entry) {
+          return entry.correct;
+        }).length;
+        const missedIds = getMissedLearnCardIds();
+        const score = total === 0 ? 0 : Math.round((correct / total) * 100);
+
+        elements.learnContent.innerHTML =
+          '<div class="learn-card done-score">' +
+            "<div>" +
+              '<div class="score-number">' + score + "%</div>" +
+              '<div class="score-caption">' + correct + " correct out of " + total + "</div>" +
+            "</div>" +
+            '<div class="button-row center-actions">' +
+              '<button class="btn btn-primary" type="button" data-learn-action="restart">Restart Learn</button>' +
+              '<button class="btn btn-secondary" type="button" data-learn-action="review-missed" ' + (missedIds.length === 0 ? "disabled" : "") + ">Review Missed</button>" +
+              '<button class="btn btn-secondary" type="button" data-learn-action="end">Back to Start</button>' +
+            "</div>" +
+          "</div>";
+      }
+
+      function createAnswerChoiceHtml(option, index, correctDefinition) {
+        const number = index + 1;
+        let className = "answer-choice";
+
+        if (app.learn.locked) {
+          if (option === correctDefinition) {
+            className += " correct";
+          } else if (index === app.learn.selectedIndex) {
+            className += " wrong";
+          }
+        }
+
+        return (
+          '<button class="' + className + '" type="button" data-answer-index="' + index + '" ' + (app.learn.locked ? "disabled" : "") + ">" +
+            '<span class="answer-choice-number">' + number + "</span>" +
+            '<span class="answer-choice-text">' + escapeHtml(option) + "</span>" +
+          "</button>"
+        );
+      }
+
+      function getLearnFeedback(correctDefinition) {
+        if (!app.learn.locked) {
+          return {
+            className: "",
+            text: ""
+          };
+        }
+
+        const selectedOption = app.learn.selectedIndex === null
+          ? null
+          : app.learn.options[app.learn.selectedIndex];
+
+        if (selectedOption === correctDefinition) {
+          return {
+            className: "correct",
+            text: "Correct."
+          };
+        }
+
+        return {
+          className: "wrong",
+          text: "Correct answer: " + correctDefinition
+        };
+      }
+
+      function handleLearnClick(event) {
+        const answerButton = event.target.closest("[data-answer-index]");
+        const actionButton = event.target.closest("[data-learn-action]");
+
+        if (answerButton) {
+          const answerIndex = Number(answerButton.dataset.answerIndex);
+          submitLearnAnswer(answerIndex);
+          return;
+        }
+
+        if (!actionButton) {
+          return;
+        }
+
+        const action = actionButton.dataset.learnAction;
+
+        if (action === "start") {
+          app.cardFilter = "all";
+          startLearnSession();
+          return;
+        }
+
+        if (action === "start-favorites") {
+          const favoriteIds = app.cards
+            .filter(function (card) {
+              return card.favorite;
+            })
+            .map(function (card) {
+              return card.id;
+            });
+
+          if (favoriteIds.length === 0) {
+            showToast("No favorite cards yet.");
+            return;
+          }
+
+          app.cardFilter = "favorites";
+          startLearnSession(favoriteIds);
+          return;
+        }
+
+        if (action === "dont-know") {
+          submitLearnAnswer(null);
+          return;
+        }
+
+        if (action === "favorite-current") {
+          favoriteCurrentLearnCard();
+          return;
+        }
+
+        if (action === "speak-current") {
+          speakCurrentLearnCard();
+          return;
+        }
+
+        if (action === "restart") {
+          startLearnSession();
+          return;
+        }
+
+        if (action === "review-missed") {
+          const missedIds = getMissedLearnCardIds();
+
+          if (missedIds.length === 0) {
+            showToast("No missed cards to review.");
+            return;
+          }
+
+          startLearnSession(missedIds);
+          return;
+        }
+
+        if (action === "end") {
+          resetLearnSession();
+          renderLearn();
+        }
+      }
+
+      function submitLearnAnswer(answerIndex) {
+        if (app.learn.locked) {
+          return;
+        }
+
+        const card = getCardById(app.learn.currentId);
+
+        if (!card) {
+          return;
+        }
+
+        const selectedOption = answerIndex === null ? null : app.learn.options[answerIndex];
+        const isCorrect = selectedOption === card.definition;
+
+        app.learn.selectedIndex = answerIndex;
+        app.learn.locked = true;
+
+        updateReviewSchedule(card, isCorrect);
+
+        app.learn.history.push({
+          cardId: card.id,
+          correct: isCorrect,
+          selected: selectedOption,
+          answer: card.definition
+        });
+
+        saveCards();
+        renderLearn();
+        renderHeader();
+        renderStats();
+        renderCards();
+
+        window.setTimeout(function () {
+          goToNextLearnQuestion();
+        }, isCorrect ? 850 : 1450);
+      }
+
+      function favoriteCurrentLearnCard() {
+        const card = getCardById(app.learn.currentId);
+
+        if (!card) {
+          return;
+        }
+
+        card.favorite = !card.favorite;
+        saveCards();
+        renderLearn();
+        renderCards();
+        showToast(card.favorite ? "Card added to favorites." : "Card removed from favorites.");
+      }
+
+      function speakCurrentLearnCard() {
+        const card = getCardById(app.learn.currentId);
+
+        if (!card) {
+          return;
+        }
+
+        speakText(card.term);
+      }
+
+      function speakText(text) {
+        if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {
+          showToast("Text-to-speech is not available in this browser.");
+          return;
+        }
+
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      function getMissedLearnCardIds() {
+        const missed = [];
+        const seen = new Set();
+
+        app.learn.history.forEach(function (entry) {
+          if (!entry.correct && !seen.has(entry.cardId)) {
+            seen.add(entry.cardId);
+            missed.push(entry.cardId);
+          }
+        });
+
+        return missed;
+      }
+
+      function renderExport() {
+        elements.exportText.value = app.cards.map(function (card) {
+          return card.term + "\t" + card.definition;
+        }).join("\n");
+      }
+
+      function copyExportText() {
+        renderExport();
+
+        if (!elements.exportText.value.trim()) {
+          showToast("There are no cards to copy.");
+          return;
+        }
+
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+          navigator.clipboard.writeText(elements.exportText.value)
+            .then(function () {
+              showToast("Export text copied.");
+            })
+            .catch(function () {
+              fallbackCopyExportText();
+            });
+          return;
+        }
+
+        fallbackCopyExportText();
+      }
+
+      function fallbackCopyExportText() {
+        elements.exportText.focus();
+        elements.exportText.select();
+
+        try {
+          document.execCommand("copy");
+          showToast("Export text copied.");
+        } catch (error) {
+          showToast("Copy failed. Select the text manually.");
+        }
+
+        window.getSelection().removeAllRanges();
+      }
+
+      function downloadExportText() {
+        renderExport();
+
+        if (!elements.exportText.value.trim()) {
+          showToast("There are no cards to download.");
+          return;
+        }
+
+        downloadTextFile(elements.exportText.value, "study-cards-export.txt", "text/plain;charset=utf-8");
+        showToast("Export downloaded.");
+      }
+
+      function downloadBackupJson() {
+        if (app.cards.length === 0) {
+          showToast("There are no cards to back up.");
+          return;
+        }
+
+        const payload = {
+          version: 2,
+          exportedAt: new Date().toISOString(),
+          cards: app.cards
+        };
+
+        downloadTextFile(JSON.stringify(payload, null, 2), "study-cards-backup.json", "application/json;charset=utf-8");
+        showToast("Backup downloaded.");
+      }
+
+      function downloadTextFile(content, filename, type) {
+        const blob = new Blob([content], { type: type });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
+      function getCardById(cardId) {
+        return app.cards.find(function (card) {
+          return card.id === cardId;
+        }) || null;
+      }
+
+      function isCardDue(card) {
+        if (!card.nextReview) {
+          return true;
+        }
+
+        return new Date(card.nextReview).getTime() <= Date.now();
+      }
+
+      function isCardMastered(card) {
+        return (card.streak || 0) >= 3 && (card.correct || 0) >= (card.wrong || 0);
+      }
+
+      function formatDateTime(value) {
+        if (!value) {
+          return "now";
+        }
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+          return "now";
+        }
+
+        const now = new Date();
+        const isToday = date.toDateString() === now.toDateString();
+
+        if (isToday) {
+          return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        }
+
+        return date.toLocaleDateString([], { month: "short", day: "numeric" });
+      }
+
+      function addDays(date, days) {
+        const copy = new Date(date.getTime());
+        copy.setDate(copy.getDate() + days);
+        return copy;
+      }
+
+      function addMinutes(date, minutes) {
+        return new Date(date.getTime() + minutes * 60 * 1000);
+      }
+
+      function shuffleArray(array) {
+        const copy = array.slice();
+
+        for (let index = copy.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          const current = copy[index];
+
+          copy[index] = copy[randomIndex];
+          copy[randomIndex] = current;
+        }
+
+        return copy;
+      }
+
+      function createEmptyStateHtml(title, message) {
+        return (
+          '<div class="empty-state">' +
+            "<h2>" + escapeHtml(title) + "</h2>" +
+            "<p>" + escapeHtml(message) + "</p>" +
+          "</div>"
+        );
+      }
+
+      function createSmallEmptyFlashHtml(title, message) {
+        return (
+          '<div class="flash-label">' + escapeHtml(title) + "</div>" +
+          '<div class="flash-text small">' + escapeHtml(message) + "</div>"
+        );
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function escapeAttribute(value) {
+        return escapeHtml(value).replace(/`/g, "&#096;");
+      }
+
+      function shortenText(value, maxLength) {
+        const text = String(value).replace(/\s+/g, " ").trim();
+
+        if (text.length <= maxLength) {
+          return text;
+        }
+
+        return text.slice(0, maxLength - 1) + "…";
+      }
+
+      function debounce(callback, wait) {
+        let timeoutId = null;
+
+        return function () {
+          const args = arguments;
+
+          window.clearTimeout(timeoutId);
+          timeoutId = window.setTimeout(function () {
+            callback.apply(null, args);
+          }, wait);
+        };
+      }
+
+      function showToast(message, options) {
+        const settings = options || {};
+        elements.toast.textContent = "";
+
+        const messageNode = document.createElement("span");
+        messageNode.textContent = message;
+        elements.toast.appendChild(messageNode);
+
+        if (settings.actionLabel && typeof settings.onAction === "function") {
+          const actionButton = document.createElement("button");
+          actionButton.type = "button";
+          actionButton.textContent = settings.actionLabel;
+          actionButton.addEventListener("click", function () {
+            hideToast();
+            settings.onAction();
+          });
+          elements.toast.appendChild(actionButton);
+        }
+
+        elements.toast.classList.add("show");
+
+        window.clearTimeout(showToast.timeoutId);
+        showToast.timeoutId = window.setTimeout(hideToast, settings.duration || 2100);
+      }
+
+      function hideToast() {
+        elements.toast.classList.remove("show");
+      }
+
+      function handleKeyboardShortcuts(event) {
+        if (!elements.editModal.classList.contains("hidden")) {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            closeEditModal();
+          }
+          return;
+        }
+
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+
+        if (activeTag === "textarea" || activeTag === "input" || activeTag === "select") {
+          return;
+        }
+
+        if (app.activeView === "flashcards") {
+          if (event.code === "Space") {
+            event.preventDefault();
+            flipFlashCard();
+          }
+
+          if (event.key === "ArrowRight") {
+            nextFlashCard();
+          }
+
+          if (event.key === "ArrowLeft") {
+            previousFlashCard();
+          }
+        }
+
+        if (app.activeView === "learn" && app.learn.active && !app.learn.locked) {
+          const number = Number(event.key);
+
+          if (Number.isInteger(number) && number >= 1 && number <= app.learn.options.length) {
+            submitLearnAnswer(number - 1);
+          }
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
