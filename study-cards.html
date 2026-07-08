@@ -33,11 +33,15 @@
 
     html {
       min-height: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
       background: var(--bg);
     }
 
     body {
       min-height: 100vh;
+      max-width: 100%;
+      overflow-x: hidden;
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       color: var(--text);
@@ -56,6 +60,7 @@
 
     button {
       cursor: pointer;
+      color: inherit;
     }
 
     button:disabled {
@@ -73,35 +78,54 @@
     }
 
     .app {
-      width: min(1420px, calc(100% - 32px));
+      width: min(1600px, calc(100% - 32px));
       margin: 0 auto;
       padding: 28px 0 48px;
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    main {
+      min-width: 0;
     }
 
     .topbar {
+      position: sticky;
+      top: 24px;
+      min-height: calc(100vh - 56px);
       display: flex;
-      align-items: center;
-      gap: 18px;
-      justify-content: space-between;
-      margin-bottom: 34px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 22px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+      max-height: calc(100vh - 56px);
+      overflow-y: auto;
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      min-width: 180px;
+      min-width: 0;
+      padding: 4px 4px 2px;
     }
 
     .brand-logo {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 12px;
       display: grid;
       place-items: center;
       background: linear-gradient(135deg, var(--primary), #42d98b);
       box-shadow: 0 0 26px rgba(108, 124, 255, 0.6);
       font-weight: 900;
+      flex: 0 0 auto;
     }
 
     .brand-title {
@@ -113,15 +137,15 @@
 
     .nav {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
       gap: 8px;
-      flex: 1;
       padding: 8px;
       border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.045);
-      border-radius: 999px;
-      overflow-x: auto;
+      border-radius: 22px;
+      overflow: visible;
       scrollbar-width: none;
     }
 
@@ -130,12 +154,14 @@
     }
 
     .nav-button {
+      width: 100%;
       border: 0;
       color: var(--muted);
       background: transparent;
-      border-radius: 999px;
-      padding: 11px 16px;
-      font-weight: 800;
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-weight: 850;
+      text-align: left;
       white-space: nowrap;
       transition: background var(--transition), color var(--transition), transform var(--transition);
     }
@@ -152,22 +178,25 @@
     }
 
     .topbar-actions {
-      display: flex;
-      align-items: center;
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
       gap: 10px;
-      min-width: 180px;
-      justify-content: flex-end;
+      min-width: 0;
+      margin-top: auto;
     }
 
     .mini-stat {
       display: inline-flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
+      width: 100%;
       color: var(--muted);
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 10px 13px;
+      border-radius: 16px;
+      padding: 12px 14px;
       font-weight: 800;
       white-space: nowrap;
     }
@@ -176,22 +205,25 @@
       color: var(--text);
     }
 
-    .icon-button {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.06);
+    .clear-button {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 16px;
+      border: 1px solid rgba(240, 100, 100, 0.45);
+      background: rgba(240, 100, 100, 0.16);
       color: var(--text);
-      display: grid;
-      place-items: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      font-weight: 900;
       transition: background var(--transition), border var(--transition), transform var(--transition);
     }
 
-    .icon-button:hover {
+    .clear-button:hover {
       transform: translateY(-1px);
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--border-strong);
+      background: rgba(240, 100, 100, 0.24);
+      border-color: rgba(240, 100, 100, 0.75);
     }
 
     .view {
@@ -349,6 +381,25 @@
       margin-top: 8px;
     }
 
+    .import-example {
+      margin-top: 12px;
+      padding: 13px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.24);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .import-example code {
+      display: block;
+      margin-top: 6px;
+      color: var(--text);
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
     .button-row {
       display: flex;
       flex-wrap: wrap;
@@ -359,6 +410,10 @@
 
     .button-row.compact {
       margin-top: 0;
+    }
+
+    .learn-answer-actions {
+      justify-content: flex-end;
     }
 
     .center-actions {
@@ -548,11 +603,6 @@
       background: rgba(255, 255, 255, 0.06);
     }
 
-    .badge.due {
-      color: #10132d;
-      background: var(--yellow);
-      border-color: var(--yellow);
-    }
 
     .badge.mastered {
       color: #dffff0;
@@ -586,11 +636,6 @@
       transform: translateY(-1px);
     }
 
-    .small-button.favorite-active {
-      color: #10132d;
-      background: var(--yellow);
-      border-color: var(--yellow);
-    }
 
     .study-shell {
       width: min(960px, 100%);
@@ -613,6 +658,7 @@
       border-radius: 28px;
       border: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(65, 71, 106, 0.98), rgba(54, 60, 92, 0.98));
+      color: var(--text);
       box-shadow: var(--shadow);
       display: grid;
       place-items: center;
@@ -751,6 +797,369 @@
       overflow-wrap: anywhere;
     }
 
+    .true-false-statement {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: rgba(11, 9, 40, 0.26);
+    }
+
+    .true-false-label {
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .true-false-definition {
+      color: var(--text);
+      font-size: clamp(20px, 2.4vw, 28px);
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .learn-settings {
+      width: min(980px, 100%);
+      margin: 26px auto 0;
+      text-align: left;
+      display: grid;
+      gap: 22px;
+    }
+
+    .setup-section {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .setup-section legend {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: 0.01em;
+    }
+
+    .setup-option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .setup-option {
+      position: relative;
+      display: grid;
+      gap: 6px;
+      min-height: 112px;
+      padding: 18px;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      background: rgba(11, 9, 40, 0.28);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform var(--transition), background var(--transition), border var(--transition), box-shadow var(--transition);
+    }
+
+    .setup-option:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.075);
+      border-color: rgba(255, 255, 255, 0.34);
+    }
+
+    .setup-radio {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .setup-option:has(.setup-radio:checked) {
+      border-color: var(--yellow);
+      background: rgba(255, 218, 61, 0.12);
+      box-shadow: 0 16px 34px rgba(255, 218, 61, 0.14);
+    }
+
+    .setup-option:has(.setup-radio:focus-visible) {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+    .setup-option-title {
+      font-size: 18px;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+
+    .setup-option-text {
+      color: var(--muted-2);
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .setup-chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .setup-chip {
+      position: relative;
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      background: rgba(11, 9, 40, 0.28);
+      color: var(--text);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform var(--transition), background var(--transition), border var(--transition), box-shadow var(--transition);
+    }
+
+    .setup-chip:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.075);
+      border-color: rgba(255, 255, 255, 0.34);
+    }
+
+    .setup-chip:has(.setup-radio:checked) {
+      color: #10132d;
+      background: var(--yellow);
+      border-color: var(--yellow);
+      box-shadow: 0 12px 26px rgba(255, 218, 61, 0.18);
+    }
+
+    .setup-chip:has(.setup-radio:focus-visible) {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+    .setup-custom-chip {
+      gap: 10px;
+      padding-right: 10px;
+    }
+
+    .custom-count-input {
+      display: none;
+      width: 96px;
+      min-height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(11, 9, 40, 0.28);
+      color: var(--text);
+      padding: 0 12px;
+      font-weight: 900;
+      outline: none;
+    }
+
+    .setup-custom-chip:has(.setup-radio:checked) .custom-count-input {
+      display: inline-flex;
+    }
+
+    .custom-count-input:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+
+
+    .deck-picker-panel {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .deck-picker-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .deck-picker-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing: -0.02em;
+    }
+
+    .deck-picker-meta {
+      color: var(--muted-2);
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .deck-choice-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .deck-choice {
+      position: relative;
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) 42px;
+      align-items: center;
+      gap: 14px;
+      min-height: 76px;
+      padding: 12px 14px;
+      border: 2px solid transparent;
+      border-radius: 18px;
+      background: rgba(11, 9, 40, 0.18);
+      color: var(--text);
+      cursor: pointer;
+      transition: background var(--transition), border var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .deck-choice:hover {
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-1px);
+    }
+
+    .deck-choice:has(.deck-checkbox:checked) {
+      border-color: rgba(141, 152, 255, 0.72);
+      background: rgba(108, 124, 255, 0.10);
+      box-shadow: 0 14px 32px rgba(108, 124, 255, 0.10);
+    }
+
+    .deck-choice:has(.deck-checkbox:focus-visible) {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+    .deck-checkbox {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .deck-choice-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(141, 152, 255, 0.18);
+      color: #a9d6ff;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .deck-choice-main {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .deck-choice-title {
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 950;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .deck-choice-subtitle {
+      color: var(--muted-2);
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .deck-choice-toggle {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.72);
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-size: 17px;
+      font-weight: 950;
+      justify-self: end;
+    }
+
+    .deck-choice-toggle::before {
+      content: "+";
+      transform: translateY(-1px);
+    }
+
+    .deck-choice:has(.deck-checkbox:checked) .deck-choice-toggle {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: rgba(255, 255, 255, 0.94);
+      color: #161633;
+    }
+
+    .deck-choice:has(.deck-checkbox:checked) .deck-choice-toggle::before {
+      content: "✓";
+      transform: none;
+    }
+
+    .deck-picker-empty {
+      padding: 18px;
+      border: 1px dashed rgba(255, 255, 255, 0.28);
+      border-radius: 18px;
+      color: var(--muted);
+      background: rgba(11, 9, 40, 0.20);
+      text-align: center;
+      font-weight: 850;
+    }
+
+    .learn-start-note {
+      width: min(980px, 100%);
+      margin: 14px auto 0;
+      color: var(--muted-2);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .learn-start-actions {
+      margin-top: 18px;
+    }
+
+    .learn-back-button {
+      min-height: 38px;
+      padding: 0 14px;
+      font-size: 14px;
+    }
+
+    .typing-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .typing-input {
+      min-height: 58px;
+      font-size: 18px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .answer-title {
       margin: 34px 0 16px;
       color: var(--text);
@@ -852,18 +1261,55 @@
       max-width: 560px;
     }
 
+    .mini-deck-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+      text-align: left;
+    }
+
+    .mini-deck-button {
+      width: 100%;
+      min-height: 58px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.32);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 16px;
+      font-weight: 900;
+      text-align: left;
+    }
+
+    .mini-deck-button small {
+      color: var(--muted);
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .mini-deck-button:hover {
+      border-color: var(--yellow);
+      background: rgba(255, 218, 61, 0.1);
+    }
+
     .toast {
       position: fixed;
       left: 50%;
       bottom: 24px;
-      transform: translateX(-50%) translateY(120%);
+      transform: translateX(-50%) translateY(calc(100% + 48px));
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
       background: rgba(255, 255, 255, 0.96);
       color: #121530;
       border-radius: 999px;
       padding: 10px 12px 10px 18px;
       font-weight: 950;
       box-shadow: 0 18px 60px rgba(0, 0, 0, 0.38);
-      transition: transform 220ms ease;
+      transition: transform 220ms ease, opacity 180ms ease, visibility 0s linear 220ms;
       z-index: 50;
       max-width: calc(100% - 32px);
       display: inline-flex;
@@ -873,6 +1319,10 @@
 
     .toast.show {
       transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: transform 220ms ease, opacity 180ms ease;
     }
 
     .toast button {
@@ -909,6 +1359,35 @@
       color: var(--muted);
       font-weight: 850;
       font-size: 18px;
+    }
+
+    .session-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      width: min(720px, 100%);
+    }
+
+    .session-summary-item {
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.28);
+    }
+
+    .session-summary-label {
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .session-summary-value {
+      margin-top: 6px;
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 950;
     }
 
     .modal-backdrop {
@@ -954,16 +1433,400 @@
       margin-top: 8px;
     }
 
+
+    .library-import-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(260px, 0.55fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+
+    .library-drop-zone {
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 28px;
+      border: 2px dashed rgba(255, 255, 255, 0.28);
+      border-radius: 24px;
+      background: rgba(11, 9, 40, 0.28);
+      transition: border var(--transition), background var(--transition), transform var(--transition);
+    }
+
+    .library-drop-zone.drag-over {
+      border-color: var(--yellow);
+      background: rgba(255, 218, 61, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .library-drop-zone h2 {
+      margin: 12px 0 8px;
+      font-size: clamp(26px, 4vw, 38px);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+    }
+
+    .library-drop-zone p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 520px;
+    }
+
+    .drop-icon {
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--primary), #42d98b);
+      color: #fff;
+      font-size: 34px;
+      font-weight: 950;
+      box-shadow: 0 18px 40px rgba(108, 124, 255, 0.25);
+    }
+
+    .inline-file-label {
+      color: var(--yellow);
+      font-weight: 950;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+
+    .library-settings {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(11, 9, 40, 0.24);
+    }
+
+    .library-settings-title,
+    .library-heading {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .library-import-status {
+      min-height: 44px;
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .library-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .library-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.28);
+    }
+
+    .library-card.active-deck {
+      border-color: rgba(255, 218, 61, 0.8);
+      box-shadow: 0 0 0 3px rgba(255, 218, 61, 0.12);
+    }
+
+    .library-card-main {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .library-card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .library-card-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      overflow-wrap: anywhere;
+    }
+
+    .library-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .library-card-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .library-rename-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      max-width: 560px;
+    }
+
+    .library-empty-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+
+    .sidebar-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 2px 4px 10px;
+      color: var(--text);
+    }
+
+    .sidebar-icon-button {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text);
+      font-size: 26px;
+      font-weight: 900;
+      display: grid;
+      place-items: center;
+    }
+
+    .sidebar-icon-button:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .sidebar-search-mark {
+      font-size: 30px;
+      font-weight: 950;
+      line-height: 1;
+      opacity: 0.98;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      margin: 12px 0;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .sidebar-section-title {
+      margin: 10px 8px 8px;
+      color: var(--muted);
+      font-weight: 950;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-button,
+    .sidebar-folder-button,
+    .new-folder-button {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-icon,
+    .folder-icon {
+      width: 26px;
+      display: inline-grid;
+      place-items: center;
+      font-size: 18px;
+      opacity: 0.96;
+    }
+
+    .folder-list {
+      display: grid;
+      gap: 4px;
+    }
+
+    .sidebar-folder-button,
+    .new-folder-button {
+      width: 100%;
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 850;
+      text-align: left;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+    }
+
+    .sidebar-folder-button:hover,
+    .new-folder-button:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.075);
+    }
+
+    .sidebar-folder-button.active-filter {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .library-card-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .library-card-actions .favorite-active {
+      color: #10132d;
+      background: var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    .folder-tag {
+      border-color: rgba(141, 152, 255, 0.38);
+      color: var(--muted);
+    }
+
+    .mode-panel {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .mode-launcher {
+      display: grid;
+      gap: 22px;
+    }
+
+    .mode-title-row {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .match-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .match-column {
+      display: grid;
+      gap: 10px;
+    }
+
+    .match-option {
+      min-height: 68px;
+      border-radius: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.16);
+      background: rgba(11, 9, 40, 0.22);
+      color: var(--text);
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 850;
+      line-height: 1.35;
+      transition: background var(--transition), border var(--transition), transform var(--transition), opacity var(--transition);
+    }
+
+    .match-option:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: rgba(141, 152, 255, 0.72);
+      background: rgba(108, 124, 255, 0.12);
+    }
+
+    .match-option.selected {
+      border-color: var(--yellow);
+      background: rgba(255, 218, 61, 0.14);
+    }
+
+    .match-option.matched {
+      opacity: 0.35;
+      text-decoration: line-through;
+    }
+
+    .flash-mode-shell {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .flash-mode-shell .flash-card {
+      min-height: min(560px, calc(100vh - 330px));
+      display: grid;
+      place-items: center;
+    }
+
+    .flash-keyboard-help {
+      margin: 14px auto 0;
+      color: var(--muted-2);
+      text-align: center;
+      font-weight: 850;
+      font-size: 14px;
+    }
+
     @media (max-width: 980px) {
+      .app {
+        width: min(1420px, calc(100% - 32px));
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
       .topbar {
-        align-items: stretch;
-        flex-direction: column;
+        position: static;
+        min-height: 0;
       }
 
       .brand,
       .topbar-actions {
         min-width: 0;
-        justify-content: center;
+      }
+
+      .nav {
+        flex-direction: row;
+        align-items: center;
+        overflow-x: auto;
+        border-radius: 999px;
+      }
+
+      .sidebar-top-actions,
+      .sidebar-divider,
+      .sidebar-section-title,
+      .folder-list,
+      .new-folder-button {
+        display: none;
+      }
+
+      .nav-button {
+        width: auto;
+        text-align: center;
+        border-radius: 999px;
+      }
+
+      .topbar-actions {
+        flex-direction: row;
+        align-items: center;
+        margin-top: 0;
+      }
+
+      .mini-stat,
+      .clear-button {
+        width: auto;
       }
 
       .hero-grid {
@@ -990,6 +1853,21 @@
         padding-top: 16px;
       }
 
+      .topbar {
+        padding: 14px;
+        border-radius: 22px;
+      }
+
+      .topbar-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .mini-stat,
+      .clear-button {
+        width: 100%;
+      }
+
       .panel-header,
       .panel-body,
       .learn-card {
@@ -999,7 +1877,8 @@
 
       .field-grid,
       .stats-grid,
-      .answer-grid {
+      .answer-grid,
+      .setup-option-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1007,6 +1886,16 @@
       .backup-box {
         align-items: stretch;
         flex-direction: column;
+      }
+
+      .library-import-grid,
+      .library-card,
+      .library-rename-row {
+        grid-template-columns: 1fr;
+      }
+
+      .library-card-actions {
+        justify-content: flex-start;
       }
 
       .cards-toolbar {
@@ -1036,8 +1925,150 @@
         flex-direction: column;
       }
 
+      .typing-form {
+        grid-template-columns: 1fr;
+      }
+
+      .session-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .modal {
         padding: 22px;
+      }
+    }
+
+
+    .history-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .history-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(11, 9, 40, 0.24);
+    }
+
+    .history-card h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .history-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .history-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      .app {
+        width: 100%;
+        padding: 0 0 32px;
+        gap: 0;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        border-radius: 0 0 22px 22px;
+        border-left: 0;
+        border-right: 0;
+        max-height: none;
+        overflow: visible;
+        gap: 12px;
+      }
+
+      main {
+        width: min(100% - 20px, 980px);
+        margin: 16px auto 0;
+      }
+
+      .brand-title {
+        font-size: 20px;
+      }
+
+      .nav {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 8px;
+        border-radius: 999px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .nav-button {
+        min-width: max-content;
+        padding: 12px 15px;
+        border-radius: 999px;
+      }
+
+      .nav-button .nav-icon {
+        display: none;
+      }
+
+      .sidebar-divider,
+      .sidebar-section-title,
+      .folder-list,
+      .new-folder-button {
+        display: none !important;
+      }
+
+      .section-title {
+        font-size: clamp(30px, 9vw, 44px);
+      }
+
+      .panel {
+        border-radius: 22px;
+      }
+
+      .panel-header,
+      .panel-body {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .library-card-actions,
+      .button-row,
+      .history-stats {
+        justify-content: stretch;
+      }
+
+      .library-card-actions .small-button,
+      .button-row .btn {
+        flex: 1 1 auto;
+      }
+
+      .history-card {
+        grid-template-columns: 1fr;
+      }
+
+      .flash-card {
+        width: 100%;
+        min-height: 52vh;
+      }
+
+      .flash-text {
+        font-size: clamp(30px, 10vw, 54px);
       }
     }
 
@@ -1057,32 +2088,39 @@
 <body>
   <div class="app">
     <header class="topbar">
+      <div class="sidebar-top-actions" aria-hidden="true">
+        <button class="sidebar-icon-button" type="button" title="Menu">☰</button>
+        <span class="sidebar-search-mark">Q</span>
+      </div>
+
       <div class="brand" aria-label="Study Cards">
         <div class="brand-logo" aria-hidden="true">S</div>
         <div class="brand-title">Study Cards</div>
       </div>
 
-      <nav class="nav" aria-label="Study modes" role="tablist">
-        <button class="nav-button" id="tab-import" type="button" role="tab" aria-selected="true" aria-controls="importView" tabindex="0" data-view-target="import">Import</button>
-        <button class="nav-button" id="tab-cards" type="button" role="tab" aria-selected="false" aria-controls="cardsView" tabindex="-1" data-view-target="cards">Cards</button>
-        <button class="nav-button" id="tab-flashcards" type="button" role="tab" aria-selected="false" aria-controls="flashcardsView" tabindex="-1" data-view-target="flashcards">Flashcards</button>
-        <button class="nav-button" id="tab-learn" type="button" role="tab" aria-selected="false" aria-controls="learnView" tabindex="-1" data-view-target="learn">Learn</button>
-        <button class="nav-button" id="tab-export" type="button" role="tab" aria-selected="false" aria-controls="exportView" tabindex="-1" data-view-target="export">Export</button>
-      </nav>
+      <nav class="nav" aria-label="Study navigation" role="tablist">
+        <button class="nav-button" id="tab-library" type="button" role="tab" aria-selected="true" aria-controls="libraryView" tabindex="0" data-view-target="library"><span class="nav-icon" aria-hidden="true">⌂</span><span>My Library</span></button>
+        <button class="nav-button" id="tab-import" type="button" role="tab" aria-selected="false" aria-controls="importView" tabindex="-1" data-view-target="import"><span class="nav-icon" aria-hidden="true">＋</span><span>Import</span></button>
 
-      <div class="topbar-actions">
-        <div class="mini-stat" aria-live="polite">
-          Cards
-          <strong id="headerCardCount">0</strong>
-        </div>
-        <button class="icon-button" id="resetAllButton" type="button" title="Delete all cards" aria-label="Delete all cards">
-          ✕
-        </button>
-      </div>
+        <div class="sidebar-divider" aria-hidden="true"></div>
+        <div class="sidebar-section-title">Your folders</div>
+        <div class="folder-list" id="folderNavList" aria-label="Library folders"></div>
+        <button class="new-folder-button" id="newFolderButton" type="button"><span class="folder-icon" aria-hidden="true">＋</span><span>New folder</span></button>
+
+        <div class="sidebar-divider" aria-hidden="true"></div>
+        <div class="sidebar-section-title">Start here</div>
+        <button class="nav-button" id="tab-flashcards" type="button" role="tab" aria-selected="false" aria-controls="flashcardsView" tabindex="-1" data-view-target="flashcards"><span class="nav-icon" aria-hidden="true">▱</span><span>Flashcards</span></button>
+        <button class="nav-button" id="tab-learn" type="button" role="tab" aria-selected="false" aria-controls="learnView" tabindex="-1" data-view-target="learn"><span class="nav-icon" aria-hidden="true">✦</span><span>Learn</span></button>
+        <button class="nav-button" id="tab-test" type="button" role="tab" aria-selected="false" aria-controls="testView" tabindex="-1" data-view-target="test"><span class="nav-icon" aria-hidden="true">✓</span><span>Test</span></button>
+        <button class="nav-button" id="tab-match" type="button" role="tab" aria-selected="false" aria-controls="matchView" tabindex="-1" data-view-target="match"><span class="nav-icon" aria-hidden="true">⋈</span><span>Match</span></button>
+        <button class="nav-button" id="tab-write" type="button" role="tab" aria-selected="false" aria-controls="writeView" tabindex="-1" data-view-target="write"><span class="nav-icon" aria-hidden="true">✎</span><span>Write</span></button>
+        <button class="nav-button" id="tab-history" type="button" role="tab" aria-selected="false" aria-controls="historyView" tabindex="-1" data-view-target="history"><span class="nav-icon" aria-hidden="true">◷</span><span>History</span></button>
+        <button class="nav-button" id="tab-export" type="button" role="tab" aria-selected="false" aria-controls="exportView" tabindex="-1" data-view-target="export"><span class="nav-icon" aria-hidden="true">⇩</span><span>Export</span></button>
+      </nav>
     </header>
 
     <main>
-      <section class="view active" id="importView" role="tabpanel" aria-labelledby="tab-import">
+      <section class="view" id="importView" role="tabpanel" aria-labelledby="tab-import" hidden>
         <div class="hero-grid">
           <div class="panel">
             <div class="panel-header">
@@ -1123,6 +2161,11 @@
 
               <textarea class="textarea" id="importText" spellcheck="false" aria-label="Import text"></textarea>
 
+              <div class="import-example" aria-label="Import example">
+                Example format:
+                <code>Question [tab] Answer<br />What is photosynthesis? [tab] Plants making food from light</code>
+              </div>
+
               <div class="file-import-box">
                 <div>
                   <div class="file-name" id="importFileName">No .txt file selected.</div>
@@ -1158,11 +2201,59 @@
         </div>
       </section>
 
+      <section class="view active" id="libraryView" role="tabpanel" aria-labelledby="tab-library">
+        <div class="panel">
+          <div class="panel-header">
+            <h1 class="section-title">My Library</h1>
+            <p class="section-subtitle">Drag in multiple .txt files. Each file becomes one study set, and the deck name is taken from the file name.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="library-import-grid">
+              <div class="library-drop-zone" id="libraryDropZone" role="button" tabindex="0" aria-label="Drag text files here or choose files">
+                <div>
+                  <div class="drop-icon" aria-hidden="true">+</div>
+                  <h2>Drag .txt files here</h2>
+                  <p>Drop one file or many files at once, or <label class="inline-file-label" for="libraryFileInput">choose files</label>. Each file should use the same Quizlet-style format.</p>
+                  <input class="file-input" id="libraryFileInput" type="file" accept=".txt,text/plain" multiple />
+                </div>
+              </div>
+
+              <div class="library-settings" aria-label="Library import settings">
+                <h2 class="library-settings-title">File import settings</h2>
+                <div class="field">
+                  <label for="libraryTermSeparator">Separator between term and definition</label>
+                  <select class="select" id="libraryTermSeparator">
+                    <option value="tab" selected>Tab</option>
+                    <option value="comma">Comma</option>
+                    <option value="semicolon">Semicolon</option>
+                    <option value="pipe">Pipe |</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="libraryCardSeparator">Separator between cards</label>
+                  <select class="select" id="libraryCardSeparator">
+                    <option value="newline" selected>New line</option>
+                    <option value="emptyline">Empty line</option>
+                  </select>
+                </div>
+                <div class="form-help">File names become deck names. Example: <strong>biology-unit-1.txt</strong> becomes <strong>biology-unit-1</strong>.</div>
+              </div>
+            </div>
+
+            <div class="library-import-status" id="libraryImportStatus" aria-live="polite">No files imported yet. Drag .txt files here to build your library.</div>
+
+            <h2 class="library-heading">Your study sets</h2>
+            <div class="library-list" id="libraryList" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="view" id="cardsView" role="tabpanel" aria-labelledby="tab-cards" hidden>
         <div class="panel">
           <div class="panel-header">
             <h1 class="section-title">Your cards</h1>
-            <p class="section-subtitle">Search, edit, favorite, delete, and review what is due next.</p>
+            <p class="section-subtitle">Search, edit, delete, and track your study progress.</p>
           </div>
 
           <div class="panel-body">
@@ -1173,7 +2264,6 @@
             <div class="cards-toolbar">
               <input class="input" id="cardSearchInput" type="search" placeholder="Search cards..." aria-label="Search cards" />
               <div class="button-row compact">
-                <button class="btn btn-secondary" id="studyFavoritesButton" type="button">Study Favorites</button>
                 <button class="btn btn-secondary" id="studyAllButton" type="button">Study All</button>
               </div>
             </div>
@@ -1184,23 +2274,29 @@
       </section>
 
       <section class="view" id="flashcardsView" role="tabpanel" aria-labelledby="tab-flashcards" hidden>
-        <div class="study-shell">
-          <div class="flash-progress" id="flashProgress" aria-live="polite">0 / 0</div>
+        <div class="study-shell flash-mode-shell">
+          <div id="flashSetup"></div>
 
-          <button class="flash-card" id="flashCardButton" type="button" aria-label="Flip flashcard">
-            <div class="flash-content" id="flashCardContent"></div>
-          </button>
+          <div id="flashStudyArea">
+            <div class="flash-progress" id="flashProgress" aria-live="polite">0 / 0</div>
 
-          <div class="button-row center-actions">
-            <button class="btn btn-secondary" id="previousFlashButton" type="button">Previous</button>
-            <button class="btn btn-primary" id="flipFlashButton" type="button">Flip</button>
-            <button class="btn btn-secondary" id="nextFlashButton" type="button">Next</button>
-            <button class="btn btn-secondary" id="shuffleFlashButton" type="button">Shuffle</button>
-          </div>
+            <button class="flash-card" id="flashCardButton" type="button" aria-label="Flip flashcard">
+              <div class="flash-content" id="flashCardContent"></div>
+            </button>
 
-          <div class="button-row center-actions">
-            <button class="btn btn-secondary" id="markLearningButton" type="button">Still learning</button>
-            <button class="btn btn-secondary" id="markKnownButton" type="button">I know this</button>
+            <div class="flash-keyboard-help">Keyboard: Space flips • Left/Right moves cards</div>
+
+            <div class="button-row center-actions">
+              <button class="btn btn-secondary" id="previousFlashButton" type="button">Previous</button>
+              <button class="btn btn-primary" id="flipFlashButton" type="button">Flip</button>
+              <button class="btn btn-secondary" id="nextFlashButton" type="button">Next</button>
+              <button class="btn btn-secondary" id="shuffleFlashButton" type="button">Shuffle</button>
+            </div>
+
+            <div class="button-row center-actions">
+              <button class="btn btn-secondary" id="markLearningButton" type="button">Still learning</button>
+              <button class="btn btn-secondary" id="markKnownButton" type="button">I know this</button>
+            </div>
           </div>
         </div>
       </section>
@@ -1208,6 +2304,30 @@
       <section class="view" id="learnView" role="tabpanel" aria-labelledby="tab-learn" hidden>
         <div class="learn-top" id="learnTop"></div>
         <div id="learnContent"></div>
+      </section>
+
+      <section class="view" id="testView" role="tabpanel" aria-labelledby="tab-test" hidden>
+        <div id="testContent"></div>
+      </section>
+
+      <section class="view" id="matchView" role="tabpanel" aria-labelledby="tab-match" hidden>
+        <div id="matchContent"></div>
+      </section>
+
+      <section class="view" id="writeView" role="tabpanel" aria-labelledby="tab-write" hidden>
+        <div id="writeContent"></div>
+      </section>
+
+      <section class="view" id="historyView" role="tabpanel" aria-labelledby="tab-history" hidden>
+        <div class="panel">
+          <div class="panel-header">
+            <h1 class="section-title">Practice history</h1>
+            <p class="section-subtitle">Every Learn, Test, Write, Match, and Flashcard practice you finish is saved here and mirrored into Google Sheets.</p>
+          </div>
+          <div class="panel-body">
+            <div class="history-list" id="historyList" aria-live="polite"></div>
+          </div>
+        </div>
       </section>
 
       <section class="view" id="exportView" role="tabpanel" aria-labelledby="tab-export" hidden>
@@ -1254,7 +2374,7 @@
           <label for="editDefinition">Definition</label>
           <textarea class="textarea" id="editDefinition" rows="4"></textarea>
         </div>
-        <div class="form-help">Saving keeps the card’s progress, favorites, and review schedule.</div>
+        <div class="form-help">Saving keeps the card’s progress and review schedule.</div>
         <div class="modal-actions">
           <button class="btn btn-secondary" id="cancelEditButton" type="button">Cancel</button>
           <button class="btn btn-primary" type="submit">Save Changes</button>
@@ -1268,7 +2388,9 @@
       "use strict";
 
       const STORAGE_KEY = "study_cards_app_v2";
+      const LIBRARY_STORAGE_KEY = "study_cards_library_v1";
       const LEGACY_STORAGE_KEY = "study_cards_app_v1";
+      const HISTORY_STORAGE_KEY = "study_cards_history_v1";
       const REVIEW_INTERVAL_DAYS = [1, 2, 4, 7, 14, 30, 60];
 
       const SAMPLE_IMPORT_TEXT = [
@@ -1290,34 +2412,82 @@
 
       const app = {
         cards: [],
-        activeView: "import",
-        cardFilter: "all",
+        libraryDecks: [],
+        libraryFolders: [],
+        libraryFilter: "all",
+        practiceHistory: [],
+        activeDeckId: null,
+        activeView: "library",
         editingCardId: null,
         lastFocusedElement: null,
         undoDelete: null,
+        undoLibraryDelete: null,
         flash: {
           order: [],
           index: 0,
-          flipped: false
+          flipped: false,
+          started: false,
+          selectedDeckIds: []
+        },
+        match: {
+          active: false,
+          selectedDeckIds: [],
+          cards: [],
+          selectedTermId: null,
+          matchedIds: [],
+          attempts: 0
         },
         learn: createEmptyLearnState()
       };
 
       const elements = {};
+      const sheetStorage = {
+        enabled: false,
+        loaded: false,
+        values: {},
+        saveTimers: {}
+      };
+      let learnAdvanceTimeoutId = null;
+      let learnCountdownIntervalId = null;
 
       document.addEventListener("DOMContentLoaded", init);
 
       function init() {
         cacheElements();
-        loadCards();
         bindEvents();
 
-        resetFlashOrder();
-        renderAll();
+        loadSheetStorage().then(function () {
+          loadCards();
+          loadLibrary();
+          loadHistory();
+          resetFlashOrder();
+          renderAll();
+          switchView("library");
 
-        if (elements.importText.value.trim()) {
-          previewImport();
+          if (elements.importText.value.trim()) {
+            previewImport();
+          }
+        });
+      }
+
+      function isSheetStorageAvailable() {
+        return false;
+      }
+
+      function loadSheetStorage() {
+        return Promise.resolve();
+      }
+
+      function getStoredValue(key) {
+        if (sheetStorage.enabled && Object.prototype.hasOwnProperty.call(sheetStorage.values, key)) {
+          return sheetStorage.values[key];
         }
+        return localStorage.getItem(key);
+      }
+
+      function setStoredValue(key, value) {
+        localStorage.setItem(key, value);
+        sheetStorage.values[key] = value;
       }
 
       function cacheElements() {
@@ -1327,9 +2497,14 @@
         elements.navButtons = Array.from(document.querySelectorAll('[role="tab"][data-view-target]'));
         elements.views = {
           import: document.getElementById("importView"),
+          library: document.getElementById("libraryView"),
           cards: document.getElementById("cardsView"),
           flashcards: document.getElementById("flashcardsView"),
           learn: document.getElementById("learnView"),
+          test: document.getElementById("testView"),
+          match: document.getElementById("matchView"),
+          write: document.getElementById("writeView"),
+          history: document.getElementById("historyView"),
           export: document.getElementById("exportView")
         };
 
@@ -1344,12 +2519,22 @@
         elements.loadSampleButton = document.getElementById("loadSampleButton");
         elements.previewBox = document.getElementById("previewBox");
 
+        elements.libraryFileInput = document.getElementById("libraryFileInput");
+        elements.libraryDropZone = document.getElementById("libraryDropZone");
+        elements.libraryImportStatus = document.getElementById("libraryImportStatus");
+        elements.libraryTermSeparator = document.getElementById("libraryTermSeparator");
+        elements.libraryCardSeparator = document.getElementById("libraryCardSeparator");
+        elements.libraryList = document.getElementById("libraryList");
+        elements.folderNavList = document.getElementById("folderNavList");
+        elements.newFolderButton = document.getElementById("newFolderButton");
+
         elements.statsGrid = document.getElementById("statsGrid");
         elements.cardSearchInput = document.getElementById("cardSearchInput");
         elements.cardList = document.getElementById("cardList");
-        elements.studyFavoritesButton = document.getElementById("studyFavoritesButton");
         elements.studyAllButton = document.getElementById("studyAllButton");
 
+        elements.flashSetup = document.getElementById("flashSetup");
+        elements.flashStudyArea = document.getElementById("flashStudyArea");
         elements.flashProgress = document.getElementById("flashProgress");
         elements.flashCardButton = document.getElementById("flashCardButton");
         elements.flashCardContent = document.getElementById("flashCardContent");
@@ -1362,6 +2547,10 @@
 
         elements.learnTop = document.getElementById("learnTop");
         elements.learnContent = document.getElementById("learnContent");
+        elements.testContent = document.getElementById("testContent");
+        elements.matchContent = document.getElementById("matchContent");
+        elements.historyList = document.getElementById("historyList");
+        elements.writeContent = document.getElementById("writeContent");
 
         elements.exportText = document.getElementById("exportText");
         elements.copyExportButton = document.getElementById("copyExportButton");
@@ -1380,6 +2569,7 @@
       function bindEvents() {
         elements.navButtons.forEach(function (button, index) {
           button.addEventListener("click", function () {
+            if (button.dataset.viewTarget === "library") { app.libraryFilter = "all"; }
             switchView(button.dataset.viewTarget, { focusTab: false });
           });
 
@@ -1388,7 +2578,9 @@
           });
         });
 
-        elements.resetAllButton.addEventListener("click", resetAllCards);
+        if (elements.resetAllButton) {
+          elements.resetAllButton.addEventListener("click", resetAllCards);
+        }
 
         elements.previewButton.addEventListener("click", previewImport);
         elements.importButton.addEventListener("click", importCards);
@@ -1405,22 +2597,42 @@
         elements.cardSeparator.addEventListener("change", previewImport);
         elements.importText.addEventListener("input", debounce(previewImport, 180));
 
+        elements.libraryFileInput.addEventListener("change", handleLibraryFileInputChange);
+        elements.libraryDropZone.addEventListener("click", function (event) {
+          if (event.target.tagName.toLowerCase() !== "label") {
+            elements.libraryFileInput.click();
+          }
+        });
+        elements.libraryDropZone.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            elements.libraryFileInput.click();
+          }
+        });
+        elements.libraryDropZone.addEventListener("dragover", handleLibraryDragOver);
+        elements.libraryDropZone.addEventListener("dragleave", handleLibraryDragLeave);
+        elements.libraryDropZone.addEventListener("drop", handleLibraryDrop);
+        elements.libraryList.addEventListener("click", handleLibraryClick);
+        if (elements.folderNavList) {
+          elements.folderNavList.addEventListener("click", handleFolderNavClick);
+        }
+        if (elements.newFolderButton) {
+          elements.newFolderButton.addEventListener("click", createLibraryFolderPrompt);
+        }
+
         elements.cardSearchInput.addEventListener("input", renderCards);
 
-        elements.studyFavoritesButton.addEventListener("click", function () {
-          app.cardFilter = "favorites";
-          resetFlashOrder();
-          switchView("flashcards");
-        });
-
         elements.studyAllButton.addEventListener("click", function () {
-          app.cardFilter = "all";
+          app.flash.started = true;
+          app.flash.selectedDeckIds = app.activeDeckId ? [app.activeDeckId] : [];
           resetFlashOrder();
           switchView("flashcards");
         });
 
         elements.cardList.addEventListener("click", handleCardListClick);
 
+        elements.flashSetup.addEventListener("click", handleFlashSetupClick);
+        elements.flashSetup.addEventListener("change", handleFlashSetupChange);
         elements.flashCardButton.addEventListener("click", flipFlashCard);
         elements.flipFlashButton.addEventListener("click", flipFlashCard);
         elements.previousFlashButton.addEventListener("click", previousFlashCard);
@@ -1434,6 +2646,17 @@
         });
 
         elements.learnContent.addEventListener("click", handleLearnClick);
+        elements.learnContent.addEventListener("change", handleLearnSettingsChange);
+        elements.learnContent.addEventListener("focusin", handleLearnFocusIn);
+        elements.learnContent.addEventListener("submit", handleLearnSubmit);
+        elements.testContent.addEventListener("click", handleSpecialStudyClick);
+        elements.testContent.addEventListener("change", handleSpecialStudyChange);
+        elements.testContent.addEventListener("focusin", handleSpecialStudyFocusIn);
+        elements.writeContent.addEventListener("click", handleSpecialStudyClick);
+        elements.writeContent.addEventListener("change", handleSpecialStudyChange);
+        elements.writeContent.addEventListener("focusin", handleSpecialStudyFocusIn);
+        elements.matchContent.addEventListener("click", handleMatchClick);
+        elements.matchContent.addEventListener("change", handleMatchSettingsChange);
 
         elements.copyExportButton.addEventListener("click", copyExportText);
         elements.downloadExportButton.addEventListener("click", downloadExportText);
@@ -1454,9 +2677,9 @@
         const lastIndex = elements.navButtons.length - 1;
         let nextIndex = currentIndex;
 
-        if (event.key === "ArrowRight") {
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
           nextIndex = currentIndex === lastIndex ? 0 : currentIndex + 1;
-        } else if (event.key === "ArrowLeft") {
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
           nextIndex = currentIndex === 0 ? lastIndex : currentIndex - 1;
         } else if (event.key === "Home") {
           nextIndex = 0;
@@ -1507,6 +2730,192 @@
         reader.readAsText(file);
       }
 
+      function handleLibraryFileInputChange(event) {
+        importFilesToLibrary(event.target.files);
+        elements.libraryFileInput.value = "";
+      }
+
+      function handleLibraryDragOver(event) {
+        event.preventDefault();
+        elements.libraryDropZone.classList.add("drag-over");
+      }
+
+      function handleLibraryDragLeave(event) {
+        if (!elements.libraryDropZone.contains(event.relatedTarget)) {
+          elements.libraryDropZone.classList.remove("drag-over");
+        }
+      }
+
+      function handleLibraryDrop(event) {
+        event.preventDefault();
+        elements.libraryDropZone.classList.remove("drag-over");
+        importFilesToLibrary(event.dataTransfer ? event.dataTransfer.files : []);
+      }
+
+      function importFilesToLibrary(fileList) {
+        const files = Array.from(fileList || []);
+        const textFiles = files.filter(isSupportedTextFile);
+
+        if (textFiles.length === 0) {
+          updateLibraryImportStatus("No .txt files found. Drag or choose plain text files.");
+          showToast("Please choose .txt files.");
+          return;
+        }
+
+        updateLibraryImportStatus("Reading " + textFiles.length + " file" + (textFiles.length === 1 ? "" : "s") + "...");
+
+        Promise.all(textFiles.map(readTextFileForLibrary))
+          .then(function (items) {
+            const now = new Date().toISOString();
+            let importedCount = 0;
+            let skippedFiles = 0;
+            let skippedCards = 0;
+            const importedNames = [];
+
+            items.forEach(function (item) {
+              if (item.error) {
+                skippedFiles += 1;
+                return;
+              }
+
+              const parsed = parseImportText(
+                item.text,
+                elements.libraryTermSeparator.value,
+                elements.libraryCardSeparator.value
+              );
+              const uniqueResult = getUniqueParsedCards(parsed.cards);
+              const cards = uniqueResult.uniqueCards.map(function (card) {
+                return createCard(card.term, card.definition);
+              });
+
+              skippedCards += parsed.errors.length + uniqueResult.duplicates.length;
+
+              if (cards.length === 0) {
+                skippedFiles += 1;
+                return;
+              }
+
+              const deckName = getUniqueDeckName(getDeckNameFromFileName(item.file.name));
+              const deck = {
+                id: createId(),
+                name: deckName,
+                cards: cards,
+                createdAt: now,
+                updatedAt: now,
+                favorite: false,
+                folder: "Unfiled"
+              };
+
+              app.libraryDecks.unshift(deck);
+              importedCount += 1;
+              importedNames.push(deckName);
+            });
+
+            app.libraryDecks.sort(compareLibraryDecks);
+
+            if (importedCount > 0 && !app.activeDeckId && app.cards.length === 0) {
+              const firstImportedDeck = app.libraryDecks.find(function (deck) {
+                return importedNames.indexOf(deck.name) !== -1;
+              });
+              if (firstImportedDeck) {
+                app.cards = cloneCards(firstImportedDeck.cards);
+                app.activeDeckId = firstImportedDeck.id;
+                app.flash.selectedDeckIds = [firstImportedDeck.id];
+                saveCards();
+              }
+            }
+
+            saveLibrary();
+            renderAll();
+
+            if (importedCount > 0) {
+              const summary = "Imported " + importedCount + " study set" + (importedCount === 1 ? "" : "s") + ".";
+              const skippedSummary = skippedFiles || skippedCards
+                ? " Skipped " + skippedFiles + " file" + (skippedFiles === 1 ? "" : "s") + " and " + skippedCards + " card" + (skippedCards === 1 ? "" : "s") + "."
+                : "";
+              updateLibraryImportStatus(summary + skippedSummary + " New sets: " + importedNames.slice(0, 4).join(", ") + (importedNames.length > 4 ? ", and more." : "."));
+              showToast(summary);
+            } else {
+              updateLibraryImportStatus("No study sets were imported. Check the file format and separator settings.");
+              showToast("No valid cards found in those files.");
+            }
+          })
+          .catch(function () {
+            updateLibraryImportStatus("Could not read one or more files.");
+            showToast("Could not read the selected files.");
+          });
+      }
+
+      function isSupportedTextFile(file) {
+        const fileName = file && file.name ? file.name.toLowerCase() : "";
+        return Boolean(file) && (file.type === "text/plain" || fileName.endsWith(".txt") || file.type === "");
+      }
+
+      function readTextFileForLibrary(file) {
+        return new Promise(function (resolve) {
+          const reader = new FileReader();
+
+          reader.onload = function () {
+            resolve({ file: file, text: String(reader.result || "") });
+          };
+
+          reader.onerror = function () {
+            resolve({ file: file, text: "", error: true });
+          };
+
+          reader.readAsText(file);
+        });
+      }
+
+      function getUniqueParsedCards(cards) {
+        const seen = new Set();
+        const uniqueCards = [];
+        const duplicates = [];
+
+        cards.forEach(function (card) {
+          const key = createCardKey(card.term, card.definition);
+
+          if (seen.has(key)) {
+            duplicates.push(card);
+            return;
+          }
+
+          seen.add(key);
+          uniqueCards.push(card);
+        });
+
+        return {
+          uniqueCards: uniqueCards,
+          duplicates: duplicates
+        };
+      }
+
+      function getDeckNameFromFileName(fileName) {
+        const name = String(fileName || "Study Set").replace(/\.[^/.]+$/, "").trim();
+        return name || "Study Set";
+      }
+
+      function getUniqueDeckName(baseName, currentDeckId) {
+        const base = String(baseName || "Study Set").trim() || "Study Set";
+        let candidate = base;
+        let suffix = 2;
+
+        while (app.libraryDecks.some(function (deck) {
+          return deck.id !== currentDeckId && normalizeAnswer(deck.name) === normalizeAnswer(candidate);
+        })) {
+          candidate = base + " (" + suffix + ")";
+          suffix += 1;
+        }
+
+        return candidate;
+      }
+
+      function updateLibraryImportStatus(message) {
+        if (elements.libraryImportStatus) {
+          elements.libraryImportStatus.textContent = message;
+        }
+      }
+
       function loadCards() {
         const loaded = readStoragePayload(STORAGE_KEY) || readStoragePayload(LEGACY_STORAGE_KEY);
 
@@ -1523,12 +2932,13 @@
             return normalizeCard(card);
           });
 
+        app.activeDeckId = typeof loaded.activeDeckId === "string" ? loaded.activeDeckId : null;
         saveCards();
       }
 
       function readStoragePayload(key) {
         try {
-          const rawData = localStorage.getItem(key);
+          const rawData = getStoredValue(key);
 
           if (!rawData) {
             return null;
@@ -1545,10 +2955,791 @@
         const payload = {
           version: 2,
           cards: app.cards,
+          activeDeckId: app.activeDeckId,
           savedAt: new Date().toISOString()
         };
 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        setStoredValue(STORAGE_KEY, JSON.stringify(payload));
+      }
+
+      function loadLibrary() {
+        const loaded = readStoragePayload(LIBRARY_STORAGE_KEY);
+
+        if (!loaded || !Array.isArray(loaded.decks)) {
+          app.libraryDecks = [];
+          return;
+        }
+
+        app.libraryFolders = Array.isArray(loaded.folders) ? loaded.folders.filter(function (name) {
+          return typeof name === "string" && name.trim();
+        }).map(function (name) {
+          return name.trim();
+        }) : [];
+
+        app.libraryDecks = loaded.decks
+          .filter(function (deck) {
+            return deck && typeof deck.name === "string" && Array.isArray(deck.cards);
+          })
+          .map(function (deck) {
+            return normalizeLibraryDeck(deck);
+          })
+          .sort(compareLibraryDecks);
+
+        if (app.activeDeckId && !getLibraryDeckById(app.activeDeckId)) {
+          app.activeDeckId = null;
+          saveCards();
+        }
+      }
+
+      function saveLibrary() {
+        const payload = {
+          version: 1,
+          decks: app.libraryDecks,
+          folders: app.libraryFolders,
+          savedAt: new Date().toISOString()
+        };
+
+        setStoredValue(LIBRARY_STORAGE_KEY, JSON.stringify(payload));
+        syncLibraryToSheets(payload);
+      }
+
+      function loadHistory() {
+        const loaded = readStoragePayload(HISTORY_STORAGE_KEY);
+        app.practiceHistory = loaded && Array.isArray(loaded.history)
+          ? loaded.history.filter(function (entry) { return entry && typeof entry.type === "string"; })
+          : [];
+      }
+
+      function saveHistory() {
+        const payload = {
+          version: 1,
+          history: app.practiceHistory.slice(0, 300),
+          savedAt: new Date().toISOString()
+        };
+        setStoredValue(HISTORY_STORAGE_KEY, JSON.stringify(payload));
+      }
+
+      function syncLibraryToSheets(payload) {
+        return;
+      }
+
+      function recordPractice(type, data) {
+        const total = Number(data.total || 0);
+        const correct = Number(data.correct || 0);
+        const wrong = Math.max(0, Number(data.wrong || (total - correct)));
+        const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+        const entry = {
+          id: createId(),
+          type: type,
+          date: new Date().toISOString(),
+          deckIds: Array.isArray(data.deckIds) ? data.deckIds : [],
+          deckNames: Array.isArray(data.deckNames) ? data.deckNames : getDeckNamesForIds(data.deckIds || []),
+          total: total,
+          correct: correct,
+          wrong: wrong,
+          accuracy: accuracy,
+          details: data.details || {}
+        };
+
+        app.practiceHistory.unshift(entry);
+        app.practiceHistory = app.practiceHistory.slice(0, 300);
+        saveHistory();
+        renderHistory();
+      }
+
+      function getDeckNamesForIds(deckIds) {
+        return (Array.isArray(deckIds) ? deckIds : []).map(function (deckId) {
+          const deck = getLibraryDeckById(deckId);
+          return deck ? deck.name : "Current cards";
+        });
+      }
+
+      function renderHistory() {
+        if (!elements.historyList) {
+          return;
+        }
+        if (!app.practiceHistory.length) {
+          elements.historyList.innerHTML = createEmptyStateHtml("No practice yet", "Start a Learn, Test, Write, Match, or Flashcards session and your results will appear here.");
+          return;
+        }
+        elements.historyList.innerHTML = app.practiceHistory.map(function (entry) {
+          return (
+            '<article class="history-card">' +
+              '<div>' +
+                '<h2>' + escapeHtml(formatPracticeType(entry.type)) + '</h2>' +
+                '<p>' + escapeHtml(formatDateTime(entry.date)) + ' • ' + escapeHtml((entry.deckNames || []).join(", ") || "Current cards") + '</p>' +
+              '</div>' +
+              '<div class="history-stats">' +
+                '<span class="badge">' + escapeHtml(String(entry.total)) + ' questions</span>' +
+                '<span class="badge mastered">' + escapeHtml(String(entry.accuracy)) + '%</span>' +
+                '<span class="badge">' + escapeHtml(String(entry.correct)) + ' correct</span>' +
+                '<span class="badge">' + escapeHtml(String(entry.wrong)) + ' wrong</span>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join("");
+      }
+
+      function formatPracticeType(type) {
+        const names = {
+          learn: "Learn",
+          test: "Test",
+          write: "Write",
+          match: "Match",
+          flashcard: "Flashcards"
+        };
+        return names[type] || type;
+      }
+
+      function normalizeLibraryDeck(deck) {
+        const now = new Date().toISOString();
+        const cards = deck.cards
+          .filter(function (card) {
+            return card && typeof card.term === "string" && typeof card.definition === "string";
+          })
+          .map(function (card) {
+            return normalizeCard(card);
+          });
+
+        return {
+          id: typeof deck.id === "string" && deck.id ? deck.id : createId(),
+          name: deck.name.trim() || "Untitled set",
+          cards: cards,
+          createdAt: typeof deck.createdAt === "string" ? deck.createdAt : now,
+          updatedAt: typeof deck.updatedAt === "string" ? deck.updatedAt : now,
+          favorite: Boolean(deck.favorite),
+          folder: typeof deck.folder === "string" && deck.folder.trim() ? deck.folder.trim() : "Unfiled"
+        };
+      }
+
+      function compareLibraryDecks(firstDeck, secondDeck) {
+        return new Date(secondDeck.updatedAt || 0) - new Date(firstDeck.updatedAt || 0);
+      }
+
+      function cloneCards(cards) {
+        return cards.map(function (card) {
+          return normalizeCard(JSON.parse(JSON.stringify(card)));
+        });
+      }
+
+      function getLibraryDeckById(deckId) {
+        return app.libraryDecks.find(function (deck) {
+          return deck.id === deckId;
+        }) || null;
+      }
+
+      function getLibraryDeckByName(name) {
+        const normalized = normalizeAnswer(name);
+        return app.libraryDecks.find(function (deck) {
+          return normalizeAnswer(deck.name) === normalized;
+        }) || null;
+      }
+
+      function saveCurrentSetToLibrary() {
+        const name = window.prompt("Name this study set:", "Study Set");
+        if (name === null) {
+          return;
+        }
+        const trimmedName = name.trim();
+
+        if (app.cards.length === 0) {
+          showToast("Import cards before saving a set.");
+          return;
+        }
+
+        if (!trimmedName) {
+          showToast("Name your study set first.");
+          return;
+        }
+
+        const existingDeck = getLibraryDeckByName(trimmedName);
+        const now = new Date().toISOString();
+
+        if (existingDeck) {
+          existingDeck.name = trimmedName;
+          existingDeck.cards = cloneCards(app.cards);
+          existingDeck.updatedAt = now;
+          app.activeDeckId = existingDeck.id;
+          showToast("Library set updated.");
+        } else {
+          const deck = {
+            id: createId(),
+            name: trimmedName,
+            cards: cloneCards(app.cards),
+            createdAt: now,
+            updatedAt: now
+          };
+          app.libraryDecks.unshift(deck);
+          app.activeDeckId = deck.id;
+          showToast("Saved to My Library.");
+        }
+
+        app.libraryDecks.sort(compareLibraryDecks);
+        saveLibrary();
+        saveCards();
+        renderAll();
+      }
+
+      function renderSidebarLists() {
+        if (!elements.folderNavList) {
+          return;
+        }
+
+        const folderNames = getLibraryFolderNames();
+        const filter = app.libraryFilter || "all";
+        const folderButtons = [
+          { label: "Recent sets", icon: "◷", filter: "recent" },
+          { label: "Favorites", icon: "★", filter: "favorites" }
+        ].concat(folderNames.map(function (name) {
+          return { label: name, icon: "▢", filter: "folder:" + name };
+        }));
+
+        elements.folderNavList.innerHTML = folderButtons.map(function (item) {
+          return (
+            '<button class="sidebar-folder-button ' + (filter === item.filter ? 'active-filter' : '') + '" type="button" data-library-filter="' + escapeAttribute(item.filter) + '">' +
+              '<span class="folder-icon" aria-hidden="true">' + escapeHtml(item.icon) + '</span>' +
+              '<span>' + escapeHtml(item.label) + '</span>' +
+            '</button>'
+          );
+        }).join("");
+      }
+
+      function getLibraryFolderNames() {
+        const names = new Set(["Physics", "Programming"]);
+        app.libraryFolders.forEach(function (name) {
+          if (name && name !== "Unfiled") {
+            names.add(name);
+          }
+        });
+        app.libraryDecks.forEach(function (deck) {
+          if (deck.folder && deck.folder !== "Unfiled") {
+            names.add(deck.folder);
+          }
+        });
+        return Array.from(names).sort(function (a, b) {
+          return a.localeCompare(b);
+        });
+      }
+
+      function getFilteredLibraryDecks() {
+        let decks = app.libraryDecks.slice().sort(compareLibraryDecks);
+        const filter = app.libraryFilter || "all";
+
+        if (filter === "favorites") {
+          decks = decks.filter(function (deck) {
+            return deck.favorite;
+          });
+        } else if (filter.indexOf("folder:") === 0) {
+          const folderName = filter.slice("folder:".length);
+          decks = decks.filter(function (deck) {
+            return (deck.folder || "Unfiled") === folderName;
+          });
+        } else if (filter === "recent") {
+          decks = decks.slice(0, 8);
+        }
+
+        return decks;
+      }
+
+      function getLibraryFilterTitle() {
+        const filter = app.libraryFilter || "all";
+        if (filter === "favorites") {
+          return "Favorite sets";
+        }
+        if (filter === "recent") {
+          return "Recent sets";
+        }
+        if (filter.indexOf("folder:") === 0) {
+          return "Folder: " + filter.slice("folder:".length);
+        }
+        return "Your study sets";
+      }
+
+      function renderLibrary() {
+        if (!elements.libraryList) {
+          return;
+        }
+
+        renderSidebarLists();
+        const visibleDecks = getFilteredLibraryDecks();
+        const heading = document.querySelector(".library-heading");
+        if (heading) {
+          heading.textContent = getLibraryFilterTitle();
+        }
+
+        if (app.libraryDecks.length === 0) {
+          elements.libraryList.innerHTML =
+            '<div class="empty-state">' +
+              '<h2>No study sets yet</h2>' +
+              '<p>Drag one or more .txt files into My Library. Each file will become a separate deck named after the file.</p>' +
+            '</div>';
+          return;
+        }
+
+        if (visibleDecks.length === 0) {
+          elements.libraryList.innerHTML =
+            '<div class="empty-state">' +
+              '<h2>No sets here yet</h2>' +
+              '<p>Try another folder or import a new file.</p>' +
+            '</div>';
+          return;
+        }
+
+        elements.libraryList.innerHTML = visibleDecks.map(function (deck) {
+          const isActive = deck.id === app.activeDeckId;
+          const folder = deck.folder || "Unfiled";
+          return (
+            '<article class="library-card ' + (isActive ? "active-deck" : "") + '" data-deck-id="' + escapeAttribute(deck.id) + '">' +
+              '<div class="library-card-main">' +
+                '<div class="library-card-title-row">' +
+                  '<h2 class="library-card-title">' + escapeHtml(deck.name) + '</h2>' +
+                  (isActive ? '<span class="badge mastered">Open now</span>' : '') +
+                '</div>' +
+                '<div class="library-card-meta library-card-meta-row">' +
+                  '<span class="badge">' + deck.cards.length + ' card' + (deck.cards.length === 1 ? '' : 's') + '</span>' +
+                  '<span class="badge">Updated ' + escapeHtml(formatDateTime(deck.updatedAt)) + '</span>' +
+                  '<span class="badge folder-tag">' + escapeHtml(folder) + '</span>' +
+                  (deck.favorite ? '<span class="badge mastered">Favorite</span>' : '') +
+                '</div>' +
+                '<div class="library-rename-row">' +
+                  '<input class="input library-name-input" type="text" value="' + escapeAttribute(deck.name) + '" aria-label="Rename ' + escapeAttribute(deck.name) + '" />' +
+                  '<button class="small-button" type="button" data-library-action="rename-deck">Save Name</button>' +
+                '</div>' +
+              '</div>' +
+              '<div class="library-card-actions">' +
+                '<button class="small-button ' + (deck.favorite ? 'favorite-active' : '') + '" type="button" data-library-action="favorite-deck">★</button>' +
+                '<button class="small-button" type="button" data-library-action="load-deck">Open</button>' +
+                '<button class="small-button" type="button" data-library-action="learn-deck">Learn</button>' +
+                '<button class="small-button" type="button" data-library-action="flash-deck">Flashcards</button>' +
+                '<button class="small-button" type="button" data-library-action="folder-deck">Folder</button>' +
+                '<button class="small-button" type="button" data-library-action="duplicate-deck">Duplicate</button>' +
+                '<button class="small-button" type="button" data-library-action="delete-deck">Delete</button>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join("");
+      }
+
+      function handleLibraryClick(event) {
+        const actionButton = event.target.closest("[data-library-action]");
+
+        if (!actionButton) {
+          return;
+        }
+
+        const action = actionButton.dataset.libraryAction;
+
+        const deckCard = actionButton.closest("[data-deck-id]");
+        const deckId = deckCard ? deckCard.dataset.deckId : null;
+
+        if (action === "load-deck") {
+          loadLibraryDeck(deckId);
+          return;
+        }
+
+        if (action === "rename-deck") {
+          const input = deckCard ? deckCard.querySelector(".library-name-input") : null;
+          renameLibraryDeck(deckId, input ? input.value : "");
+          return;
+        }
+
+        if (action === "learn-deck") {
+          prepareLearnWithDecks([deckId]);
+          return;
+        }
+
+        if (action === "flash-deck") {
+          prepareFlashcardsWithDecks([deckId]);
+          return;
+        }
+
+        if (action === "favorite-deck") {
+          toggleFavoriteDeck(deckId);
+          return;
+        }
+
+        if (action === "folder-deck") {
+          moveDeckToFolder(deckId);
+          return;
+        }
+
+        if (action === "duplicate-deck") {
+          duplicateLibraryDeck(deckId);
+          return;
+        }
+
+        if (action === "delete-deck") {
+          deleteLibraryDeck(deckId);
+        }
+      }
+
+      function handleFolderNavClick(event) {
+        const button = event.target.closest("[data-library-filter]");
+        if (!button) {
+          return;
+        }
+        app.libraryFilter = button.dataset.libraryFilter || "all";
+        switchView("library");
+        renderLibrary();
+      }
+
+      function createLibraryFolderPrompt() {
+        const name = window.prompt("New folder name:");
+        const trimmed = String(name || "").trim();
+        if (!trimmed) {
+          return;
+        }
+        if (app.libraryFolders.indexOf(trimmed) === -1) {
+          app.libraryFolders.push(trimmed);
+        }
+        app.libraryFilter = "folder:" + trimmed;
+        saveLibrary();
+        renderSidebarLists();
+        renderLibrary();
+      }
+
+      function toggleFavoriteDeck(deckId) {
+        const deck = getLibraryDeckById(deckId);
+        if (!deck) {
+          return;
+        }
+        deck.favorite = !deck.favorite;
+        deck.updatedAt = new Date().toISOString();
+        saveLibrary();
+        renderLibrary();
+        showToast(deck.favorite ? "Added to favorites." : "Removed from favorites.");
+      }
+
+      function moveDeckToFolder(deckId) {
+        const deck = getLibraryDeckById(deckId);
+        if (!deck) {
+          return;
+        }
+        const current = deck.folder || "Unfiled";
+        const name = window.prompt("Folder name:", current === "Unfiled" ? "" : current);
+        const trimmed = String(name || "").trim() || "Unfiled";
+        deck.folder = trimmed;
+        deck.updatedAt = new Date().toISOString();
+        if (trimmed !== "Unfiled" && app.libraryFolders.indexOf(trimmed) === -1) {
+          app.libraryFolders.push(trimmed);
+        }
+        saveLibrary();
+        renderSidebarLists();
+        renderLibrary();
+        showToast("Moved to " + trimmed + ".");
+      }
+
+      function duplicateLibraryDeck(deckId) {
+        const deck = getLibraryDeckById(deckId);
+        if (!deck) {
+          return;
+        }
+        const now = new Date().toISOString();
+        const copy = {
+          id: createId(),
+          name: getUniqueDeckName(deck.name + " Copy"),
+          cards: cloneCards(deck.cards).map(function (card) {
+            card.id = createId();
+            return card;
+          }),
+          createdAt: now,
+          updatedAt: now,
+          favorite: false,
+          folder: deck.folder || "Unfiled"
+        };
+        app.libraryDecks.unshift(copy);
+        saveLibrary();
+        renderAll();
+        showToast("Duplicated “" + deck.name + "”.");
+      }
+
+      function loadLibraryDeck(deckId) {
+        const deck = getLibraryDeckById(deckId);
+
+        if (!deck) {
+          showToast("Library set not found.");
+          return;
+        }
+
+        clearUndoDelete();
+        clearUndoLibraryDelete();
+        app.cards = cloneCards(deck.cards);
+        app.activeDeckId = deck.id;
+        app.flash.started = false;
+        app.flash.selectedDeckIds = [deck.id];
+        resetFlashOrder();
+        resetLearnSession();
+        saveCards();
+        renderAll();
+        switchView("cards");
+        showToast("Loaded “" + deck.name + "”.");
+      }
+
+
+      function getStudySetOptions() {
+        const decks = app.libraryDecks.slice().sort(compareLibraryDecks);
+
+        if (decks.length > 0) {
+          return decks;
+        }
+
+        if (app.cards.length > 0) {
+          return [{
+            id: "__current__",
+            name: "Current cards",
+            cards: app.cards,
+            updatedAt: new Date().toISOString()
+          }];
+        }
+
+        return [];
+      }
+
+      function getDefaultSelectedDeckIds(preferredIds) {
+        const sets = getStudySetOptions();
+        const validIds = new Set(sets.map(function (deck) {
+          return deck.id;
+        }));
+        const preferred = Array.isArray(preferredIds) ? preferredIds.filter(function (id) {
+          return validIds.has(id);
+        }) : [];
+
+        if (preferred.length > 0) {
+          return preferred;
+        }
+
+        if (app.activeDeckId && validIds.has(app.activeDeckId)) {
+          return [app.activeDeckId];
+        }
+
+        return sets.length > 0 ? [sets[0].id] : [];
+      }
+
+      function getSelectedDeckIdsFrom(container, inputName) {
+        return Array.from(container.querySelectorAll('input[name="' + inputName + '"]:checked'))
+          .map(function (input) {
+            return input.value;
+          });
+      }
+
+      function getCardsForDeckIds(deckIds) {
+        const ids = Array.isArray(deckIds) ? deckIds : [];
+
+        if (ids.indexOf("__current__") !== -1) {
+          return cloneCards(app.cards);
+        }
+
+        const cards = [];
+        const seenDeckIds = new Set();
+
+        ids.forEach(function (deckId) {
+          if (seenDeckIds.has(deckId)) {
+            return;
+          }
+
+          seenDeckIds.add(deckId);
+          const deck = getLibraryDeckById(deckId);
+
+          if (deck) {
+            cards.push.apply(cards, cloneCards(deck.cards));
+          }
+        });
+
+        return cards;
+      }
+
+      function activateCardsFromDeckIds(deckIds, options) {
+        const settings = options || {};
+        const selectedIds = getDefaultSelectedDeckIds(deckIds);
+        const cards = getCardsForDeckIds(selectedIds);
+
+        if (cards.length === 0) {
+          showToast("Choose at least one study set.");
+          return [];
+        }
+
+        if (selectedIds.indexOf("__current__") === -1) {
+          app.cards = cards;
+          app.activeDeckId = selectedIds.length === 1 ? selectedIds[0] : null;
+          saveCards();
+        }
+
+        if (settings.render !== false) {
+          renderHeader();
+          renderStats();
+          renderCards();
+          renderLibrary();
+          renderExport();
+        }
+
+        return app.cards.slice();
+      }
+
+      function countCardsForDeckIds(deckIds) {
+        return getCardsForDeckIds(getDefaultSelectedDeckIds(deckIds)).length;
+      }
+
+      function createDeckPickerHtml(inputName, selectedDeckIds, title) {
+        const sets = getStudySetOptions();
+        const selected = new Set(getDefaultSelectedDeckIds(selectedDeckIds));
+        const selectedCount = countCardsForDeckIds(Array.from(selected));
+
+        if (sets.length === 0) {
+          return (
+            '<div class="deck-picker-panel">' +
+              '<div class="deck-picker-header">' +
+                '<h3 class="deck-picker-title">' + escapeHtml(title || "Choose flashcard sets") + '</h3>' +
+              '</div>' +
+              '<div class="deck-picker-empty">Import .txt files into My Library first.</div>' +
+            '</div>'
+          );
+        }
+
+        return (
+          '<div class="deck-picker-panel">' +
+            '<div class="deck-picker-header">' +
+              '<h3 class="deck-picker-title">' + escapeHtml(title || "Choose flashcard sets") + '</h3>' +
+              '<div class="deck-picker-meta">' + selectedCount + ' selected card' + (selectedCount === 1 ? '' : 's') + '</div>' +
+            '</div>' +
+            '<div class="deck-choice-list">' +
+              sets.map(function (deck) {
+                const checked = selected.has(deck.id) ? " checked" : "";
+                const cardCount = deck.cards.length;
+                return (
+                  '<label class="deck-choice">' +
+                    '<input class="deck-checkbox" type="checkbox" name="' + escapeAttribute(inputName) + '" value="' + escapeAttribute(deck.id) + '"' + checked + ' />' +
+                    '<span class="deck-choice-icon" aria-hidden="true">▱</span>' +
+                    '<span class="deck-choice-main">' +
+                      '<span class="deck-choice-title">' + escapeHtml(deck.name) + '</span>' +
+                      '<span class="deck-choice-subtitle">' + cardCount + ' term' + (cardCount === 1 ? '' : 's') + ' • by you</span>' +
+                    '</span>' +
+                    '<span class="deck-choice-toggle" aria-hidden="true"></span>' +
+                  '</label>'
+                );
+              }).join("") +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      function prepareLearnWithDecks(deckIds) {
+        resetLearnSession();
+        app.learn.selectedDeckIds = getDefaultSelectedDeckIds(deckIds);
+        switchView("learn");
+      }
+
+      function prepareFlashcardsWithDecks(deckIds) {
+        app.flash.started = false;
+        app.flash.selectedDeckIds = getDefaultSelectedDeckIds(deckIds);
+        resetFlashOrder();
+        switchView("flashcards");
+      }
+
+      function saveOverLibraryDeck(deckId) {
+        const deck = getLibraryDeckById(deckId);
+
+        if (!deck) {
+          showToast("Library set not found.");
+          return;
+        }
+
+        if (app.cards.length === 0) {
+          showToast("There are no current cards to save.");
+          return;
+        }
+
+        deck.cards = cloneCards(app.cards);
+        deck.updatedAt = new Date().toISOString();
+        app.activeDeckId = deck.id;
+        app.libraryDecks.sort(compareLibraryDecks);
+        saveLibrary();
+        saveCards();
+        renderLibrary();
+        showToast("Saved over “" + deck.name + "”.");
+      }
+
+      function renameLibraryDeck(deckId, newName) {
+        const deck = getLibraryDeckById(deckId);
+        const name = String(newName || "").trim();
+
+        if (!deck) {
+          showToast("Library set not found.");
+          return;
+        }
+
+        if (!name) {
+          showToast("Set name cannot be empty.");
+          return;
+        }
+
+        const duplicate = getLibraryDeckByName(name);
+        if (duplicate && duplicate.id !== deck.id) {
+          showToast("A set with that name already exists.");
+          return;
+        }
+
+        deck.name = name;
+        deck.updatedAt = new Date().toISOString();
+        saveLibrary();
+        renderLibrary();
+        showToast("Set renamed.");
+      }
+
+      function deleteLibraryDeck(deckId) {
+        const index = app.libraryDecks.findIndex(function (deck) {
+          return deck.id === deckId;
+        });
+
+        if (index === -1) {
+          return;
+        }
+
+        clearUndoLibraryDelete();
+        const deletedDeck = app.libraryDecks[index];
+        app.libraryDecks.splice(index, 1);
+
+        if (app.activeDeckId === deletedDeck.id) {
+          app.activeDeckId = null;
+          saveCards();
+        }
+
+        app.undoLibraryDelete = {
+          deck: deletedDeck,
+          index: index,
+          timeoutId: null
+        };
+
+        saveLibrary();
+        renderLibrary();
+
+        showToast("Library set deleted.", {
+          actionLabel: "Undo",
+          onAction: undoDeleteLibraryDeck,
+          duration: 6000
+        });
+
+        app.undoLibraryDelete.timeoutId = window.setTimeout(clearUndoLibraryDelete, 6000);
+      }
+
+      function undoDeleteLibraryDeck() {
+        if (!app.undoLibraryDelete) {
+          return;
+        }
+
+        const index = Math.min(app.undoLibraryDelete.index, app.libraryDecks.length);
+        app.libraryDecks.splice(index, 0, app.undoLibraryDelete.deck);
+        clearUndoLibraryDelete();
+        saveLibrary();
+        renderLibrary();
+        showToast("Library set restored.");
+      }
+
+      function clearUndoLibraryDelete() {
+        if (app.undoLibraryDelete && app.undoLibraryDelete.timeoutId) {
+          window.clearTimeout(app.undoLibraryDelete.timeoutId);
+        }
+
+        app.undoLibraryDelete = null;
       }
 
       function normalizeCard(card) {
@@ -1560,7 +3751,6 @@
           definition: card.definition.trim(),
           correct: Number.isFinite(card.correct) ? card.correct : 0,
           wrong: Number.isFinite(card.wrong) ? card.wrong : 0,
-          favorite: Boolean(card.favorite),
           createdAt: createdAt,
           lastReviewed: typeof card.lastReviewed === "string" ? card.lastReviewed : null,
           nextReview: typeof card.nextReview === "string" ? card.nextReview : createdAt,
@@ -1578,7 +3768,6 @@
           definition: definition.trim(),
           correct: 0,
           wrong: 0,
-          favorite: false,
           createdAt: now,
           lastReviewed: null,
           nextReview: now,
@@ -1590,12 +3779,28 @@
       function createEmptyLearnState() {
         return {
           active: false,
+          selectedDeckIds: [],
+          mode: "choice",
+          currentMode: "choice",
+          questionLimit: "all",
           total: 0,
           queue: [],
           currentId: null,
           options: [],
           selectedIndex: null,
           locked: false,
+          direction: "term-definition",
+          currentDirection: "term-definition",
+          questionLabel: "Term",
+          questionText: "",
+          answerLabel: "Definition",
+          correctAnswer: "",
+          promptAnswer: null,
+          promptIsTrue: null,
+          typedAnswer: "",
+          pendingAdvance: false,
+          nextCountdown: 0,
+          recorded: false,
           history: []
         };
       }
@@ -1633,6 +3838,14 @@
           elements.views[key].hidden = !isActive;
         });
 
+        if (viewName === "library") {
+          renderLibrary();
+        }
+
+        if (viewName === "history") {
+          renderHistory();
+        }
+
         if (viewName === "export") {
           renderExport();
         }
@@ -1645,19 +3858,36 @@
         if (viewName === "learn") {
           renderLearn();
         }
+
+        if (viewName === "test") {
+          renderSpecialStudyMode("test");
+        }
+
+        if (viewName === "write") {
+          renderSpecialStudyMode("write");
+        }
+
+        if (viewName === "match") {
+          renderMatchMode();
+        }
       }
 
       function renderAll() {
         renderHeader();
+        renderSidebarLists();
+        renderLibrary();
         renderStats();
         renderCards();
         renderFlashcards();
         renderLearn();
+        renderHistory();
         renderExport();
       }
 
       function renderHeader() {
-        elements.headerCardCount.textContent = String(app.cards.length);
+        if (elements.headerCardCount) {
+          elements.headerCardCount.textContent = String(app.cards.length);
+        }
       }
 
       function parseImportText(text, termSeparatorValue, cardSeparatorValue) {
@@ -1727,25 +3957,60 @@
         return separators[value] || "\t";
       }
 
+      function getImportDuplicateResult(cards, mode) {
+        const seen = new Set();
+        const uniqueCards = [];
+        const duplicates = [];
+
+        if (mode === "append") {
+          app.cards.forEach(function (card) {
+            seen.add(createCardKey(card.term, card.definition));
+          });
+        }
+
+        cards.forEach(function (card) {
+          const key = createCardKey(card.term, card.definition);
+
+          if (seen.has(key)) {
+            duplicates.push(card);
+            return;
+          }
+
+          seen.add(key);
+          uniqueCards.push(card);
+        });
+
+        return {
+          uniqueCards: uniqueCards,
+          duplicates: duplicates
+        };
+      }
+
+      function createCardKey(term, definition) {
+        return normalizeAnswer(term) + "␟" + normalizeAnswer(definition);
+      }
+
       function previewImport() {
         const parsed = parseImportText(
           elements.importText.value,
           elements.termSeparator.value,
           elements.cardSeparator.value
         );
+        const duplicateResult = getImportDuplicateResult(parsed.cards, elements.importMode.value);
+        const readyCards = duplicateResult.uniqueCards;
 
         if (parsed.cards.length === 0 && parsed.errors.length === 0) {
           elements.previewBox.innerHTML = "No valid cards found. Make sure every line has a term, then a separator, then a definition.";
           return;
         }
 
-        const previewCards = parsed.cards.slice(0, 6);
-        const moreCount = parsed.cards.length - previewCards.length;
+        const previewCards = readyCards.slice(0, 6);
+        const moreCount = readyCards.length - previewCards.length;
         const errorPreview = parsed.errors.slice(0, 5);
         const moreErrors = parsed.errors.length - errorPreview.length;
 
         elements.previewBox.innerHTML = [
-          '<div class="preview-summary">' + parsed.cards.length + " valid card" + (parsed.cards.length === 1 ? "" : "s") + " detected.</div>",
+          '<div class="preview-summary">' + readyCards.length + " card" + (readyCards.length === 1 ? "" : "s") + " ready to import.</div>",
           previewCards.map(function (card) {
             return (
               '<div class="preview-card">' +
@@ -1755,6 +4020,7 @@
             );
           }).join(""),
           moreCount > 0 ? '<div class="preview-card">+' + moreCount + " more cards</div>" : "",
+          duplicateResult.duplicates.length > 0 ? '<div class="preview-warning">' + duplicateResult.duplicates.length + " duplicate card" + (duplicateResult.duplicates.length === 1 ? "" : "s") + " will be skipped.</div>" : "",
           parsed.errors.length > 0 ? createImportErrorsHtml(errorPreview, moreErrors, parsed.errors.length) : ""
         ].join("");
       }
@@ -1784,7 +4050,15 @@
           return;
         }
 
-        const newCards = parsed.cards.map(function (card) {
+        const duplicateResult = getImportDuplicateResult(parsed.cards, elements.importMode.value);
+
+        if (duplicateResult.uniqueCards.length === 0) {
+          showToast("No new cards to import.");
+          previewImport();
+          return;
+        }
+
+        const newCards = duplicateResult.uniqueCards.map(function (card) {
           return createCard(card.term, card.definition);
         });
 
@@ -1794,15 +4068,16 @@
           app.cards = newCards;
         }
 
-        app.cardFilter = "all";
+        app.activeDeckId = null;
         resetFlashOrder();
         resetLearnSession();
         saveCards();
         renderAll();
         switchView("cards");
 
-        if (parsed.errors.length > 0) {
-          showToast(newCards.length + " imported, " + parsed.errors.length + " skipped.");
+        const skippedCount = parsed.errors.length + duplicateResult.duplicates.length;
+        if (skippedCount > 0) {
+          showToast(newCards.length + " imported, " + skippedCount + " skipped.");
         } else {
           showToast(newCards.length + " card" + (newCards.length === 1 ? "" : "s") + " imported.");
         }
@@ -1810,35 +4085,32 @@
 
       function resetAllCards() {
         if (app.cards.length === 0) {
-          showToast("There are no cards to delete.");
+          showToast("There are no cards to clear.");
           return;
         }
 
-        const confirmed = window.confirm("Delete all cards? This cannot be undone.");
+        const confirmed = window.confirm("Clear all saved cards from this browser? This cannot be undone.");
 
         if (!confirmed) {
           return;
         }
 
         clearUndoDelete();
+        clearUndoLibraryDelete();
+        app.activeDeckId = null;
         app.cards = [];
-        app.cardFilter = "all";
+        app.flash.started = false;
+        app.flash.selectedDeckIds = [];
         resetFlashOrder();
         resetLearnSession();
         saveCards();
         renderAll();
-        switchView("import");
-        showToast("All cards deleted.");
+        switchView("library");
+        showToast("All cards cleared.");
       }
 
       function getStudyCards() {
-        const filtered = app.cardFilter === "favorites"
-          ? app.cards.filter(function (card) {
-            return card.favorite;
-          })
-          : app.cards.slice();
-
-        return filtered.sort(compareReviewPriority);
+        return app.cards.slice().sort(compareReviewPriority);
       }
 
       function compareReviewPriority(firstCard, secondCard) {
@@ -1869,18 +4141,15 @@
           return sum + card.correct;
         }, 0);
 
-        const due = app.cards.filter(isCardDue).length;
-        const mastered = app.cards.filter(isCardMastered).length;
-        const learning = app.cards.filter(function (card) {
-          return card.correct + card.wrong > 0 && !isCardMastered(card);
-        }).length;
+        const wrong = app.cards.reduce(function (sum, card) {
+          return sum + card.wrong;
+        }, 0);
         const accuracy = attempts === 0 ? 0 : Math.round((correct / attempts) * 100);
 
         const stats = [
           { label: "Cards", value: total },
-          { label: "Due now", value: due },
-          { label: "Mastered", value: mastered },
-          { label: "Learning", value: learning },
+          { label: "Correct", value: correct },
+          { label: "Wrong", value: wrong },
           { label: "Accuracy", value: accuracy + "%" }
         ];
 
@@ -1911,10 +4180,14 @@
           .sort(compareReviewPriority);
 
         if (app.cards.length === 0) {
-          elements.cardList.innerHTML = createEmptyStateHtml(
-            "No cards yet",
-            "Go to Import, paste your study text, and import your first set."
-          );
+          if (app.libraryDecks.length > 0) {
+            elements.cardList.innerHTML = createOpenSetStateHtml();
+          } else {
+            elements.cardList.innerHTML = createEmptyStateHtml(
+              "No cards yet",
+              "Go to My Library or Import to add your first study set."
+            );
+          }
           return;
         }
 
@@ -1938,7 +4211,6 @@
                 '<div class="card-text-value">' + escapeHtml(card.definition) + "</div>" +
               "</div>" +
               '<div class="card-actions">' +
-                '<button class="small-button ' + (card.favorite ? "favorite-active" : "") + '" type="button" data-action="toggle-favorite" aria-label="' + (card.favorite ? "Remove favorite" : "Add favorite") + '" title="Favorite">★</button>' +
                 '<button class="small-button" type="button" data-action="edit-card">Edit</button>' +
                 '<button class="small-button" type="button" data-action="delete-card">Delete</button>' +
               "</div>" +
@@ -1951,15 +4223,6 @@
       function createCardMetaHtml(card) {
         const badges = [];
 
-        if (card.favorite) {
-          badges.push('<span class="badge">★ Favorite</span>');
-        }
-
-        if (isCardDue(card)) {
-          badges.push('<span class="badge due">Due now</span>');
-        } else {
-          badges.push('<span class="badge">Next: ' + escapeHtml(formatDateTime(card.nextReview)) + "</span>");
-        }
 
         if (isCardMastered(card)) {
           badges.push('<span class="badge mastered">Mastered</span>');
@@ -1975,6 +4238,12 @@
       }
 
       function handleCardListClick(event) {
+        const openDeckButton = event.target.closest("[data-open-deck-id]");
+        if (openDeckButton) {
+          loadLibraryDeck(openDeckButton.dataset.openDeckId);
+          return;
+        }
+
         const actionButton = event.target.closest("[data-action]");
 
         if (!actionButton) {
@@ -1991,13 +4260,6 @@
 
         if (!card) {
           return;
-        }
-
-        if (actionButton.dataset.action === "toggle-favorite") {
-          card.favorite = !card.favorite;
-          saveCards();
-          renderAll();
-          showToast(card.favorite ? "Card added to favorites." : "Card removed from favorites.");
         }
 
         if (actionButton.dataset.action === "edit-card") {
@@ -2153,27 +4415,279 @@
         return getCardById(app.flash.order[app.flash.index]);
       }
 
+      function renderSpecialStudyMode(modeName) {
+        const isWrite = modeName === "write";
+        const title = isWrite ? "Write" : "Test";
+        const description = isWrite
+          ? "Type each answer yourself. This is the hardest practice mode."
+          : "Generate a mixed practice test from one or more flashcard sets.";
+        const selectedDeckIds = getDefaultSelectedDeckIds(app.learn.selectedDeckIds);
+        app.learn.selectedDeckIds = selectedDeckIds;
+        const availableCount = countCardsForDeckIds(selectedDeckIds);
+        const container = isWrite ? elements.writeContent : elements.testContent;
+
+        container.innerHTML =
+          '<div class="panel mode-panel">' +
+            '<div class="panel-header">' +
+              '<div class="mode-title-row">' +
+                '<div>' +
+                  '<h1 class="section-title">' + escapeHtml(title) + '</h1>' +
+                  '<p class="section-subtitle">' + escapeHtml(description) + '</p>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="panel-body mode-launcher">' +
+              createDeckPickerHtml(modeName + "DeckId", selectedDeckIds, "Choose flashcard sets") +
+              '<fieldset class="setup-section">' +
+                '<legend>Choose study direction</legend>' +
+                '<div class="setup-option-grid">' +
+                  '<label class="setup-option">' +
+                    '<input class="setup-radio" type="radio" name="' + modeName + 'Direction" value="term-definition" checked />' +
+                    '<span class="setup-option-title">Question → Answer</span>' +
+                    '<span class="setup-option-text">See the term and answer with the definition.</span>' +
+                  '</label>' +
+                  '<label class="setup-option">' +
+                    '<input class="setup-radio" type="radio" name="' + modeName + 'Direction" value="definition-term" />' +
+                    '<span class="setup-option-title">Answer → Question</span>' +
+                    '<span class="setup-option-text">See the definition and remember the term.</span>' +
+                  '</label>' +
+                  '<label class="setup-option">' +
+                    '<input class="setup-radio" type="radio" name="' + modeName + 'Direction" value="mixed" />' +
+                    '<span class="setup-option-title">Mixed</span>' +
+                    '<span class="setup-option-text">Switch direction randomly during the session.</span>' +
+                  '</label>' +
+                '</div>' +
+              '</fieldset>' +
+              '<fieldset class="setup-section">' +
+                '<legend>Choose number of questions</legend>' +
+                '<div class="setup-chip-grid">' + createQuestionCountChoices(availableCount).replace(/learnQuestionCount/g, modeName + 'QuestionCount').replace(/customQuestionCount/g, modeName + 'CustomQuestionCount') + '</div>' +
+              '</fieldset>' +
+              '<div class="button-row center-actions">' +
+                '<button class="btn btn-primary" type="button" data-special-action="start-' + modeName + '">Start ' + escapeHtml(title) + '</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      function getSelectedSpecialQuestionCount(container, modeName) {
+        const selected = container.querySelector('input[name="' + modeName + 'QuestionCount"]:checked');
+        if (!selected) {
+          return "all";
+        }
+        if (selected.value !== "custom") {
+          return selected.value;
+        }
+        const input = container.querySelector('#' + modeName + 'CustomQuestionCount');
+        const value = input ? Math.floor(Number(input.value)) : 0;
+        if (!Number.isFinite(value) || value < 1) {
+          return "invalid";
+        }
+        return String(value);
+      }
+
+      function getSelectedSpecialDirection(container, modeName) {
+        const selected = container.querySelector('input[name="' + modeName + 'Direction"]:checked');
+        return selected ? selected.value : "term-definition";
+      }
+
+      function handleSpecialStudyClick(event) {
+        const customInput = event.target.closest('.custom-count-input');
+        if (customInput) {
+          const label = customInput.closest('label');
+          const radio = label ? label.querySelector('input[type="radio"]') : null;
+          if (radio) radio.checked = true;
+        }
+
+        const button = event.target.closest('[data-special-action]');
+        if (!button) {
+          return;
+        }
+        const modeName = button.dataset.specialAction.replace('start-', '');
+        const container = modeName === 'write' ? elements.writeContent : elements.testContent;
+        const selectedDeckIds = getSelectedDeckIdsFrom(container, modeName + 'DeckId');
+        if (selectedDeckIds.length === 0) {
+          showToast("Choose at least one set.");
+          return;
+        }
+        const questionLimit = getSelectedSpecialQuestionCount(container, modeName);
+        if (questionLimit === "invalid") {
+          showToast("Enter a custom number of questions.");
+          return;
+        }
+        app.learn.selectedDeckIds = selectedDeckIds;
+        activateCardsFromDeckIds(selectedDeckIds, { render: false });
+        resetLearnSession();
+        app.learn.selectedDeckIds = selectedDeckIds;
+        app.learn.direction = getSelectedSpecialDirection(container, modeName);
+        const direction = getSelectedSpecialDirection(container, modeName);
+        switchView("learn");
+        startLearnSession(null, modeName === "write" ? "typing" : "test", questionLimit, direction);
+      }
+
+      function handleSpecialStudyChange(event) {
+        if (!event.target || event.target.type !== "checkbox") {
+          return;
+        }
+        const container = event.currentTarget;
+        const modeName = container === elements.writeContent ? "write" : "test";
+        app.learn.selectedDeckIds = getSelectedDeckIdsFrom(container, modeName + "DeckId");
+        renderSpecialStudyMode(modeName);
+      }
+
+      function handleSpecialStudyFocusIn(event) {
+        const input = event.target.closest('.custom-count-input');
+        if (!input) {
+          return;
+        }
+        const label = input.closest('label');
+        const radio = label ? label.querySelector('input[type="radio"]') : null;
+        if (radio) radio.checked = true;
+      }
+
+      function renderMatchMode() {
+        if (!app.match.active) {
+          const selectedDeckIds = getDefaultSelectedDeckIds(app.match.selectedDeckIds);
+          app.match.selectedDeckIds = selectedDeckIds;
+          elements.matchContent.innerHTML =
+            '<div class="panel mode-panel">' +
+              '<div class="panel-header">' +
+                '<h1 class="section-title">Match</h1>' +
+                '<p class="section-subtitle">Choose one or more sets, then match each term with its definition.</p>' +
+              '</div>' +
+              '<div class="panel-body mode-launcher">' +
+                createDeckPickerHtml("matchDeckId", selectedDeckIds, "Choose flashcard sets") +
+                '<div class="button-row center-actions">' +
+                  '<button class="btn btn-primary" type="button" data-match-action="start-match">Start Match</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+          return;
+        }
+
+        const matched = new Set(app.match.matchedIds || []);
+        const terms = app.match.cards;
+        const definitions = shuffleArray(app.match.cards.slice());
+        const complete = matched.size >= terms.length;
+        if (complete && !app.match.recorded) {
+          app.match.recorded = true;
+          const correctMatches = terms.length;
+          const wrongAttempts = Math.max(0, app.match.attempts - correctMatches);
+          recordPractice("match", {
+            deckIds: app.match.selectedDeckIds,
+            total: app.match.attempts || correctMatches,
+            correct: correctMatches,
+            wrong: wrongAttempts,
+            details: { matchedCards: correctMatches }
+          });
+        }
+        elements.matchContent.innerHTML =
+          '<div class="panel mode-panel">' +
+            '<div class="panel-header">' +
+              '<h1 class="section-title">Match</h1>' +
+              '<p class="section-subtitle">' + matched.size + ' / ' + terms.length + ' matched • ' + app.match.attempts + ' attempts</p>' +
+            '</div>' +
+            '<div class="panel-body">' +
+              (complete
+                ? '<div class="done-score"><div class="score-number">Done</div><div class="score-caption">All matches complete.</div><div class="button-row center-actions"><button class="btn btn-primary" type="button" data-match-action="restart-match">Play again</button><button class="btn btn-secondary" type="button" data-match-action="setup-match">Choose sets</button></div></div>'
+                : '<div class="match-board"><div class="match-column">' + terms.map(function (card) {
+                    return '<button class="match-option ' + (app.match.selectedTermId === card.id ? 'selected ' : '') + (matched.has(card.id) ? 'matched' : '') + '" type="button" data-match-term="' + escapeAttribute(card.id) + '" ' + (matched.has(card.id) ? 'disabled' : '') + '>' + escapeHtml(card.term) + '</button>';
+                  }).join('') + '</div><div class="match-column">' + definitions.map(function (card) {
+                    return '<button class="match-option ' + (matched.has(card.id) ? 'matched' : '') + '" type="button" data-match-definition="' + escapeAttribute(card.id) + '" ' + (matched.has(card.id) ? 'disabled' : '') + '>' + escapeHtml(card.definition) + '</button>';
+                  }).join('') + '</div></div>') +
+            '</div>' +
+          '</div>';
+      }
+
+      function startMatchWithDecks(deckIds) {
+        const selectedDeckIds = getDefaultSelectedDeckIds(deckIds);
+        const cards = getCardsForDeckIds(selectedDeckIds);
+        if (cards.length === 0) {
+          showToast("Choose at least one set.");
+          return;
+        }
+        app.match.active = true;
+        app.match.selectedDeckIds = selectedDeckIds;
+        app.match.cards = shuffleArray(cards).slice(0, Math.min(8, cards.length));
+        app.match.selectedTermId = null;
+        app.match.matchedIds = [];
+        app.match.attempts = 0;
+        app.match.recorded = false;
+        renderMatchMode();
+      }
+
+      function handleMatchClick(event) {
+        const action = event.target.closest('[data-match-action]');
+        if (action) {
+          if (action.dataset.matchAction === "start-match") {
+            const selectedDeckIds = getSelectedDeckIdsFrom(elements.matchContent, "matchDeckId");
+            startMatchWithDecks(selectedDeckIds);
+          } else if (action.dataset.matchAction === "restart-match") {
+            startMatchWithDecks(app.match.selectedDeckIds);
+          } else if (action.dataset.matchAction === "setup-match") {
+            app.match.active = false;
+            renderMatchMode();
+          }
+          return;
+        }
+
+        const termButton = event.target.closest('[data-match-term]');
+        if (termButton) {
+          app.match.selectedTermId = termButton.dataset.matchTerm;
+          renderMatchMode();
+          return;
+        }
+
+        const definitionButton = event.target.closest('[data-match-definition]');
+        if (definitionButton && app.match.selectedTermId) {
+          app.match.attempts += 1;
+          if (definitionButton.dataset.matchDefinition === app.match.selectedTermId) {
+            app.match.matchedIds.push(app.match.selectedTermId);
+            app.match.selectedTermId = null;
+            showToast("Match found.");
+          } else {
+            showToast("Not a match. Try again.");
+          }
+          renderMatchMode();
+        }
+      }
+
+      function handleMatchSettingsChange(event) {
+        if (event.target && event.target.name === "matchDeckId") {
+          app.match.selectedDeckIds = getSelectedDeckIdsFrom(elements.matchContent, "matchDeckId");
+          renderMatchMode();
+        }
+      }
+
       function renderFlashcards() {
+        if (!app.flash.started) {
+          const selectedDeckIds = getDefaultSelectedDeckIds(app.flash.selectedDeckIds);
+          app.flash.selectedDeckIds = selectedDeckIds;
+          elements.flashSetup.hidden = false;
+          elements.flashStudyArea.hidden = true;
+          elements.flashSetup.innerHTML =
+            '<div class="empty-state">' +
+              '<h2>Flashcards</h2>' +
+              '<p>Choose one or more sets before starting flashcards.</p>' +
+              createDeckPickerHtml("flashDeckId", selectedDeckIds, "Choose flashcard sets") +
+              '<div class="button-row center-actions learn-start-actions">' +
+                '<button class="btn btn-primary" type="button" data-flash-action="start-flashcards">Start Flashcards</button>' +
+              '</div>' +
+            '</div>';
+          setFlashControlsDisabled(true);
+          return;
+        }
+
+        elements.flashSetup.hidden = true;
+        elements.flashStudyArea.hidden = false;
         ensureFlashOrder();
 
-        const studyCards = getStudyCards();
         const card = getCurrentFlashCard();
 
         if (app.cards.length === 0) {
           elements.flashProgress.textContent = "0 / 0";
           elements.flashCardContent.innerHTML = createSmallEmptyFlashHtml(
             "No cards yet",
-            "Import cards first."
-          );
-          setFlashControlsDisabled(true);
-          return;
-        }
-
-        if (studyCards.length === 0 && app.cardFilter === "favorites") {
-          elements.flashProgress.textContent = "0 / 0";
-          elements.flashCardContent.innerHTML = createSmallEmptyFlashHtml(
-            "No favorite cards",
-            "Favorite some cards in the Cards page first."
+            "Choose a set from My Library first."
           );
           setFlashControlsDisabled(true);
           return;
@@ -2183,7 +4697,7 @@
           elements.flashProgress.textContent = "0 / 0";
           elements.flashCardContent.innerHTML = createSmallEmptyFlashHtml(
             "No card selected",
-            "Try shuffling or returning to all cards."
+            "Try shuffling or choosing a different set."
           );
           setFlashControlsDisabled(true);
           return;
@@ -2191,9 +4705,7 @@
 
         const sideLabel = app.flash.flipped ? "Definition" : "Term";
         const text = app.flash.flipped ? card.definition : card.term;
-        const dueLabel = isCardDue(card) ? "Due now" : "Next review: " + formatDateTime(card.nextReview);
-
-        elements.flashProgress.textContent = (app.flash.index + 1) + " / " + app.flash.order.length + " · " + dueLabel;
+        elements.flashProgress.textContent = (app.flash.index + 1) + " / " + app.flash.order.length;
 
         elements.flashCardContent.innerHTML =
           '<div class="flash-label">' + sideLabel + "</div>" +
@@ -2205,6 +4717,43 @@
         elements.previousFlashButton.disabled = app.flash.order.length <= 1;
         elements.nextFlashButton.disabled = app.flash.order.length <= 1;
         elements.shuffleFlashButton.disabled = app.flash.order.length <= 1;
+      }
+
+      function handleFlashSetupClick(event) {
+        const actionButton = event.target.closest("[data-flash-action]");
+
+        if (!actionButton) {
+          return;
+        }
+
+        if (actionButton.dataset.flashAction === "start-flashcards") {
+          const selectedDeckIds = getSelectedDeckIdsFrom(elements.flashSetup, "flashDeckId");
+
+          if (selectedDeckIds.length === 0) {
+            showToast("Choose at least one set.");
+            return;
+          }
+
+          app.flash.selectedDeckIds = selectedDeckIds;
+          const cards = activateCardsFromDeckIds(selectedDeckIds, { render: false });
+
+          if (cards.length === 0) {
+            return;
+          }
+
+          app.flash.started = true;
+          resetFlashOrder();
+          renderHeader();
+          renderFlashcards();
+        }
+      }
+
+      function handleFlashSetupChange(event) {
+        if (event.target && event.target.name === "flashDeckId") {
+          const selectedDeckIds = getSelectedDeckIdsFrom(elements.flashSetup, "flashDeckId");
+          app.flash.selectedDeckIds = selectedDeckIds.length > 0 ? selectedDeckIds : getDefaultSelectedDeckIds(app.flash.selectedDeckIds);
+          renderFlashcards();
+        }
       }
 
       function setFlashControlsDisabled(disabled) {
@@ -2275,6 +4824,7 @@
         }
 
         updateReviewSchedule(card, isKnown);
+        recordPractice("flashcard", { deckIds: app.flash.selectedDeckIds, total: 1, correct: isKnown ? 1 : 0, wrong: isKnown ? 0 : 1, details: { cardId: card.id } });
         saveCards();
         renderHeader();
         renderStats();
@@ -2300,13 +4850,44 @@
           card.reviewLevel = 0;
           card.nextReview = addMinutes(now, 15).toISOString();
         }
+
+        syncCardProgressToLibrary(card);
+      }
+
+      function syncCardProgressToLibrary(updatedCard) {
+        if (!updatedCard || app.libraryDecks.length === 0) {
+          return;
+        }
+
+        let changed = false;
+        app.libraryDecks.forEach(function (deck) {
+          deck.cards.forEach(function (card) {
+            if (card.id === updatedCard.id) {
+              card.correct = updatedCard.correct;
+              card.wrong = updatedCard.wrong;
+              card.lastReviewed = updatedCard.lastReviewed;
+              card.nextReview = updatedCard.nextReview;
+              card.streak = updatedCard.streak;
+              card.reviewLevel = updatedCard.reviewLevel;
+              deck.updatedAt = new Date().toISOString();
+              changed = true;
+            }
+          });
+        });
+
+        if (changed) {
+          saveLibrary();
+        }
       }
 
       function resetLearnSession() {
+        clearLearnAdvanceTimers();
         app.learn = createEmptyLearnState();
       }
 
-      function startLearnSession(cardIds) {
+      function startLearnSession(cardIds, mode, questionLimit, directionOverride) {
+        clearLearnAdvanceTimers();
+
         const ids = Array.isArray(cardIds) && cardIds.length > 0
           ? cardIds.slice()
           : getStudyCards().map(function (card) {
@@ -2318,19 +4899,42 @@
           return;
         }
 
+        const selectedLimit = questionLimit || getSelectedQuestionCount();
+        const limitedIds = applyQuestionLimit(ids, selectedLimit);
+
         app.learn.active = true;
-        app.learn.total = ids.length;
-        app.learn.queue = shuffleArray(ids);
+        app.learn.selectedDeckIds = getDefaultSelectedDeckIds(app.learn.selectedDeckIds);
+        app.learn.mode = mode || app.learn.mode || "choice";
+        app.learn.currentMode = app.learn.mode === "test" ? "choice" : app.learn.mode;
+        app.learn.questionLimit = selectedLimit;
+        app.learn.direction = directionOverride || getSelectedLearnDirection();
+        app.learn.total = limitedIds.length;
+        app.learn.queue = shuffleArray(limitedIds);
         app.learn.currentId = null;
         app.learn.options = [];
         app.learn.selectedIndex = null;
         app.learn.locked = false;
+        app.learn.pendingAdvance = false;
+        app.learn.nextCountdown = 0;
+        app.learn.currentDirection = "term-definition";
+        app.learn.questionLabel = "Term";
+        app.learn.questionText = "";
+        app.learn.answerLabel = "Definition";
+        app.learn.correctAnswer = "";
+        app.learn.promptAnswer = null;
+        app.learn.promptIsTrue = null;
+        app.learn.typedAnswer = "";
+        app.learn.pendingAdvance = false;
+        app.learn.nextCountdown = 0;
+        app.learn.recorded = false;
         app.learn.history = [];
 
         goToNextLearnQuestion();
       }
 
       function goToNextLearnQuestion() {
+        clearLearnAdvanceTimers();
+
         if (!app.learn.active) {
           renderLearn();
           return;
@@ -2357,67 +4961,474 @@
           return;
         }
 
-        app.learn.options = buildLearnOptions(card);
+        const promptParts = buildPromptParts(card, resolveLearnDirection());
+        app.learn.currentDirection = promptParts.direction;
+        app.learn.questionLabel = promptParts.questionLabel;
+        app.learn.questionText = promptParts.questionText;
+        app.learn.answerLabel = promptParts.answerLabel;
+        app.learn.correctAnswer = promptParts.answerText;
+        app.learn.typedAnswer = "";
+
+        const activeQuestionMode = app.learn.mode === "test"
+          ? shuffleArray(["choice", "typing", "truefalse"])[0]
+          : app.learn.mode;
+        app.learn.currentMode = activeQuestionMode;
+
+        if (activeQuestionMode === "truefalse") {
+          const prompt = buildTrueFalsePrompt(card, promptParts.direction);
+          app.learn.promptAnswer = prompt.answer;
+          app.learn.promptIsTrue = prompt.isTrue;
+          app.learn.options = ["True", "False"];
+        } else if (activeQuestionMode === "typing") {
+          app.learn.promptAnswer = null;
+          app.learn.promptIsTrue = null;
+          app.learn.options = [];
+        } else {
+          app.learn.promptAnswer = null;
+          app.learn.promptIsTrue = null;
+          app.learn.options = buildLearnOptions(card, promptParts.direction);
+        }
+
         renderLearn();
       }
 
-      function buildLearnOptions(card) {
-        const definitions = [];
+      function buildLearnOptions(card, direction) {
+        const answers = [];
         const seen = new Set();
+        const activeDirection = direction || app.learn.currentDirection || "term-definition";
 
-        function addDefinition(definition) {
-          const normalized = definition.trim().toLowerCase();
+        function addAnswer(answer) {
+          const normalized = normalizeAnswer(answer);
 
           if (!normalized || seen.has(normalized)) {
             return;
           }
 
           seen.add(normalized);
-          definitions.push(definition);
+          answers.push(answer);
         }
 
-        addDefinition(card.definition);
+        addAnswer(buildPromptParts(card, activeDirection).answerText);
 
         shuffleArray(app.cards.slice()).forEach(function (candidate) {
           if (candidate.id !== card.id) {
-            addDefinition(candidate.definition);
+            addAnswer(buildPromptParts(candidate, activeDirection).answerText);
           }
         });
 
-        return shuffleArray(definitions.slice(0, Math.min(4, definitions.length)));
+        return shuffleArray(answers.slice(0, Math.min(4, answers.length)));
+      }
+
+      function buildTrueFalsePrompt(card, direction) {
+        const activeDirection = direction || app.learn.currentDirection || "term-definition";
+        const correctAnswer = buildPromptParts(card, activeDirection).answerText;
+        const alternatives = app.cards.filter(function (candidate) {
+          return candidate.id !== card.id &&
+            normalizeAnswer(buildPromptParts(candidate, activeDirection).answerText) !== normalizeAnswer(correctAnswer);
+        });
+
+        const shouldShowTrueAnswer = alternatives.length === 0 || Math.random() < 0.5;
+
+        if (shouldShowTrueAnswer) {
+          return {
+            answer: correctAnswer,
+            isTrue: true
+          };
+        }
+
+        return {
+          answer: buildPromptParts(shuffleArray(alternatives)[0], activeDirection).answerText,
+          isTrue: false
+        };
+      }
+
+      function getActiveLearnMode() {
+        return app.learn.currentMode || app.learn.mode || "choice";
+      }
+
+      function getSelectedLearnDirection() {
+        const selected = elements.learnContent.querySelector('input[name="learnDirection"]:checked');
+        return selected ? selected.value : (app.learn.direction || "term-definition");
+      }
+
+      function getSelectedLearnMode() {
+        const selected = elements.learnContent.querySelector('input[name="learnMode"]:checked');
+        return selected ? selected.value : (app.learn.mode || "choice");
+      }
+
+      function getSelectedQuestionCount() {
+        const selected = elements.learnContent.querySelector('input[name="learnQuestionCount"]:checked');
+
+        if (!selected) {
+          return app.learn.questionLimit || "all";
+        }
+
+        if (selected.value !== "custom") {
+          return selected.value;
+        }
+
+        const input = elements.learnContent.querySelector("#customQuestionCount");
+        const availableCount = countCardsForDeckIds(app.learn.selectedDeckIds);
+        const value = input ? Math.floor(Number(input.value)) : 0;
+
+        if (!Number.isFinite(value) || value < 1) {
+          return "invalid";
+        }
+
+        return String(Math.min(value, availableCount));
+      }
+
+      function applyQuestionLimit(ids, questionLimit) {
+        const limit = Number(questionLimit);
+
+        if (!Number.isFinite(limit) || limit <= 0 || limit >= ids.length) {
+          return ids.slice();
+        }
+
+        return shuffleArray(ids).slice(0, limit);
+      }
+
+      function getModeLabel(mode) {
+        const labels = {
+          choice: "Multiple Choice",
+          typing: "Typing",
+          truefalse: "True / False",
+          test: "Test",
+          write: "Write"
+        };
+
+        return labels[mode] || "Multiple Choice";
+      }
+
+      function getDirectionLabel(direction) {
+        const labels = {
+          "term-definition": "Question → Answer",
+          "definition-term": "Answer → Question",
+          mixed: "Mixed"
+        };
+
+        return labels[direction] || "Question → Answer";
+      }
+
+      function getQuestionCountLabel(questionLimit, availableCount) {
+        const limit = Number(questionLimit);
+
+        if (!Number.isFinite(limit) || limit <= 0 || limit >= availableCount) {
+          return "All " + availableCount + " questions";
+        }
+
+        return limit + " question" + (limit === 1 ? "" : "s");
+      }
+
+      function createQuestionCountChoices(availableCount) {
+        const counts = [5, 10, 20, 30, 50, 100];
+        const choices = [
+          '<label class="setup-chip">' +
+            '<input class="setup-radio" type="radio" name="learnQuestionCount" value="all" checked />' +
+            '<span>All cards (' + availableCount + ')</span>' +
+          '</label>',
+          '<label class="setup-chip setup-custom-chip">' +
+            '<input class="setup-radio" type="radio" name="learnQuestionCount" value="custom" />' +
+            '<span>Custom</span>' +
+            '<input class="custom-count-input" id="customQuestionCount" type="number" min="1" max="' + Math.max(1, availableCount) + '" placeholder="1-' + Math.max(1, availableCount) + '" aria-label="Custom number of questions" />' +
+          '</label>'
+        ];
+
+        counts.forEach(function (count) {
+          if (count < availableCount) {
+            choices.push(
+              '<label class="setup-chip">' +
+                '<input class="setup-radio" type="radio" name="learnQuestionCount" value="' + count + '" />' +
+                '<span>' + count + ' questions</span>' +
+              '</label>'
+            );
+          }
+        });
+
+        return choices.join("");
+      }
+
+      function confirmAndStartLearnSession(cardIds, mode, questionLimit) {
+        if (!Array.isArray(cardIds) || cardIds.length === 0) {
+          const selectedDeckIds = getSelectedDeckIdsFrom(elements.learnContent, "learnDeckId");
+
+          if (selectedDeckIds.length === 0) {
+            showToast("Choose at least one set.");
+            return;
+          }
+
+          app.learn.selectedDeckIds = selectedDeckIds;
+          activateCardsFromDeckIds(selectedDeckIds, { render: false });
+        }
+
+        const ids = Array.isArray(cardIds) && cardIds.length > 0
+          ? cardIds.slice()
+          : getStudyCards().map(function (card) {
+            return card.id;
+          });
+
+        if (ids.length === 0) {
+          showToast("No cards available for Learn mode.");
+          return;
+        }
+
+        if (questionLimit === "invalid") {
+          const customInput = elements.learnContent.querySelector("#customQuestionCount");
+          showToast("Enter a custom number of questions.");
+          if (customInput) {
+            customInput.focus();
+          }
+          return;
+        }
+
+        const limitedIds = applyQuestionLimit(ids, questionLimit);
+        startLearnSession(limitedIds, mode, "all");
+      }
+
+      function goBackToLearnStart() {
+        resetLearnSession();
+        elements.learnTop.innerHTML = "";
+        renderLearn();
+      }
+
+      function clearLearnAdvanceTimers() {
+        if (learnAdvanceTimeoutId !== null) {
+          window.clearTimeout(learnAdvanceTimeoutId);
+          learnAdvanceTimeoutId = null;
+        }
+
+        if (learnCountdownIntervalId !== null) {
+          window.clearInterval(learnCountdownIntervalId);
+          learnCountdownIntervalId = null;
+        }
+      }
+
+      function finishLearnAnswer(isCorrect, correctDelay) {
+        clearLearnAdvanceTimers();
+
+        if (isCorrect) {
+          app.learn.pendingAdvance = false;
+          app.learn.nextCountdown = 0;
+        } else {
+          app.learn.pendingAdvance = true;
+          app.learn.nextCountdown = 5;
+        }
+
+        saveCards();
+        renderLearn();
+        renderHeader();
+        renderStats();
+        renderCards();
+
+        if (isCorrect) {
+          learnAdvanceTimeoutId = window.setTimeout(function () {
+            advanceToNextLearnQuestionNow();
+          }, correctDelay);
+          return;
+        }
+
+        startWrongAnswerCountdown();
+      }
+
+      function startWrongAnswerCountdown() {
+        updateNextQuestionButtonText();
+
+        learnCountdownIntervalId = window.setInterval(function () {
+          if (!app.learn.pendingAdvance) {
+            clearLearnAdvanceTimers();
+            return;
+          }
+
+          app.learn.nextCountdown = Math.max(0, app.learn.nextCountdown - 1);
+
+          if (app.learn.nextCountdown <= 0) {
+            advanceToNextLearnQuestionNow();
+            return;
+          }
+
+          updateNextQuestionButtonText();
+        }, 1000);
+      }
+
+      function updateNextQuestionButtonText() {
+        const button = elements.learnContent.querySelector('[data-learn-action="next-question"]');
+
+        if (!button) {
+          return;
+        }
+
+        button.textContent = "Next Question (" + Math.max(0, app.learn.nextCountdown || 0) + "s)";
+      }
+
+      function advanceToNextLearnQuestionNow() {
+        clearLearnAdvanceTimers();
+        app.learn.pendingAdvance = false;
+        app.learn.nextCountdown = 0;
+        goToNextLearnQuestion();
+      }
+
+      function undoLearnHistoryEntry(entry) {
+        const card = entry ? getCardById(entry.cardId) : null;
+
+        if (!card) {
+          return;
+        }
+
+        if (entry.correct) {
+          card.correct = Math.max(0, card.correct - 1);
+        } else {
+          card.wrong = Math.max(0, card.wrong - 1);
+        }
+      }
+
+      function goToPreviousLearnQuestion() {
+        if (!app.learn.active || app.learn.locked || app.learn.history.length === 0) {
+          return;
+        }
+
+        clearLearnAdvanceTimers();
+
+        if (app.learn.currentId) {
+          app.learn.queue.unshift(app.learn.currentId);
+        }
+
+        const previousEntry = app.learn.history[app.learn.history.length - 1];
+        const card = getCardById(previousEntry.cardId);
+
+        if (!card) {
+          renderLearn();
+          return;
+        }
+
+        const previousMode = previousEntry.mode || getActiveLearnMode() || "choice";
+        const promptParts = buildPromptParts(card, previousEntry.direction);
+
+        app.learn.currentMode = previousMode;
+        app.learn.currentId = card.id;
+        app.learn.currentDirection = promptParts.direction;
+        app.learn.questionLabel = promptParts.questionLabel;
+        app.learn.questionText = promptParts.questionText;
+        app.learn.answerLabel = promptParts.answerLabel;
+        app.learn.correctAnswer = promptParts.answerText;
+        app.learn.locked = true;
+        app.learn.pendingAdvance = false;
+        app.learn.nextCountdown = 0;
+
+        if (previousMode === "truefalse") {
+          app.learn.promptAnswer = previousEntry.promptAnswer || previousEntry.shownAnswer || promptParts.answerText;
+          app.learn.promptIsTrue = Boolean(previousEntry.promptIsTrue);
+          app.learn.options = ["True", "False"];
+          app.learn.selectedIndex = app.learn.options.indexOf(previousEntry.selected);
+          if (app.learn.selectedIndex < 0) {
+            app.learn.selectedIndex = null;
+          }
+          app.learn.typedAnswer = "";
+        } else if (previousMode === "typing") {
+          app.learn.promptAnswer = null;
+          app.learn.promptIsTrue = null;
+          app.learn.options = [];
+          app.learn.selectedIndex = null;
+          app.learn.typedAnswer = previousEntry.selected || "";
+        } else {
+          app.learn.promptAnswer = null;
+          app.learn.promptIsTrue = null;
+          app.learn.options = Array.isArray(previousEntry.options) && previousEntry.options.length > 0
+            ? previousEntry.options.slice()
+            : buildLearnOptions(card, promptParts.direction);
+          app.learn.selectedIndex = app.learn.options.indexOf(previousEntry.selected);
+          if (app.learn.selectedIndex < 0) {
+            app.learn.selectedIndex = null;
+          }
+          app.learn.typedAnswer = "";
+        }
+
+        renderLearn();
+      }
+
+      function resolveLearnDirection() {
+        const direction = app.learn.direction || "term-definition";
+
+        if (direction === "mixed") {
+          return Math.random() < 0.5 ? "term-definition" : "definition-term";
+        }
+
+        return direction === "definition-term" ? "definition-term" : "term-definition";
+      }
+
+      function buildPromptParts(card, direction) {
+        const activeDirection = direction === "definition-term" ? "definition-term" : "term-definition";
+        const termToDefinition = activeDirection === "term-definition";
+
+        return {
+          direction: activeDirection,
+          questionLabel: termToDefinition ? "Term" : "Definition",
+          questionText: termToDefinition ? card.term : card.definition,
+          answerLabel: termToDefinition ? "Definition" : "Term",
+          answerText: termToDefinition ? card.definition : card.term
+        };
       }
 
       function renderLearn() {
-        if (app.cards.length === 0) {
-          elements.learnTop.innerHTML = "";
-          elements.learnContent.innerHTML = createEmptyStateHtml(
-            "No cards yet",
-            "Import cards first, then come back to Learn mode."
-          );
-          return;
-        }
-
-        const studyCards = getStudyCards();
-
-        if (studyCards.length === 0 && app.cardFilter === "favorites") {
-          elements.learnTop.innerHTML = "";
-          elements.learnContent.innerHTML = createEmptyStateHtml(
-            "No favorite cards",
-            "Favorite some cards first or switch back to Study All."
-          );
-          return;
-        }
-
         if (!app.learn.active) {
-          const dueCount = studyCards.filter(isCardDue).length;
+          const selectedDeckIds = getDefaultSelectedDeckIds(app.learn.selectedDeckIds);
+          app.learn.selectedDeckIds = selectedDeckIds;
+          const availableCount = countCardsForDeckIds(selectedDeckIds);
+
           elements.learnTop.innerHTML = "";
           elements.learnContent.innerHTML =
             '<div class="empty-state">' +
-              "<h2>Ready to learn?</h2>" +
-              "<p>Answer multiple-choice questions from your imported cards. Due and difficult cards are prioritized first. " + dueCount + " card" + (dueCount === 1 ? " is" : "s are") + " due now.</p>" +
-              '<div class="button-row center-actions">' +
-                '<button class="btn btn-primary" type="button" data-learn-action="start">Start Learn</button>' +
-                '<button class="btn btn-secondary" type="button" data-learn-action="start-favorites">Learn Favorites</button>' +
+              "<h2>Generate a practice test</h2>" +
+              "<p>Choose flashcard sets, mode, direction, and session length before starting.</p>" +
+              createDeckPickerHtml("learnDeckId", selectedDeckIds, "Choose flashcard sets") +
+              '<div class="learn-settings">' +
+                '<fieldset class="setup-section">' +
+                  '<legend>Choose study mode</legend>' +
+                  '<div class="setup-option-grid">' +
+                    '<label class="setup-option">' +
+                      '<input class="setup-radio" type="radio" name="learnMode" value="choice" checked />' +
+                      '<span class="setup-option-title">Multiple Choice</span>' +
+                      '<span class="setup-option-text">Pick the correct answer from options.</span>' +
+                    '</label>' +
+                    '<label class="setup-option">' +
+                      '<input class="setup-radio" type="radio" name="learnMode" value="typing" />' +
+                      '<span class="setup-option-title">Typing</span>' +
+                      '<span class="setup-option-text">Type the answer yourself for harder practice.</span>' +
+                    '</label>' +
+                    '<label class="setup-option">' +
+                      '<input class="setup-radio" type="radio" name="learnMode" value="truefalse" />' +
+                      '<span class="setup-option-title">True / False</span>' +
+                      '<span class="setup-option-text">Decide whether the shown match is correct.</span>' +
+                    '</label>' +
+                  '</div>' +
+                '</fieldset>' +
+                '<fieldset class="setup-section">' +
+                  '<legend>Choose study direction</legend>' +
+                  '<div class="setup-option-grid">' +
+                    '<label class="setup-option">' +
+                      '<input class="setup-radio" type="radio" name="learnDirection" value="term-definition" checked />' +
+                      '<span class="setup-option-title">Question → Answer</span>' +
+                      '<span class="setup-option-text">See the term and choose or type the definition.</span>' +
+                    '</label>' +
+                    '<label class="setup-option">' +
+                      '<input class="setup-radio" type="radio" name="learnDirection" value="definition-term" />' +
+                      '<span class="setup-option-title">Answer → Question</span>' +
+                      '<span class="setup-option-text">See the definition and remember the term.</span>' +
+                    '</label>' +
+                    '<label class="setup-option">' +
+                      '<input class="setup-radio" type="radio" name="learnDirection" value="mixed" />' +
+                      '<span class="setup-option-title">Mixed</span>' +
+                      '<span class="setup-option-text">Switch direction randomly during the session.</span>' +
+                    '</label>' +
+                  '</div>' +
+                '</fieldset>' +
+                '<fieldset class="setup-section">' +
+                  '<legend>Choose number of questions</legend>' +
+                  '<div class="setup-chip-grid">' + createQuestionCountChoices(availableCount) + '</div>' +
+                '</fieldset>' +
+              "</div>" +
+              '<p class="learn-start-note">Press Start Learn when you are ready. The session will begin right away.</p>' +
+              '<div class="button-row center-actions learn-start-actions">' +
+                '<button class="btn btn-primary" type="button" data-learn-action="start-learn">Start Learn</button>' +
               "</div>" +
             "</div>";
           return;
@@ -2437,33 +5448,76 @@
           return;
         }
 
-        const correctDefinition = card.definition;
-        const feedback = getLearnFeedback(correctDefinition);
+        const activeLearnMode = getActiveLearnMode();
+        const isTrueFalseMode = activeLearnMode === "truefalse";
+        const isTypingMode = activeLearnMode === "typing";
+        const correctAnswer = getCurrentCorrectAnswer();
+        const feedback = getLearnFeedback(correctAnswer);
+        const statementHtml = isTrueFalseMode
+          ? '<div class="true-false-statement">' +
+              '<div class="true-false-label">' + escapeHtml(app.learn.answerLabel + " shown") + "</div>" +
+              '<div class="true-false-definition">' + escapeHtml(app.learn.promptAnswer || "") + "</div>" +
+            "</div>"
+          : "";
+        const answerTitle = isTrueFalseMode
+          ? "Is this " + app.learn.answerLabel.toLowerCase() + " correct?"
+          : isTypingMode
+            ? "Type the " + app.learn.answerLabel.toLowerCase()
+            : "Choose the " + app.learn.answerLabel.toLowerCase();
+        const answerAreaHtml = isTypingMode
+          ? createTypingAnswerHtml()
+          : '<div class="answer-grid">' +
+              app.learn.options.map(function (option, index) {
+                return createAnswerChoiceHtml(option, index, correctAnswer);
+              }).join("") +
+            "</div>";
+        const previousButtonHtml =
+          '<button class="btn btn-secondary" type="button" data-learn-action="previous-question" ' +
+            (app.learn.history.length === 0 || app.learn.locked ? "disabled" : "") +
+          ">Previous Question</button>";
+        const nextButtonHtml = app.learn.pendingAdvance
+          ? '<button class="btn btn-primary" type="button" data-learn-action="next-question">Next Question (' + Math.max(0, app.learn.nextCountdown || 0) + 's)</button>'
+          : app.learn.locked
+            ? '<button class="btn btn-primary" type="button" data-learn-action="next-question">Next Question</button>'
+            : "";
 
         elements.learnContent.innerHTML =
           '<div class="learn-card">' +
             '<div class="learn-meta">' +
               '<div class="learn-meta-left">' +
-                "<span>Term</span>" +
-                '<button class="speaker-button" type="button" data-learn-action="speak-current" aria-label="Read term aloud" title="Read term aloud">🔊</button>' +
+                "<span>" + escapeHtml(app.learn.questionLabel) + "</span>" +
+                '<button class="speaker-button" type="button" data-learn-action="speak-current" aria-label="Read prompt aloud" title="Read prompt aloud">🔊</button>' +
               "</div>" +
-              '<span>' + escapeHtml(isCardDue(card) ? "Due now" : "Review later") + "</span>" +
+              '<button class="btn btn-secondary learn-back-button" type="button" data-learn-action="back-to-start">Back</button>' +
             "</div>" +
-            '<div class="learn-question">' + escapeHtml(card.term) + "</div>" +
-            '<div class="answer-title">Choose an answer</div>' +
-            '<div class="answer-grid">' +
-              app.learn.options.map(function (option, index) {
-                return createAnswerChoiceHtml(option, index, correctDefinition);
-              }).join("") +
-            "</div>" +
+            '<div class="learn-question">' + escapeHtml(app.learn.questionText || "") + "</div>" +
+            statementHtml +
+            '<div class="answer-title">' + escapeHtml(answerTitle) + "</div>" +
+            answerAreaHtml +
             '<div class="learn-footer">' +
               '<div class="learn-feedback ' + feedback.className + '">' + escapeHtml(feedback.text) + "</div>" +
-              '<div class="button-row compact">' +
-                '<button class="btn btn-secondary" type="button" data-learn-action="favorite-current">★ Favorite</button>' +
+              '<div class="button-row compact learn-answer-actions">' +
+                previousButtonHtml +
                 '<button class="btn btn-secondary" type="button" data-learn-action="dont-know" ' + (app.learn.locked ? "disabled" : "") + ">Don't know?</button>" +
+                nextButtonHtml +
               "</div>" +
             "</div>" +
           "</div>";
+
+        const typingInput = elements.learnContent.querySelector("#typingAnswerInput");
+        if (typingInput && !app.learn.locked) {
+          typingInput.focus();
+        }
+      }
+
+      function createTypingAnswerHtml() {
+        return (
+          '<form class="typing-form" id="typingAnswerForm">' +
+            '<label class="sr-only" for="typingAnswerInput">Type your answer</label>' +
+            '<input class="input typing-input" id="typingAnswerInput" type="text" autocomplete="off" spellcheck="false" value="' + escapeAttribute(app.learn.typedAnswer || "") + '" ' + (app.learn.locked ? "disabled" : "") + " />" +
+            '<button class="btn btn-primary" type="submit" ' + (app.learn.locked ? "disabled" : "") + ">Check</button>" +
+          "</form>"
+        );
       }
 
       function renderLearnProgress() {
@@ -2486,19 +5540,43 @@
         }
       }
 
+      function getPracticeTypeFromLearnMode() {
+        if (app.learn.mode === "test") { return "test"; }
+        if (app.learn.mode === "typing") { return "write"; }
+        return "learn";
+      }
+
       function renderLearnComplete() {
         const total = app.learn.history.length;
         const correct = app.learn.history.filter(function (entry) {
           return entry.correct;
         }).length;
+        const wrong = Math.max(0, total - correct);
         const missedIds = getMissedLearnCardIds();
         const score = total === 0 ? 0 : Math.round((correct / total) * 100);
+
+        if (!app.learn.recorded) {
+          app.learn.recorded = true;
+          recordPractice(getPracticeTypeFromLearnMode(), {
+            deckIds: app.learn.selectedDeckIds,
+            total: total,
+            correct: correct,
+            wrong: wrong,
+            details: { mode: app.learn.mode, direction: app.learn.direction, missedCards: missedIds.length }
+          });
+        }
 
         elements.learnContent.innerHTML =
           '<div class="learn-card done-score">' +
             "<div>" +
               '<div class="score-number">' + score + "%</div>" +
-              '<div class="score-caption">' + correct + " correct out of " + total + "</div>" +
+              '<div class="score-caption">Session complete</div>' +
+            "</div>" +
+            '<div class="session-summary" aria-label="Session results">' +
+              createSessionSummaryItem("Correct", correct) +
+              createSessionSummaryItem("Wrong", wrong) +
+              createSessionSummaryItem("Accuracy", score + "%") +
+              createSessionSummaryItem("Missed cards", missedIds.length) +
             "</div>" +
             '<div class="button-row center-actions">' +
               '<button class="btn btn-primary" type="button" data-learn-action="restart">Restart Learn</button>' +
@@ -2506,6 +5584,15 @@
               '<button class="btn btn-secondary" type="button" data-learn-action="end">Back to Start</button>' +
             "</div>" +
           "</div>";
+      }
+
+      function createSessionSummaryItem(label, value) {
+        return (
+          '<div class="session-summary-item">' +
+            '<div class="session-summary-label">' + escapeHtml(label) + "</div>" +
+            '<div class="session-summary-value">' + escapeHtml(String(value)) + "</div>" +
+          "</div>"
+        );
       }
 
       function createAnswerChoiceHtml(option, index, correctDefinition) {
@@ -2528,7 +5615,7 @@
         );
       }
 
-      function getLearnFeedback(correctDefinition) {
+      function getLearnFeedback(correctAnswer) {
         if (!app.learn.locked) {
           return {
             className: "",
@@ -2536,11 +5623,25 @@
           };
         }
 
+        if (getActiveLearnMode() === "typing") {
+          if (normalizeAnswer(app.learn.typedAnswer) === normalizeAnswer(correctAnswer)) {
+            return {
+              className: "correct",
+              text: "Correct."
+            };
+          }
+
+          return {
+            className: "wrong",
+            text: "Correct answer: " + correctAnswer
+          };
+        }
+
         const selectedOption = app.learn.selectedIndex === null
           ? null
           : app.learn.options[app.learn.selectedIndex];
 
-        if (selectedOption === correctDefinition) {
+        if (selectedOption === correctAnswer) {
           return {
             className: "correct",
             text: "Correct."
@@ -2549,11 +5650,49 @@
 
         return {
           className: "wrong",
-          text: "Correct answer: " + correctDefinition
+          text: "Correct answer: " + correctAnswer
         };
       }
 
+      function getCurrentCorrectAnswer() {
+        if (getActiveLearnMode() === "truefalse") {
+          return app.learn.promptIsTrue ? "True" : "False";
+        }
+
+        return app.learn.correctAnswer || "";
+      }
+
+      function handleLearnFocusIn(event) {
+        const customInput = event.target.closest("#customQuestionCount");
+
+        if (!customInput) {
+          return;
+        }
+
+        const customRadio = elements.learnContent.querySelector('input[name="learnQuestionCount"][value="custom"]');
+
+        if (customRadio) {
+          customRadio.checked = true;
+        }
+      }
+
+      function handleLearnSettingsChange(event) {
+        if (!app.learn.active && event.target && event.target.name === "learnDeckId") {
+          const selectedDeckIds = getSelectedDeckIdsFrom(elements.learnContent, "learnDeckId");
+          app.learn.selectedDeckIds = selectedDeckIds.length > 0 ? selectedDeckIds : getDefaultSelectedDeckIds(app.learn.selectedDeckIds);
+          renderLearn();
+        }
+      }
+
       function handleLearnClick(event) {
+        const customInput = event.target.closest("#customQuestionCount");
+        if (customInput) {
+          const customRadio = elements.learnContent.querySelector('input[name="learnQuestionCount"][value="custom"]');
+          if (customRadio) {
+            customRadio.checked = true;
+          }
+        }
+
         const answerButton = event.target.closest("[data-answer-index]");
         const actionButton = event.target.closest("[data-learn-action]");
 
@@ -2569,38 +5708,47 @@
 
         const action = actionButton.dataset.learnAction;
 
-        if (action === "start") {
-          app.cardFilter = "all";
-          startLearnSession();
+        if (action === "start-learn") {
+          confirmAndStartLearnSession(null, getSelectedLearnMode(), getSelectedQuestionCount());
           return;
         }
 
-        if (action === "start-favorites") {
-          const favoriteIds = app.cards
-            .filter(function (card) {
-              return card.favorite;
-            })
-            .map(function (card) {
-              return card.id;
-            });
+        if (action === "start-choice") {
+          confirmAndStartLearnSession(null, "choice", getSelectedQuestionCount());
+          return;
+        }
 
-          if (favoriteIds.length === 0) {
-            showToast("No favorite cards yet.");
-            return;
-          }
+        if (action === "start-typing") {
+          confirmAndStartLearnSession(null, "typing", getSelectedQuestionCount());
+          return;
+        }
 
-          app.cardFilter = "favorites";
-          startLearnSession(favoriteIds);
+        if (action === "start-truefalse") {
+          confirmAndStartLearnSession(null, "truefalse", getSelectedQuestionCount());
+          return;
+        }
+
+        if (action === "back-to-start") {
+          goBackToLearnStart();
+          return;
+        }
+
+        if (action === "previous-question") {
+          goToPreviousLearnQuestion();
+          return;
+        }
+
+        if (action === "next-question") {
+          advanceToNextLearnQuestionNow();
           return;
         }
 
         if (action === "dont-know") {
-          submitLearnAnswer(null);
-          return;
-        }
-
-        if (action === "favorite-current") {
-          favoriteCurrentLearnCard();
+          if (getActiveLearnMode() === "typing") {
+            submitTypingAnswer("");
+          } else {
+            submitLearnAnswer(null);
+          }
           return;
         }
 
@@ -2610,7 +5758,7 @@
         }
 
         if (action === "restart") {
-          startLearnSession();
+          startLearnSession(null, app.learn.mode || "choice", app.learn.questionLimit || "all");
           return;
         }
 
@@ -2622,13 +5770,21 @@
             return;
           }
 
-          startLearnSession(missedIds);
+          startLearnSession(missedIds, app.learn.mode || "choice", "all");
           return;
         }
 
         if (action === "end") {
           resetLearnSession();
           renderLearn();
+        }
+      }
+
+      function handleLearnSubmit(event) {
+        if (event.target && event.target.id === "typingAnswerForm") {
+          event.preventDefault();
+          const input = event.target.querySelector("#typingAnswerInput");
+          submitTypingAnswer(input ? input.value : "");
         }
       }
 
@@ -2644,7 +5800,8 @@
         }
 
         const selectedOption = answerIndex === null ? null : app.learn.options[answerIndex];
-        const isCorrect = selectedOption === card.definition;
+        const correctAnswer = getCurrentCorrectAnswer();
+        const isCorrect = selectedOption === correctAnswer;
 
         app.learn.selectedIndex = answerIndex;
         app.learn.locked = true;
@@ -2655,32 +5812,55 @@
           cardId: card.id,
           correct: isCorrect,
           selected: selectedOption,
-          answer: card.definition
+          answer: correctAnswer,
+          mode: getActiveLearnMode(),
+          direction: app.learn.currentDirection,
+          question: app.learn.questionText,
+          promptAnswer: app.learn.promptAnswer,
+          promptIsTrue: app.learn.promptIsTrue,
+          shownAnswer: getActiveLearnMode() === "truefalse" ? app.learn.promptAnswer : null,
+          options: app.learn.options.slice()
         });
 
-        saveCards();
-        renderLearn();
-        renderHeader();
-        renderStats();
-        renderCards();
-
-        window.setTimeout(function () {
-          goToNextLearnQuestion();
-        }, isCorrect ? 850 : 1450);
+        finishLearnAnswer(isCorrect, 850);
       }
 
-      function favoriteCurrentLearnCard() {
+      function submitTypingAnswer(answerText) {
+        if (app.learn.locked) {
+          return;
+        }
+
         const card = getCardById(app.learn.currentId);
 
         if (!card) {
           return;
         }
 
-        card.favorite = !card.favorite;
-        saveCards();
-        renderLearn();
-        renderCards();
-        showToast(card.favorite ? "Card added to favorites." : "Card removed from favorites.");
+        const typedAnswer = String(answerText || "").trim();
+        const correctAnswer = getCurrentCorrectAnswer();
+        const isCorrect = normalizeAnswer(typedAnswer) === normalizeAnswer(correctAnswer);
+
+        app.learn.typedAnswer = typedAnswer;
+        app.learn.selectedIndex = null;
+        app.learn.locked = true;
+
+        updateReviewSchedule(card, isCorrect);
+
+        app.learn.history.push({
+          cardId: card.id,
+          correct: isCorrect,
+          selected: typedAnswer,
+          answer: correctAnswer,
+          mode: getActiveLearnMode(),
+          direction: app.learn.currentDirection,
+          question: app.learn.questionText,
+          promptAnswer: app.learn.promptAnswer,
+          promptIsTrue: app.learn.promptIsTrue,
+          shownAnswer: null,
+          options: app.learn.options.slice()
+        });
+
+        finishLearnAnswer(isCorrect, 1000);
       }
 
       function speakCurrentLearnCard() {
@@ -2690,7 +5870,7 @@
           return;
         }
 
-        speakText(card.term);
+        speakText(app.learn.questionText || card.term);
       }
 
       function speakText(text) {
@@ -2782,7 +5962,8 @@
         const payload = {
           version: 2,
           exportedAt: new Date().toISOString(),
-          cards: app.cards
+          cards: app.cards,
+          libraryDecks: app.libraryDecks
         };
 
         downloadTextFile(JSON.stringify(payload, null, 2), "study-cards-backup.json", "application/json;charset=utf-8");
@@ -2865,6 +6046,26 @@
         return copy;
       }
 
+      function createOpenSetStateHtml() {
+        const decks = app.libraryDecks.slice().sort(compareLibraryDecks).slice(0, 6);
+        return (
+          '<div class="empty-state open-set-state">' +
+            '<h2>Choose a set to view cards</h2>' +
+            '<p>Your cards page shows the currently open set. Pick one below or go to My Library.</p>' +
+            '<div class="mini-deck-list">' +
+              decks.map(function (deck) {
+                return (
+                  '<button class="mini-deck-button" type="button" data-open-deck-id="' + escapeAttribute(deck.id) + '">' +
+                    '<span>' + escapeHtml(deck.name) + '</span>' +
+                    '<small>' + deck.cards.length + ' cards</small>' +
+                  '</button>'
+                );
+              }).join('') +
+            '</div>' +
+          '</div>'
+        );
+      }
+
       function createEmptyStateHtml(title, message) {
         return (
           '<div class="empty-state">' +
@@ -2879,6 +6080,16 @@
           '<div class="flash-label">' + escapeHtml(title) + "</div>" +
           '<div class="flash-text small">' + escapeHtml(message) + "</div>"
         );
+      }
+
+      function normalizeAnswer(value) {
+        return String(value || "")
+          .trim()
+          .toLowerCase()
+          .replace(/[“”]/g, '"')
+          .replace(/[‘’]/g, "'")
+          .replace(/\s+/g, " ")
+          .replace(/^[\s.,;:!?"'()\[\]{}]+|[\s.,;:!?"'()\[\]{}]+$/g, "");
       }
 
       function escapeHtml(value) {
@@ -2981,6 +6192,18 @@
 
           if (Number.isInteger(number) && number >= 1 && number <= app.learn.options.length) {
             submitLearnAnswer(number - 1);
+            return;
+          }
+
+          if (getActiveLearnMode() === "truefalse") {
+            if (event.key.toLowerCase() === "t") {
+              submitLearnAnswer(0);
+              return;
+            }
+
+            if (event.key.toLowerCase() === "f") {
+              submitLearnAnswer(1);
+            }
           }
         }
       }
