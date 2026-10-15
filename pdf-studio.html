@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<title>PDF Studio | Merge, Edit & Extract PDF Files</title>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.6/dist/docx-preview.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{color-scheme:light;--bg:#f5f7fb;--panel:#fff;--panel2:#f0f4fa;--text:#172338;--muted:#66758a;--border:#dfe6f0;--accent:#5255e8;--accent2:#4144c9;--danger:#d94356;--shadow:0 18px 48px rgba(25,41,75,.07)}
+:root[data-theme=dark]{color-scheme:dark;--bg:#0b1220;--panel:#131e30;--panel2:#1b2a40;--text:#edf3fc;--muted:#a4b2c6;--border:#304057;--accent:#9194ff;--accent2:#777bf5;--danger:#ff7d89;--shadow:0 18px 48px rgba(0,0,0,.18)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.shell{max-width:1240px;margin:auto;padding:24px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:36px}.brand{font-size:21px;font-weight:850;letter-spacing:-.8px}.brand span{color:var(--accent)}.top-actions{display:flex;gap:10px}.btn{border:1px solid var(--border);border-radius:12px;padding:11px 15px;background:var(--panel);color:var(--text);font-weight:700;transition:background .2s,transform .2s}.btn:hover:not(:disabled){background:var(--panel2)}.btn:active:not(:disabled){transform:scale(.98)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.primary:hover:not(:disabled){background:var(--accent2)}.btn.danger{color:var(--danger)}.btn.small{padding:7px 10px;font-size:13px;border-radius:9px}.hero{text-align:center;margin:10px auto 28px}.eyebrow{display:inline-block;color:var(--accent);background:var(--panel2);border:1px solid var(--border);padding:7px 13px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.hero h1{font-size:clamp(32px,5vw,52px);letter-spacing:-2px;line-height:1.1;margin:15px 0}.hero p{color:var(--muted);margin:0;font-size:16px}.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 auto 24px}.tab[aria-selected=true]{background:var(--accent);color:white;border-color:var(--accent)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:20px;align-items:start}.panel{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:var(--shadow)}.drop{border:2px dashed var(--border);background:var(--panel2);border-radius:17px;text-align:center;padding:29px 15px;transition:.2s;cursor:pointer}.drop:hover,.drop.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--panel))}.drop .symbol{font-size:36px}.drop h2{font-size:19px;margin:8px 0}.drop p,.hint{color:var(--muted);font-size:13px}.drop p{margin:6px 0 15px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px}.section-head h2{font-size:17px;margin:0}.tools{display:flex;gap:8px;flex-wrap:wrap}.stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.stat{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:var(--muted);font-size:13px}.stat strong{color:var(--text)}.pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:13px}.page{border:1px solid var(--border);border-radius:13px;padding:10px;background:var(--panel2);min-width:0;position:relative}.page.dragging{opacity:.35}.page.selected{border:2px solid var(--accent);padding:9px}.preview{height:145px;display:flex;align-items:center;justify-content:center;background:#e5eaf1;border-radius:8px;overflow:hidden;cursor:pointer;position:relative}.preview canvas,.preview img{max-width:100%;max-height:100%;object-fit:contain}.preview .placeholder{font-size:36px;color:#62718a}.page-title{font-size:12px;font-weight:750;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:9px 0 3px}.page-sub{font-size:11px;color:var(--muted);margin-bottom:9px}.page-actions{display:flex;flex-wrap:wrap;gap:4px}.page-actions button{flex:1;min-width:28px}.select-page{position:absolute;z-index:2;top:15px;left:15px;width:19px;height:19px;accent-color:var(--accent);cursor:pointer}.empty{text-align:center;border:1px dashed var(--border);border-radius:12px;padding:32px;color:var(--muted);font-size:14px}.sidebar{position:sticky;top:18px}.sidebar h2{font-size:19px;margin:0 0 15px}.field-label{display:block;font-size:13px;font-weight:800;margin:15px 0 8px}.field{width:100%;border:1px solid var(--border);border-radius:11px;background:var(--panel2);color:var(--text);padding:12px}.side-note{font-size:13px;color:var(--muted);line-height:1.6}.wide{width:100%;margin-top:12px}.progress{height:9px;border-radius:20px;background:var(--panel2);overflow:hidden;margin-top:14px}.progress>div{height:100%;width:0;background:var(--accent);transition:width .2s}.status{font-size:13px;color:var(--muted);min-height:20px;margin:10px 0;overflow-wrap:anywhere}.status.error{color:var(--danger)}.success{display:none;margin-top:15px;border:1px solid var(--border);background:var(--panel2);padding:14px;border-radius:12px}.success.show{display:block}.success strong{display:block;margin-bottom:6px}.privacy{margin-top:18px;padding-top:17px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.6}.mode-tip{background:var(--panel2);border-radius:11px;padding:12px;color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:15px}.modal{border:none;border-radius:18px;background:var(--panel);color:var(--text);width:min(94vw,900px);max-height:92vh;padding:16px;box-shadow:0 30px 90px #0007}.modal::backdrop{background:#07101dbb}.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.modal-body{max-height:75vh;overflow:auto;display:grid;place-items:center;background:#9ca6b4;padding:15px;border-radius:10px}.modal-body canvas,.modal-body img{max-width:100%;height:auto}.footer{text-align:center;font-size:12px;color:var(--muted);padding:28px 0}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{position:static}.shell{padding:15px}.topbar{margin-bottom:22px}.panel{padding:16px}.hero h1{letter-spacing:-1px}.pages{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}}@media(max-width:480px){.section-head{align-items:start;flex-direction:column}.topbar .btn{font-size:12px}.tab{flex:1 1 42%}}
+
+
+/* Content extractor — isolated from the existing PDF editor */
+.extractor{max-width:1100px;margin:0 auto 34px;display:grid;gap:20px}
+.extractor[hidden],#editorLayout[hidden]{display:none!important}
+.extract-intro h2{font-size:clamp(23px,3vw,31px);margin:0 0 8px}
+.extract-intro p{color:var(--muted);margin:0;line-height:1.6}
+.extract-drop{background:var(--panel);border:2px dashed var(--border);border-radius:18px;text-align:center;padding:42px 20px;cursor:pointer;transition:border-color .2s,background .2s}
+.extract-drop:hover,.extract-drop.drag,.extract-drop:focus-visible{border-color:var(--accent);background:var(--panel2);outline-offset:3px}
+.extract-symbol{font-size:36px;margin-bottom:12px}.extract-drop h3{margin:0 0 7px}.extract-drop p{margin:0;color:var(--muted)}
+.extract-processing,.extract-results{display:none}.extract-processing.active,.extract-results.active{display:block}
+.extract-processing{padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:14px}
+.extract-progress-title{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px;font-size:13px}.extract-progress-title span{color:var(--muted)}
+.extractor .bar-track{height:7px;background:var(--panel2);border-radius:20px;overflow:hidden}.extractor .bar-fill{height:100%;width:0;background:var(--accent);transition:width .2s}
+.extract-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.extract-stats>div{background:var(--panel);border:1px solid var(--border);padding:18px 12px;border-radius:12px;min-width:0}
+.extract-stats strong{display:block;font-size:24px;overflow-wrap:anywhere}.extract-stats span{display:block;color:var(--muted);font-size:12px}
+.extract-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.extract-tabs{display:flex;gap:5px;flex-wrap:wrap}.extract-tabs .tab{border:1px solid var(--border);border-radius:9px;background:var(--panel2);padding:9px 13px;color:var(--muted);cursor:pointer;font:inherit}
+.extract-tabs .tab.active{background:var(--accent);color:white;border-color:var(--accent)}
+.extractor .extract-panel{display:none;padding:22px;background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow-x:auto}
+.extractor .extract-panel.active{display:block}
+.extractor .page-block{margin-bottom:20px}.extractor .page-block-head,.extractor .thumb-meta,.extractor .table-block-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.extractor pre{white-space:pre-wrap;word-break:break-word;max-height:500px;overflow:auto;background:var(--panel2);border-radius:10px;padding:16px;font-size:12px;line-height:1.7}
+.extractor .tag{display:inline-block;padding:4px 8px;background:var(--panel2);border-radius:6px;color:var(--accent);font-size:12px}
+.extractor .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.extractor .thumb{overflow:hidden;border:1px solid var(--border);border-radius:10px;background:var(--panel2)}
+.extractor .thumb img{width:100%;display:block;max-height:210px;object-fit:contain;background:white}.extractor .thumb-meta{padding:8px 10px;margin:0}
+.extractor .thumb-dl{color:var(--accent);text-decoration:none;font-weight:bold}
+.extractor .meta-table,.extractor table.data{width:100%;border-collapse:collapse;font-size:13px}
+.extractor .meta-table td,.extractor table.data td,.extractor table.data th{padding:9px;border-bottom:1px solid var(--border);text-align:left;overflow-wrap:anywhere}
+.extractor .meta-table td:first-child{color:var(--muted);width:34%}.extractor .table-block{margin-bottom:24px}
+.extractor .empty,.extract-note{color:var(--muted);font-size:13px}.extract-note{line-height:1.6;margin-top:14px}
+@media(max-width:640px){.extract-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.extract-toolbar>.btn{width:100%}.extractor .extract-panel{padding:12px}}
+
+/* Whole-document merge workspace; page thumbnails are intentionally not rendered here. */
+#mergeWorkspace[hidden]{display:none!important}
+.merge-workspace{max-width:1100px;margin:0 auto 34px}
+.merge-layout{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:20px;align-items:start}
+.merge-files{display:grid;gap:10px;margin-top:14px}
+.merge-file{display:flex;align-items:center;gap:13px;padding:14px;border:1px solid var(--border);border-radius:13px;background:var(--panel2);min-width:0}
+.merge-file.dragging{opacity:.4}.merge-icon{font-size:30px;flex-shrink:0}.merge-details{flex:1;min-width:0}.merge-name{font-weight:750;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.merge-meta{font-size:12px;color:var(--muted);margin-top:4px}.merge-actions{display:flex;gap:5px;flex-wrap:wrap}
+.merge-empty{text-align:center;color:var(--muted);padding:30px;border:1px dashed var(--border);border-radius:12px}
+@media(max-width:850px){.merge-layout{grid-template-columns:1fr}}
+@media(max-width:480px){.merge-file{flex-wrap:wrap}.merge-actions{width:100%;justify-content:flex-end}}
+
+/* Refined PDF Studio visual system */
+:root{--bg:#f6f8fc;--panel:#ffffff;--panel2:#f3f6fb;--text:#15243a;--muted:#617187;--border:#e1e7f0;--accent:#465bd8;--accent2:#344ac3;--shadow:0 10px 35px rgba(27,49,90,.045)}
+:root[data-theme=dark]{--bg:#0d1423;--panel:#152137;--panel2:#1c2b43;--text:#edf3ff;--muted:#a7b6ca;--border:#2c3d58;--accent:#8797ff;--accent2:#6d81fa;--shadow:0 12px 40px rgba(0,0,0,.12)}
+body{line-height:1.5} .shell{max-width:1320px;padding:28px 32px} .topbar{margin-bottom:52px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:7px;font-size:22px;letter-spacing:-.9px} .brand-icon{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--accent);color:white;font-size:25px;margin-right:5px}
+.hero{margin:0 auto 36px;max-width:850px}.eyebrow{background:transparent;border:1px solid var(--border);color:var(--accent);font-size:11px;letter-spacing:.14em;padding:7px 14px}
+.hero h1{font-size:clamp(35px,4.8vw,58px);letter-spacing:-2.4px;line-height:1.13;margin:20px 0 15px;font-weight:800}.hero-accent{color:var(--accent)}.hero p{font-size:16px;line-height:1.7;max-width:620px;margin:auto}
+.tabs{margin-bottom:30px;gap:6px;background:var(--panel);border:1px solid var(--border);padding:6px;border-radius:16px;width:fit-content;max-width:100%}.tabs .tab{border:0;border-radius:11px;padding:12px 20px;font-size:13px;white-space:nowrap;box-shadow:none}.tabs .tab[aria-selected=false]{background:transparent;color:var(--muted)}
+.panel{border-radius:18px;box-shadow:var(--shadow);padding:26px}.panel.sidebar{padding:25px}.sidebar h2{letter-spacing:-.5px}.drop{border-radius:15px;padding:43px 18px;border-color:#bfcbe0;background:linear-gradient(145deg,var(--panel2),var(--panel))}.drop .symbol{display:block;font-size:35px;margin-bottom:8px}.drop h2{letter-spacing:-.35px}.mode-tip{background:transparent;border-left:3px solid var(--accent);padding:3px 0 3px 13px;border-radius:0;margin-bottom:22px;line-height:1.7}
+.btn{border-radius:10px;padding:10px 16px;box-shadow:none}.btn.primary{color:#fff;background:#465bd8;border-color:#465bd8}.btn.primary:hover:not(:disabled){background:#344ac3}.section-head{margin-top:28px}.section-head h2{font-size:16px;letter-spacing:-.3px}.stat{background:var(--panel2);border-color:var(--border)}.stats{gap:10px}.stat strong{font-variant-numeric:tabular-nums}
+.merge-file,.page,.extractor .thumb{transition:border-color .18s,box-shadow .18s}.merge-file:hover,.page:hover{border-color:#a9b7d9;box-shadow:0 6px 20px rgba(32,53,100,.06)}.merge-icon{display:grid;place-items:center;width:47px;height:50px;font-size:27px;border-radius:10px;background:var(--panel)}.merge-name{font-size:14px}.merge-meta{font-size:12px}
+.field{background:var(--panel);border-radius:9px}.field:focus{border-color:var(--accent)}.privacy{padding-top:20px}.side-note{line-height:1.7}.preview{background:#e9edf4}.page{background:var(--panel)}.page-title{font-size:12px}.page-actions .btn{padding:7px 8px}.extract-drop{box-shadow:var(--shadow);padding:55px 20px}.extractor .extract-panel{box-shadow:var(--shadow)}.extract-stats>div{box-shadow:var(--shadow)}.footer{margin-top:30px;border-top:1px solid var(--border);padding:26px 0 10px}
+@media(max-width:850px){.shell{padding:20px}.topbar{margin-bottom:32px}.hero h1{letter-spacing:-1.4px}.panel{padding:20px}.tabs .tab{padding:10px 13px}}
+@media(max-width:480px){.shell{padding:14px}.topbar{margin-bottom:25px}.brand{font-size:19px}.hero{margin-bottom:26px}.hero h1{font-size:34px}.hero p{font-size:14px}.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%}.tabs .tab{font-size:11px;padding:10px 5px;white-space:normal}.drop{padding:30px 12px}.panel{padding:15px}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* DOCX conversion stage: kept outside the visible application layout. */
+.docx-conversion-stage{position:fixed;top:0;left:0;z-index:-10;opacity:0;pointer-events:none;background:#fff;color:#172338;width:max-content;max-width:none}
+.docx-conversion-stage .docx-wrapper{background:#fff!important;padding:0!important}
+.docx-conversion-stage .docx-wrapper > section{margin:0!important;box-shadow:none!important}
+
+/* pdf-studio-portfolio-integration-v1: palette follows portfolio css/styles.css. */
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0f;
+  --panel: #16161f;
+  --panel2: #1e1e2e;
+  --text: #f0f0f5;
+  --muted: #a0a0b0;
+  --border: #303044;
+  --accent: #3b82f6;
+  --accent2: #7c3aed;
+  --danger: #ff7d89;
+  --shadow: 0 16px 42px rgba(0,0,0,.24);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0a0f;
+  --panel: #16161f;
+  --panel2: #1e1e2e;
+  --text: #f0f0f5;
+  --muted: #a0a0b0;
+  --border: #303044;
+  --accent: #3b82f6;
+  --accent2: #7c3aed;
+  --danger: #ff7d89;
+  --shadow: 0 16px 42px rgba(0,0,0,.24);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f8fc;
+  --panel: #ffffff;
+  --panel2: #eef1fa;
+  --text: #161626;
+  --muted: #535b73;
+  --border: #dce2ef;
+  --accent: #2563eb;
+  --accent2: #6d28d9;
+  --danger: #c72b48;
+  --shadow: 0 16px 42px rgba(30,40,80,.07);
+}
+body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+.brand, .hero h1, .sidebar h2, .section-head h2 {
+  font-family: 'Space Grotesk', Inter, sans-serif;
+}
+.hero-accent, .brand > span:last-child {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.btn.primary, .tab[aria-selected="true"], .extract-tabs .tab.active,
+.tabs .tab[aria-selected="true"] {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-color: transparent;
+  color: #fff;
+}
+.btn.primary:hover:not(:disabled) { background: linear-gradient(135deg, #2563eb, #7c3aed); }
+.drop { border-color: var(--border); background: linear-gradient(145deg, var(--panel2), var(--panel)); }
+.drop:hover, .drop.over { border-color: var(--accent); }
+.eyebrow { color: var(--accent); }
+.pdf-portfolio-nav { display:flex; align-items:center; gap:15px; flex-wrap:wrap; }
+.pdf-portfolio-nav a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:650; transition:color .2s ease; }
+.pdf-portfolio-nav a:hover, .pdf-portfolio-nav a:focus-visible { color:var(--accent); }
+.pdf-studio-top-right { display:flex; align-items:center; gap:20px; flex-wrap:wrap; justify-content:flex-end; }
+.preview { background:#e9edf4; }
+:root[data-theme="dark"] .preview { background:#30374a; }
+@media (max-width:640px) {
+  .topbar { align-items:flex-start; flex-direction:column; }
+  .pdf-studio-top-right { justify-content:space-between; width:100%; }
+  .pdf-portfolio-nav { gap:13px; }
+}
+
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="shell">
+<header class="topbar"><div class="brand"><span class="brand-icon">▤</span> PDF <span>Studio</span></div><div class="pdf-studio-top-right"><nav class="pdf-portfolio-nav" aria-label="Portfolio navigation"><a href="index.html">Home</a><a href="projects.html">Projects</a></nav><div class="top-actions"><button class="btn small" id="themeButton" aria-label="Toggle dark mode">🌙 Dark mode</button></div></div></header>
+<section class="hero"><div class="eyebrow">YOUR PDF WORKSPACE</div><h1>Every PDF task, <span class="hero-accent">one elegant workspace.</span></h1><p>Merge documents, organize pages, and extract content — right in your browser.</p></section>
+<nav class="tabs" aria-label="PDF tools" role="tablist"><button class="btn tab" data-mode="merge" role="tab" aria-selected="true">Merge PDFs</button><button class="btn tab" data-mode="editor" role="tab" aria-selected="false">Page Editor</button><button class="btn tab" data-mode="extract" role="tab" aria-selected="false">Extract Content</button></nav>
+<section class="merge-workspace" id="mergeWorkspace" aria-label="Merge complete PDF files">
+ <div class="merge-layout"><main class="panel">
+  <div class="mode-tip">Combine PDFs, images, and Word (.docx) documents in any order. Word documents are visually converted in the browser; complex layouts may differ from Microsoft Word.</div>
+  <div class="drop" id="mergeDrop" role="button" tabindex="0" aria-label="Add PDF, image or DOCX files"><div class="symbol">📚</div><h2>Drop your documents here</h2><p>PDF, DOCX, JPG, PNG or WebP · Drag and drop or browse your device.</p><button class="btn primary" id="mergeChoose" type="button">+ Choose files</button><input class="sr-only" type="file" id="mergeInput" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp" multiple></div>
+  <div class="stats"><div class="stat"><strong id="mergeFileCount">0</strong> files</div><div class="stat"><strong id="mergePageCount">0</strong> total pages</div><div class="stat"><strong id="mergeTotalSize">0 B</strong> total size</div></div>
+  <div class="section-head"><h2>Documents in merge order</h2><button class="btn small danger" id="mergeClear" type="button">Clear files</button></div>
+  <div class="merge-files" id="mergeFiles"></div>
+ </main><aside class="panel sidebar"><h2>Merge documents</h2><p class="side-note">Add PDFs and images in any order. PDFs retain their original pages; each image becomes one PDF page.</p>
+ <label class="field-label" for="mergeOutputName">Output filename</label><input class="field" id="mergeOutputName" value="Merged-PDF" maxlength="180" autocomplete="off">
+ <button class="btn primary wide" id="mergeExport" disabled>🔗 Merge & download</button><div class="progress" aria-label="Merge progress"><div id="mergeProgress"></div></div><p class="status" id="mergeStatus" role="status" aria-live="polite"></p>
+ <div class="success" id="mergeSuccess"><strong>✅ Your merged PDF is ready!</strong><span class="side-note" id="mergeSuccessInfo"></span><button class="btn wide" id="mergeDownloadAgain">⬇ Download again</button></div>
+ <div class="privacy">🔒 Files are processed locally in your browser. External libraries load from CDNs, but this application does not upload document contents.</div>
+ </aside></div></section>
+<div class="layout" id="editorLayout" hidden><main class="panel"><div class="mode-tip" id="modeTip">Import PDF files, Word (.docx) documents or images. Preview, reorder, rotate, duplicate and remove pages. DOCX layout conversion is best-effort.</div><div class="drop" id="dropZone" role="button" tabindex="0" aria-label="Choose files or drop them here"><div class="symbol">☁️</div><h2>Drop files here</h2><p>PDF, DOCX, JPG, PNG or WebP · Or browse your device</p><button class="btn primary" type="button" id="chooseButton">+ Choose files</button><input class="sr-only" type="file" id="fileInput" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png,image/webp" multiple></div><p class="hint">Rearrange pages by dragging their cards or using the arrow controls. Word files are visually rendered, so unusual fonts, equations and complex formatting may differ. Originals are never changed.</p><div class="stats"><div class="stat"><strong id="fileCount">0</strong> source files</div><div class="stat"><strong id="pageCount">0</strong> pages</div><div class="stat"><strong id="totalSize">0 B</strong> uploaded</div></div><div class="section-head"><h2 id="pageHeading">Your pages</h2><div class="tools"><button class="btn small" id="undoButton" title="Undo (Ctrl/Cmd+Z)" disabled>↶ Undo</button><button class="btn small" id="redoButton" title="Redo (Ctrl/Cmd+Shift+Z)" disabled>↷ Redo</button><button class="btn small" id="selectAll">Select all</button><button class="btn small" id="deselectAll">Deselect</button><button class="btn small danger" id="deleteSelected">Delete selected</button><button class="btn small danger" id="clearAll">Clear all</button></div></div><div class="pages" id="pages"></div></main><aside class="panel sidebar"><h2>Export document</h2><p class="side-note" id="exportTip">Export all pages in the displayed order, or select pages to create a smaller PDF.</p><label class="field-label" for="outputName">Output filename</label><input class="field" id="outputName" value="Merged-PDF" maxlength="180" autocomplete="off"><button class="btn primary wide" id="exportButton" disabled>⬇ Export all pages</button><button class="btn wide" id="exportSelected" disabled>✂️ Export selected pages as one PDF</button><label class="field-label" for="selectedPageFormat">Export selected pages separately</label><select class="field" id="selectedPageFormat" aria-label="Selected page export format"><option value="png">PNG images</option><option value="jpeg">JPEG images</option><option value="pdf">Individual PDF files</option></select><button class="btn wide" id="exportSeparate" disabled>⬇ Export selected pages (.zip)</button><p class="side-note">Each file uses the original source name and page number, for example Lecture_page_003.png. Repeated pages receive unique filenames.</p><div class="progress" aria-label="Export progress"><div id="progressBar"></div></div><p class="status" id="status" role="status" aria-live="polite"></p><div class="success" id="success"><strong>✅ Your PDF is ready!</strong><span class="side-note" id="successInfo"></span><button class="btn wide" id="downloadAgain">⬇ Download again</button></div><div class="privacy">🔒 <strong>Files stay on your device.</strong> Processing takes place in your browser. External libraries load from a CDN; your document contents are not uploaded by this application.</div></aside></div><section class="extractor" id="extractor" hidden aria-label="Extract content from PDF">
+  <div class="extract-intro"><h2>Explore what’s inside your PDF</h2><p>Extract text, images, page previews, detected tables and document metadata from a PDF. Save the results in a ZIP archive.</p></div>
+  <div class="extract-drop" id="dropzone" role="button" tabindex="0" aria-label="Choose a PDF to extract">
+    <input type="file" id="extractorFileInput" accept=".pdf,application/pdf" hidden>
+    <div class="extract-symbol">🔎</div><h3>Drop a PDF here</h3><p>Or click to choose a file · All processing stays in your browser</p>
+  </div>
+  <div class="extract-processing" id="processing" aria-live="polite"><div class="extract-progress-title"><strong id="procFile"></strong><span id="procStatus">Reading file…</span></div><div class="bar-track"><div class="bar-fill" id="barFill"></div></div></div>
+  <div class="extract-results" id="results">
+    <div class="extract-stats">
+      <div><strong id="statPages">0</strong><span>Pages</span></div><div><strong id="statWords">0</strong><span>Words</span></div><div><strong id="statImages">0</strong><span>Images</span></div><div><strong id="statTables">0</strong><span>Table rows</span></div><div><strong id="statLinks">0</strong><span>Links</span></div>
+    </div>
+    <div class="extract-toolbar"><div class="extract-tabs" role="tablist" aria-label="Extracted content"><button class="tab active" data-tab="text">Text</button><button class="tab" data-tab="images">Images</button><button class="tab" data-tab="tables">Tables</button><button class="tab" data-tab="meta">Metadata</button></div><button class="btn primary" id="downloadAll">⬇ Download all (.zip)</button></div>
+    <div class="extract-panel panel active" id="textPanel"></div><div class="extract-panel panel" id="imagesPanel"></div><div class="extract-panel panel" id="tablesPanel"></div><div class="extract-panel panel" id="metaPanel"></div>
+    <p class="extract-note">Image and table detection is best-effort. Full-page previews are included when rendering succeeds.</p>
+  </div>
+</section>
+<footer class="footer">PDF Studio · Private, browser-based PDF tools · Powered by pdf-lib and PDF.js</footer></div>
+<dialog class="modal" id="previewModal"><div class="modal-head"><strong id="modalTitle">Page preview</strong><button class="btn small" id="closeModal">✕ Close</button></div><div class="modal-body" id="modalBody"></div></dialog>
+<script>
+/* Convert DOCX to rasterized PDF pages locally; never send document contents to a server. */
+async function convertDocxToPdf(bytes, notify) {
+  if (!window.docx || typeof window.docx.renderAsync !== 'function' || !window.html2canvas || !window.PDFLib) {
+    throw Error('Word conversion libraries did not load. Check internet/CDN access and reload.');
+  }
+  const stage = document.createElement('div');
+  stage.className = 'docx-conversion-stage';
+  document.body.append(stage);
+  try {
+    notify?.('Rendering Word layout…');
+    const styles = document.createElement('div');
+    stage.append(styles);
+    await window.docx.renderAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), stage, styles, {
+      breakPages: true,
+      ignoreLastRenderedPageBreak: false,
+      inWrapper: true,
+      useBase64URL: true
+    });
+    const sections = [...stage.querySelectorAll('.docx-wrapper > section')];
+    if (!sections.length) throw Error('Could not find pages in the Word document.');
+    if (document.fonts?.ready) await document.fonts.ready;
+    const pdf = await PDFLib.PDFDocument.create();
+    for (let index = 0; index < sections.length; index++) {
+      notify?.('Converting Word page ' + (index + 1) + ' of ' + sections.length + '…');
+      const section = sections[index];
+      await Promise.all([...section.querySelectorAll('img')].map(img => img.complete ? Promise.resolve() : new Promise(resolve => {
+        img.addEventListener('load', resolve, {once:true});
+        img.addEventListener('error', resolve, {once:true});
+      })));
+      const pageWidth = Math.max(1, section.offsetWidth);
+      const pageHeight = Math.max(1, section.offsetHeight);
+      const scale = Math.min(1.6, 2400 / Math.max(pageWidth, pageHeight));
+      const canvas = await window.html2canvas(section, {
+        backgroundColor: '#ffffff', scale, useCORS: false, logging: false,
+        onclone: clonedDocument => {
+          const clonedStage = clonedDocument.querySelector('.docx-conversion-stage');
+          if (clonedStage) {clonedStage.style.opacity = '1'; clonedStage.style.zIndex = '0';}
+        }
+      });
+      if (!canvas.width || !canvas.height) throw Error('Failed to render Word page ' + (index + 1));
+      const blob = await new Promise((resolve, reject) => canvas.toBlob(value => value ? resolve(value) : reject(Error('Could not encode Word page')), 'image/png'));
+      const image = await pdf.embedPng(await blob.arrayBuffer());
+      const width = Math.max(1, Math.min(14400, pageWidth * .75));
+      const height = Math.max(1, Math.min(14400, pageHeight * .75));
+      const page = pdf.addPage([width, height]);
+      page.drawImage(image, {x:0, y:0, width, height});
+      canvas.width = 0;
+      canvas.height = 0;
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+    return new Uint8Array(await pdf.save());
+  } finally {
+    stage.remove();
+  }
+}
+</script>
+<script>
+'use strict';
+const {PDFDocument,degrees}=PDFLib;
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const $=id=>document.getElementById(id);
+const state={sources:[],pages:[],selected:new Set(),mode:'merge',busy:false,download:null,nextId:1,undo:[],redo:[]};
+function snapshot(){return{pages:state.pages.map(p=>({...p})),selected:[...state.selected]}}
+function remember(){state.undo.push(snapshot());if(state.undo.length>40)state.undo.shift();state.redo=[]}
+function restore(snapshotValue){state.pages=snapshotValue.pages.map(p=>({...p}));state.selected=new Set(snapshotValue.selected);invalidate();render()}
+function undo(){if(state.busy||!state.undo.length)return;state.redo.push(snapshot());restore(state.undo.pop());message('Last edit undone.')}
+function redo(){if(state.busy||!state.redo.length)return;state.undo.push(snapshot());restore(state.redo.pop());message('Edit restored.')}
+$('undoButton').addEventListener('click',undo);$('redoButton').addEventListener('click',redo);
+document.addEventListener('keydown',e=>{if(state.mode!=='editor'||!(e.ctrlKey||e.metaKey)||e.key.toLowerCase()!=='z'||e.altKey)return;const t=e.target;if(t instanceof HTMLElement&&(t.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(t.tagName)))return;e.preventDefault();if(e.shiftKey)redo();else undo()});
+const modes={editor:{tip:'Import PDF files, Word (.docx) documents or images. Preview, reorder, rotate, duplicate and remove pages. DOCX layout conversion is best-effort.',export:'Export all pages in the displayed order, or select pages to create a smaller PDF.',button:'⬇ Export all pages'},extract:{tip:'Extract text, images, tables and metadata from PDF files.',export:'Download extracted content as a ZIP archive.',button:'⬇ Download extracted content'}};
+function message(text,error=false){$('status').textContent=text;$('status').classList.toggle('error',error)}
+function size(bytes){if(bytes<1024)return bytes+' B';if(bytes<1048576)return(bytes/1024).toFixed(1)+' KB';return(bytes/1048576).toFixed(1)+' MB'}
+function cleanName(name){return(name.trim().replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').replace(/\.+$/,'')||'Merged-PDF').replace(/\.pdf$/i,'')+'.pdf'}
+function setProgress(n){$('progressBar').style.width=Math.min(100,Math.max(0,n))+'%'}
+function invalidate(){if(state.download){URL.revokeObjectURL(state.download.url);state.download=null}$('success').classList.remove('show');setProgress(0)}
+function update(){$('undoButton').disabled=state.busy||!state.undo.length;$('redoButton').disabled=state.busy||!state.redo.length;const active=state.pages.length;$('fileCount').textContent=state.sources.length;$('pageCount').textContent=state.pages.length;$('totalSize').textContent=size(state.sources.reduce((n,s)=>n+s.file.size,0));$('exportButton').disabled=state.busy||active===0;$('exportSelected').disabled=state.busy||state.selected.size===0;$('exportSeparate').disabled=state.busy||state.selected.size===0;$('deleteSelected').disabled=state.busy||!state.selected.size;$('selectAll').disabled=state.busy||!state.pages.length;$('deselectAll').disabled=state.busy||!state.selected.size;$('clearAll').disabled=state.busy||!state.pages.length;$('chooseButton').disabled=state.busy;$('fileInput').disabled=state.busy;$('exportButton').textContent=modes[state.mode].button;$('pageHeading').textContent='Your pages ('+state.pages.length+')'}
+function makeButton(label,title,fn){const b=document.createElement('button');b.type='button';b.className='btn small';b.textContent=label;b.title=title;b.setAttribute('aria-label',title);b.disabled=state.busy;b.addEventListener('click',fn);return b}
+function movePage(from,to){if(state.busy||to<0||to>=state.pages.length)return;if(from===to)return;remember();const [p]=state.pages.splice(from,1);state.pages.splice(to,0,p);invalidate();render()}
+function render(){const container=$('pages');container.replaceChildren();if(!state.pages.length){const empty=document.createElement('div');empty.className='empty';empty.style.gridColumn='1/-1';empty.textContent='No pages yet. Add PDF files or images to get started.';container.append(empty)}state.pages.forEach((p,i)=>{const card=document.createElement('article');card.className='page'+(state.selected.has(p.id)?' selected':'');card.draggable=!state.busy;card.dataset.id=p.id;const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.className='select-page';checkbox.checked=state.selected.has(p.id);checkbox.disabled=state.busy;checkbox.setAttribute('aria-label','Select page '+(i+1));checkbox.addEventListener('change',()=>{checkbox.checked?state.selected.add(p.id):state.selected.delete(p.id);card.classList.toggle('selected',checkbox.checked);update()});const preview=document.createElement('div');preview.className='preview';preview.title='Open page preview';preview.tabIndex=0;preview.setAttribute('role','button');preview.setAttribute('aria-label','Preview page '+(i+1));const placeholder=document.createElement('span');placeholder.className='placeholder';placeholder.textContent='📄';preview.append(placeholder);preview.addEventListener('click',()=>showPreview(p));preview.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showPreview(p)}});const title=document.createElement('div');title.className='page-title';title.textContent=p.source.file.name;title.title=p.source.file.name;const sub=document.createElement('div');sub.className='page-sub';sub.textContent='Page '+(i+1)+' · '+(p.source.type==='pdf'?'Original '+(p.index+1):'Image')+(p.rotation?' · '+p.rotation+'°':'');const actions=document.createElement('div');actions.className='page-actions';actions.append(makeButton('←','Move left',()=>movePage(i,i-1)),makeButton('→','Move right',()=>movePage(i,i+1)),makeButton('↻','Rotate 90 degrees',()=>{remember();p.rotation=(p.rotation+90)%360;invalidate();render()}),makeButton('⧉','Duplicate page',()=>{remember();const duplicate={...p,id:state.nextId++};state.pages.splice(i+1,0,duplicate);invalidate();render()}),makeButton('✕','Remove page',()=>{remember();state.pages.splice(i,1);state.selected.delete(p.id);invalidate();render()}));card.append(checkbox,preview,title,sub,actions);container.append(card);renderThumb(p,preview,placeholder);card.addEventListener('dragstart',e=>{card.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',String(p.id))});card.addEventListener('dragend',()=>card.classList.remove('dragging'));card.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move'});card.addEventListener('drop',e=>{e.preventDefault();const from=state.pages.findIndex(x=>x.id===Number(e.dataTransfer.getData('text/plain')));const to=state.pages.findIndex(x=>x.id===p.id);if(from>=0)movePage(from,to)})});update()}
+async function renderThumb(p,preview,placeholder){try{if(p.source.type==='image'){const img=document.createElement('img');img.alt='Image page';img.src=p.source.url;img.style.transform='rotate('+p.rotation+'deg)';if(preview.isConnected)preview.replaceChildren(img);return}const page=await p.source.previewDoc.getPage(p.index+1);if(!preview.isConnected)return;const viewport=page.getViewport({scale:1,rotation:(page.rotate+p.rotation)%360});const scale=Math.min(128/viewport.width,135/viewport.height,1.5);const scaled=page.getViewport({scale:scale,rotation:(page.rotate+p.rotation)%360});const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.floor(scaled.width));canvas.height=Math.max(1,Math.floor(scaled.height));await page.render({canvasContext:canvas.getContext('2d'),viewport:scaled}).promise;if(preview.isConnected)preview.replaceChildren(canvas)}catch(err){console.warn('Preview unavailable:',err);placeholder.textContent='⚠️'}}
+async function showPreview(p){$('modalTitle').textContent=p.source.file.name+' · '+(p.index+1);$('modalBody').replaceChildren();$('previewModal').showModal();try{if(p.source.type==='image'){const img=document.createElement('img');img.src=p.source.url;img.alt='Full image preview';img.style.transform='rotate('+p.rotation+'deg)';$('modalBody').append(img)}else{const page=await p.source.previewDoc.getPage(p.index+1);const viewport=page.getViewport({scale:1,rotation:(page.rotate+p.rotation)%360});const scale=Math.min(2,Math.max(.25,780/viewport.width));const v=page.getViewport({scale,rotation:(page.rotate+p.rotation)%360});const canvas=document.createElement('canvas');canvas.width=Math.floor(v.width);canvas.height=Math.floor(v.height);await page.render({canvasContext:canvas.getContext('2d'),viewport:v}).promise;if($('previewModal').open)$('modalBody').append(canvas)}}catch(err){$('modalBody').textContent='Could not preview this page.';console.error(err)}}
+async function loadImage(file,bytes){const blob=new Blob([bytes],{type:file.type||'application/octet-stream'});const url=URL.createObjectURL(blob);try{const image=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('Could not read image'));img.src=url});if(!image.naturalWidth||!image.naturalHeight)throw Error('Empty image');return{type:'image',file,bytes,url,width:image.naturalWidth,height:image.naturalHeight}}catch(err){URL.revokeObjectURL(url);throw err}}
+async function addFiles(files){
+ if(state.busy)return;
+ const input=Array.from(files);
+ if(!input.length)return;
+ state.busy=true;update();
+ let added=0;const errors=[];
+ for(let i=0;i<input.length;i++){
+  const file=input[i];message('Reading '+(i+1)+' of '+input.length+': '+file.name);
+  try{
+   const ext=file.name.split('.').pop().toLowerCase();
+   if(!['pdf','docx','jpg','jpeg','png','webp'].includes(ext))throw Error('Only PDF, DOCX, JPG, PNG and WebP files are supported');
+   if(state.sources.some(s=>s.file.name===file.name&&s.file.size===file.size&&s.file.lastModified===file.lastModified))throw Error('Already added');
+   const bytes=new Uint8Array(await file.arrayBuffer());let source;
+   if(ext==='pdf'||ext==='docx'){
+    const pdfBytes=ext==='docx'?await convertDocxToPdf(bytes,detail=>message(file.name+': '+detail)):bytes;
+    const previewDoc=await pdfjsLib.getDocument({data:pdfBytes.slice()}).promise;
+    source={type:'pdf',file,bytes:pdfBytes,previewDoc,docx:ext==='docx'};
+    if(!previewDoc.numPages)throw Error('No pages found');
+    remember();for(let j=0;j<previewDoc.numPages;j++)state.pages.push({id:state.nextId++,source,index:j,rotation:0});
+   }else{
+    source=await loadImage(file,bytes);
+    remember();state.pages.push({id:state.nextId++,source,index:0,rotation:0});
+   }
+   state.sources.push(source);added++;
+  }catch(err){console.error('File import failed',file.name,err);errors.push(file.name+': '+err.message)}
+ }
+ state.busy=false;invalidate();render();
+ message(errors.length?added+' added. '+errors.join(' | '):added+' file'+(added===1?'':'s')+' added.',!!errors.length);
+}
+function cleanupSources(){for(const s of state.sources){if(s.url)URL.revokeObjectURL(s.url);if(s.previewDoc)s.previewDoc.destroy().catch(()=>{})}state.sources=[]}
+async function imageBytes(source){if(source.type!=='image')throw Error('Not an image');const ext=source.file.name.split('.').pop().toLowerCase();if(ext==='jpg'||ext==='jpeg')return{format:'jpg',bytes:source.bytes};if(ext==='png')return{format:'png',bytes:source.bytes};const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=source.url});const canvas=document.createElement('canvas');canvas.width=source.width;canvas.height=source.height;canvas.getContext('2d').drawImage(img,0,0);const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('Image conversion failed');return{format:'png',bytes:new Uint8Array(await blob.arrayBuffer())}}
+async function exportPdf(selectedOnly=false){if(state.busy)return;const chosen=selectedOnly?state.pages.filter(p=>state.selected.has(p.id)):state.pages.slice();if(!chosen.length){message('Select at least one page to export.',true);return}state.busy=true;invalidate();update();message('Preparing PDF…');const output=await PDFDocument.create();const cache=new Map();try{for(let i=0;i<chosen.length;i++){const p=chosen[i];message('Processing page '+(i+1)+' of '+chosen.length+'…');if(p.source.type==='pdf'){let doc=cache.get(p.source);if(!doc){doc=await PDFDocument.load(p.source.bytes,{ignoreEncryption:false});cache.set(p.source,doc)}const [page]=await output.copyPages(doc,[p.index]);if(p.rotation)page.setRotation(degrees((page.getRotation().angle+p.rotation)%360));output.addPage(page)}else{let data=cache.get(p.source);if(!data){const image=await imageBytes(p.source);const embedded=image.format==='jpg'?await output.embedJpg(image.bytes):await output.embedPng(image.bytes);data={embedded};cache.set(p.source,data)}const width=p.source.width,height=p.source.height;const scale=Math.min(1,14400/Math.max(width,height));const w=Math.max(1,width*scale),h=Math.max(1,height*scale);const page=output.addPage([w,h]);page.drawImage(data.embedded,{x:0,y:0,width:w,height:h});if(p.rotation)page.setRotation(degrees(p.rotation))}setProgress((i+1)/chosen.length*85);await new Promise(resolve=>setTimeout(resolve,0))}message('Creating final PDF…');const result=await output.save();const url=URL.createObjectURL(new Blob([result],{type:'application/pdf'}));const filename=cleanName($('outputName').value);state.download={url,filename};setProgress(100);$('successInfo').textContent=filename+' · '+chosen.length+' pages · '+size(result.byteLength);$('success').classList.add('show');message('Export completed successfully.');download()}catch(err){console.error('PDF export failed',err);message('Export failed: '+(err.message||'Could not process a file. It may be damaged, encrypted, or too large.'),true);setProgress(0)}finally{state.busy=false;update()}}
+function sourcePageName(p,extension){const base=p.source.file.name.replace(/\.[^.]+$/,'').replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').replace(/[. ]+$/,'')||'Document';return base+'_page_'+String(p.index+1).padStart(3,'0')+'.'+extension}
+async function exportSeparatePages(){
+ if(state.busy)return;
+ const chosen=state.pages.filter(p=>state.selected.has(p.id));
+ if(!chosen.length){message('Select at least one page first.',true);return}
+ if(typeof JSZip==='undefined'){message('ZIP library unavailable. Check your internet connection and reload.',true);return}
+ const format=$('selectedPageFormat').value;
+ if(!['png','jpeg','pdf'].includes(format)){message('Unsupported export format.',true);return}
+ state.busy=true;invalidate();update();
+ const archive=new JSZip(),seen=new Map(),cache=new Map();
+ try{
+  for(let i=0;i<chosen.length;i++){
+   const p=chosen[i];
+   message('Exporting selected page '+(i+1)+' of '+chosen.length+'…');
+   const ext=format==='jpeg'?'jpg':format;
+   const original=sourcePageName(p,ext);
+   const count=(seen.get(original)||0)+1;seen.set(original,count);
+   const dot=original.lastIndexOf('.');
+   const filename=count===1?original:original.slice(0,dot)+'_copy_'+count+original.slice(dot);
+   if(format==='pdf'){
+    const output=await PDFDocument.create();
+    if(p.source.type==='pdf'){
+     let originalDoc=cache.get(p.source);
+     if(!originalDoc){originalDoc=await PDFDocument.load(p.source.bytes);cache.set(p.source,originalDoc)}
+     const [page]=await output.copyPages(originalDoc,[p.index]);
+     if(p.rotation)page.setRotation(degrees((page.getRotation().angle+p.rotation)%360));
+     output.addPage(page);
+    }else{
+     const data=await imageBytes(p.source);
+     const embedded=data.format==='jpg'?await output.embedJpg(data.bytes):await output.embedPng(data.bytes);
+     const scale=Math.min(1,14400/Math.max(p.source.width,p.source.height));
+     const page=output.addPage([p.source.width*scale,p.source.height*scale]);
+     page.drawImage(embedded,{x:0,y:0,width:page.getWidth(),height:page.getHeight()});
+     if(p.rotation)page.setRotation(degrees(p.rotation));
+    }
+    archive.file(filename,await output.save());
+   }else{
+    let canvas=document.createElement('canvas');
+    if(p.source.type==='pdf'){
+     const page=await p.source.previewDoc.getPage(p.index+1);
+     const viewport=page.getViewport({scale:2,rotation:(page.rotate+p.rotation)%360});
+     const maxDimension=5000;
+     const scale=Math.min(1,maxDimension/Math.max(viewport.width,viewport.height));
+     const view=scale===1?viewport:page.getViewport({scale:2*scale,rotation:(page.rotate+p.rotation)%360});
+     canvas.width=Math.max(1,Math.ceil(view.width));canvas.height=Math.max(1,Math.ceil(view.height));
+     const context=canvas.getContext('2d',{alpha:false});
+     context.fillStyle='#fff';context.fillRect(0,0,canvas.width,canvas.height);
+     await page.render({canvasContext:context,viewport:view}).promise;
+    }else{
+     const img=await new Promise((resolve,reject)=>{const element=new Image();element.onload=()=>resolve(element);element.onerror=()=>reject(Error('Image could not be loaded'));element.src=p.source.url});
+     const rotated=p.rotation%180!==0;
+     const width=rotated?p.source.height:p.source.width,height=rotated?p.source.width:p.source.height;
+     const scale=Math.min(1,5000/Math.max(width,height));
+     canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));
+     const context=canvas.getContext('2d',{alpha:false});
+     context.fillStyle='#fff';context.fillRect(0,0,canvas.width,canvas.height);
+     context.translate(canvas.width/2,canvas.height/2);
+     context.rotate(p.rotation*Math.PI/180);
+     context.drawImage(img,-p.source.width*scale/2,-p.source.height*scale/2,p.source.width*scale,p.source.height*scale);
+    }
+    const blob=await new Promise((resolve,reject)=>canvas.toBlob(value=>value?resolve(value):reject(Error('Image encoding failed')),format==='png'?'image/png':'image/jpeg',.92));
+    archive.file(filename,blob);
+    canvas.width=0;canvas.height=0;
+   }
+   setProgress((i+1)/chosen.length*85);
+   await new Promise(resolve=>setTimeout(resolve,0));
+  }
+  message('Compressing '+chosen.length+' selected pages…');
+  const data=await archive.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:3}},metadata=>setProgress(85+metadata.percent*.15));
+  const url=URL.createObjectURL(data);
+  const base=($('outputName').value||'Selected-pages').trim().replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').replace(/\.pdf$/i,'')||'Selected-pages';
+  const filename=base+'_selected_'+format+'.zip';
+  state.download={url,filename};
+  $('successInfo').textContent=filename+' · '+chosen.length+' files · '+size(data.size);
+  $('success').classList.add('show');
+  setProgress(100);message('Selected pages exported successfully.');download();
+ }catch(err){console.error('Selected-page export failed',err);message('Selected-page export failed: '+(err.message||'Unknown error'),true);setProgress(0)}
+ finally{state.busy=false;update()}
+}
+function download(){if(!state.download)return;const a=document.createElement('a');a.href=state.download.url;a.download=state.download.filename;document.body.append(a);a.click();a.remove()}
+$('chooseButton').addEventListener('click',e=>{e.stopPropagation();$('fileInput').click()});$('dropZone').addEventListener('click',e=>{if(e.target.closest('button'))return;$('fileInput').click()});$('dropZone').addEventListener('keydown',e=>{if(e.target===$('dropZone')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();$('fileInput').click()}});$('fileInput').addEventListener('change',e=>{addFiles(e.target.files);e.target.value=''});$('dropZone').addEventListener('dragover',e=>{e.preventDefault();$('dropZone').classList.add('over')});$('dropZone').addEventListener('dragleave',e=>{if(!e.currentTarget.contains(e.relatedTarget))$('dropZone').classList.remove('over')});$('dropZone').addEventListener('drop',e=>{e.preventDefault();$('dropZone').classList.remove('over');addFiles(e.dataTransfer.files)});
+document.querySelectorAll('nav.tabs [data-mode]').forEach(button=>button.addEventListener('click',()=>{state.mode=button.dataset.mode;document.querySelectorAll('nav.tabs [data-mode]').forEach(t=>t.setAttribute('aria-selected',String(t===button)));$('editorLayout').hidden=state.mode!=='editor';$('extractor').hidden=state.mode!=='extract';$('mergeWorkspace').hidden=state.mode!=='merge';$('modeTip').textContent=modes[state.mode].tip;$('exportTip').textContent=modes[state.mode].export;update()}));
+$('selectAll').addEventListener('click',()=>{state.selected=new Set(state.pages.map(p=>p.id));render()});$('deselectAll').addEventListener('click',()=>{state.selected.clear();render()});$('deleteSelected').addEventListener('click',()=>{if(!state.selected.size)return;remember();state.pages=state.pages.filter(p=>!state.selected.has(p.id));state.selected.clear();invalidate();render()});$('clearAll').addEventListener('click',()=>{if(state.busy||!state.pages.length)return;remember();state.pages=[];state.selected.clear();invalidate();message('All pages cleared.');render()});$('exportButton').addEventListener('click',()=>exportPdf(false));$('exportSelected').addEventListener('click',()=>exportPdf(true));$('exportSeparate').addEventListener('click',exportSeparatePages);$('downloadAgain').addEventListener('click',download);$('closeModal').addEventListener('click',()=>$('previewModal').close());$('previewModal').addEventListener('click',e=>{if(e.target===$('previewModal'))$('previewModal').close()});
+const savedTheme=(()=>{try{return localStorage.getItem('pdf-studio-theme')}catch{return null}})();document.documentElement.dataset.theme=savedTheme==='light'?'light':'dark';function updateThemeButton(){$('themeButton').textContent=document.documentElement.dataset.theme==='dark'?'☀️ Light mode':'🌙 Dark mode'}$('themeButton').addEventListener('click',()=>{const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=theme;try{localStorage.setItem('pdf-studio-theme',theme)}catch{}updateThemeButton()});updateThemeButton();render();
+window.addEventListener('beforeunload',()=>{if(state.download)URL.revokeObjectURL(state.download.url);for(const s of state.sources){if(s.url)URL.revokeObjectURL(s.url);if(s.previewDoc)s.previewDoc.destroy().catch(()=>{})}});
+</script>
+<script>
+/* PDF document merging, separate from page editor and content extractor. */
+(function(){
+'use strict';
+const byId=id=>document.getElementById(id);
+const merge={files:[],busy:false,download:null,nextId:1};
+function formatSize(bytes){if(bytes<1024)return bytes+' B';if(bytes<1048576)return(bytes/1024).toFixed(1)+' KB';return(bytes/1048576).toFixed(1)+' MB'}
+function outputName(value){return(value.trim().replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').replace(/\.+$/,'')||'Merged-PDF').replace(/\.pdf$/i,'')+'.pdf'}
+function status(text,error=false){byId('mergeStatus').textContent=text;byId('mergeStatus').classList.toggle('error',error)}
+function invalidate(){if(merge.download){URL.revokeObjectURL(merge.download.url);merge.download=null}byId('mergeSuccess').classList.remove('show');byId('mergeProgress').style.width='0%'}
+function button(label,title,callback){const element=document.createElement('button');element.type='button';element.className='btn small';element.textContent=label;element.title=title;element.setAttribute('aria-label',title);element.disabled=merge.busy;element.addEventListener('click',callback);return element}
+function reorder(from,to){if(merge.busy||from===to||from<0||to<0||to>=merge.files.length)return;const [item]=merge.files.splice(from,1);merge.files.splice(to,0,item);invalidate();render()}
+function render(){const host=byId('mergeFiles');host.replaceChildren();if(!merge.files.length){const empty=document.createElement('div');empty.className='merge-empty';empty.textContent='No files added yet. Each PDF or DOCX stays grouped and every image becomes one page.';host.append(empty)}
+merge.files.forEach((item,index)=>{const card=document.createElement('article');card.className='merge-file';card.draggable=!merge.busy;const icon=document.createElement('span');icon.className='merge-icon';icon.textContent=item.image?'🖼️':item.docx?'📝':'📕';const details=document.createElement('div');details.className='merge-details';const name=document.createElement('div');name.className='merge-name';name.textContent=item.file.name;name.title=item.file.name;const meta=document.createElement('div');meta.className='merge-meta';meta.textContent=(item.image?'1 image page':item.pages+' pages')+' · '+formatSize(item.file.size)+(item.docx?' · Word conversion':'');details.append(name,meta);const actions=document.createElement('div');actions.className='merge-actions';actions.append(button('↑','Move document up',()=>reorder(index,index-1)),button('↓','Move document down',()=>reorder(index,index+1)),button('✕','Remove document',()=>{if(merge.busy)return;merge.files.splice(index,1);invalidate();render()}));card.append(icon,details,actions);host.append(card);card.addEventListener('dragstart',event=>{card.classList.add('dragging');event.dataTransfer.effectAllowed='move';event.dataTransfer.setData('text/plain',String(item.id))});card.addEventListener('dragend',()=>card.classList.remove('dragging'));card.addEventListener('dragover',event=>{event.preventDefault();event.dataTransfer.dropEffect='move'});card.addEventListener('drop',event=>{event.preventDefault();const from=merge.files.findIndex(entry=>entry.id===Number(event.dataTransfer.getData('text/plain')));reorder(from,index)})});
+byId('mergeFileCount').textContent=merge.files.length;byId('mergePageCount').textContent=merge.files.reduce((total,item)=>total+item.pages,0);byId('mergeTotalSize').textContent=formatSize(merge.files.reduce((total,item)=>total+item.file.size,0));byId('mergeExport').disabled=merge.busy||!merge.files.length;byId('mergeClear').disabled=merge.busy||!merge.files.length;byId('mergeChoose').disabled=merge.busy;byId('mergeInput').disabled=merge.busy}
+async function imageToPdf(file, original, ext) {
+  const pdfDocument = await PDFLib.PDFDocument.create();
+  let image;
+  if (ext === 'jpg' || ext === 'jpeg') {
+    image = await pdfDocument.embedJpg(original);
+  } else if (ext === 'png') {
+    image = await pdfDocument.embedPng(original);
+  } else {
+    // WebP is decoded by the browser because pdf-lib embeds JPEG and PNG only.
+    const url = URL.createObjectURL(new Blob([original], {type: 'image/webp'}));
+    try {
+      const decoded = await new Promise((resolve, reject) => {
+        const element = new Image();
+        element.onload = () => resolve(element);
+        element.onerror = () => reject(new Error('Could not decode WebP image'));
+        element.src = url;
+      });
+      const canvas = document.createElement('canvas');
+      canvas.width = decoded.naturalWidth;
+      canvas.height = decoded.naturalHeight;
+      if (!canvas.width || !canvas.height) throw Error('Image has invalid dimensions');
+      const context = canvas.getContext('2d');
+      if (!context) throw Error('Could not create image canvas');
+      context.fillStyle = '#fff';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(decoded, 0, 0);
+      const blob = await new Promise((resolve, reject) => canvas.toBlob(value =>
+        value ? resolve(value) : reject(new Error('Could not encode image')), 'image/png'));
+      image = await pdfDocument.embedPng(await blob.arrayBuffer());
+      canvas.width = 0;
+      canvas.height = 0;
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+  const scale = Math.min(1, 14400 / Math.max(image.width, image.height));
+  const width = Math.max(1, image.width * scale);
+  const height = Math.max(1, image.height * scale);
+  const page = pdfDocument.addPage([width, height]);
+  page.drawImage(image, {x: 0, y: 0, width, height});
+  return new Uint8Array(await pdfDocument.save());
+}
+async function add(files) {
+  if (merge.busy) return;
+  const input = Array.from(files);
+  if (!input.length) return;
+  merge.busy = true;
+  render();
+  const errors = [];
+  let added = 0;
+  for (let index = 0; index < input.length; index++) {
+    const file = input[index];
+    status('Reading ' + (index + 1) + ' of ' + input.length + ': ' + file.name);
+    try {
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (!['pdf', 'docx', 'jpg', 'jpeg', 'png', 'webp'].includes(ext)) {
+        throw Error('Supported formats: PDF, DOCX, JPG, PNG and WebP');
+      }
+      if (merge.files.some(item => item.file.name === file.name && item.file.size === file.size && item.file.lastModified === file.lastModified)) {
+        throw Error('File already added');
+      }
+      const original = new Uint8Array(await file.arrayBuffer());
+      const image = ['jpg', 'jpeg', 'png', 'webp'].includes(ext);
+      const docx = ext === 'docx';
+      const bytes = image ? await imageToPdf(file, original, ext) : docx ? await convertDocxToPdf(original, detail => status(file.name + ': ' + detail)) : original;
+      const loading = pdfjsLib.getDocument({data: bytes.slice()});
+      try {
+        const pdf = await loading.promise;
+        if (!pdf.numPages) throw Error('PDF has no pages');
+        merge.files.push({id: merge.nextId++, file, bytes, pages: pdf.numPages, image, docx});
+        added++;
+      } finally {
+        await loading.destroy().catch(() => {});
+      }
+    } catch (error) {
+      console.error('Merge import failed:', file.name, error);
+      errors.push(file.name + ': ' + error.message);
+    }
+  }
+  merge.busy = false;
+  invalidate();
+  render();
+  status(errors.length ? added + ' added. ' + errors.join(' | ') : added + ' file' + (added === 1 ? '' : 's') + ' added.', errors.length > 0);
+}
+function download(){if(!merge.download)return;const link=document.createElement('a');link.href=merge.download.url;link.download=merge.download.filename;document.body.append(link);link.click();link.remove()}
+async function exportMerged(){if(merge.busy||!merge.files.length)return;merge.busy=true;invalidate();render();try{const result=await PDFLib.PDFDocument.create();let processed=0;const total=merge.files.reduce((count,item)=>count+item.pages,0);for(let i=0;i<merge.files.length;i++){const item=merge.files[i];status('Merging '+(i+1)+' of '+merge.files.length+': '+item.file.name);const source=await PDFLib.PDFDocument.load(item.bytes,{ignoreEncryption:false});const indices=Array.from({length:source.getPageCount()},(_,index)=>index);const copied=await result.copyPages(source,indices);for(const page of copied){result.addPage(page);processed++;byId('mergeProgress').style.width=(processed/total*85)+'%'}await new Promise(resolve=>setTimeout(resolve,0))}status('Saving merged PDF…');const bytes=await result.save();const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));const filename=outputName(byId('mergeOutputName').value);merge.download={url,filename};byId('mergeProgress').style.width='100%';byId('mergeSuccessInfo').textContent=filename+' · '+total+' pages · '+formatSize(bytes.byteLength);byId('mergeSuccess').classList.add('show');status('Merge completed successfully.');download()}catch(error){console.error('PDF merge failed:',error);status('Merge failed: '+(error.message||'Unable to merge these PDFs.'),true);byId('mergeProgress').style.width='0%'}finally{merge.busy=false;render()}}
+byId('mergeChoose').addEventListener('click',event=>{event.stopPropagation();byId('mergeInput').click()});byId('mergeInput').addEventListener('change',event=>{add(event.target.files);event.target.value=''});const drop=byId('mergeDrop');drop.addEventListener('click',event=>{if(!event.target.closest('button'))byId('mergeInput').click()});drop.addEventListener('keydown',event=>{if(event.target===drop&&(event.key==='Enter'||event.key===' ')){event.preventDefault();byId('mergeInput').click()}});drop.addEventListener('dragover',event=>{event.preventDefault();drop.classList.add('over')});drop.addEventListener('dragleave',event=>{if(!drop.contains(event.relatedTarget))drop.classList.remove('over')});drop.addEventListener('drop',event=>{event.preventDefault();drop.classList.remove('over');add(event.dataTransfer.files)});byId('mergeClear').addEventListener('click',()=>{if(merge.busy)return;merge.files=[];invalidate();render();status('Merge list cleared.')});byId('mergeExport').addEventListener('click',exportMerged);byId('mergeDownloadAgain').addEventListener('click',download);window.addEventListener('beforeunload',()=>{if(merge.download)URL.revokeObjectURL(merge.download.url)});render();
+})();
+</script>
+<script>
+(function(){
+"use strict";
+const dropzone = document.getElementById("dropzone");
+const fileInput = document.getElementById("extractorFileInput");
+const processing = document.getElementById("processing");
+const procFile = document.getElementById("procFile");
+const procStatus = document.getElementById("procStatus");
+const barFill = document.getElementById("barFill");
+const resultsEl = document.getElementById("results");
+const downloadAllBtn = document.getElementById("downloadAll");
+
+let lastResult = null;
+
+// Show a visible banner instead of failing silently if a CDN library didn't load
+function showFatalError(message) {
+  document.querySelectorAll("#extractor .library-error").forEach((node) => node.remove());
+  const banner = document.createElement("div");
+  banner.className = "library-error";
+  banner.style.cssText =
+    "margin-top:20px;padding:16px 18px;border-radius:10px;background:#F7E2E0;color:#7A231C;font-family:IBM Plex Mono,monospace;font-size:13px;border:1px solid #C1443A;";
+  banner.textContent = message;
+  dropzone.insertAdjacentElement("afterend", banner);
+}
+
+function librariesReady() {
+  const missing = [];
+  if (typeof pdfjsLib === "undefined") missing.push("pdf.js");
+  if (typeof JSZip === "undefined") missing.push("JSZip");
+    if (missing.length) {
+    showFatalError(
+      `Couldn't load: ${missing.join(", ")}. This usually means a browser extension (ad-blocker/privacy blocker) is blocking cdnjs.cloudflare.com, or you're offline. Try disabling extensions for this page, or open it via a real local server (see README) instead of double-clicking the file.`
+    );
+    return false;
+  }
+  if (typeof pdfjsLib.GlobalWorkerOptions !== "undefined") {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }
+  return true;
+}
+
+dropzone.addEventListener("click", () => fileInput.click());
+dropzone.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileInput.click(); } });
+dropzone.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropzone.classList.add("drag");
+});
+dropzone.addEventListener("dragleave", () => dropzone.classList.remove("drag"));
+dropzone.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropzone.classList.remove("drag");
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+fileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) handleFile(file);
+  e.target.value = "";
+});
+
+window.addEventListener("load", () => {
+  librariesReady();
+});
+
+document.querySelectorAll("#extractor .extract-tabs .tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll("#extractor .extract-tabs .tab").forEach((t) => t.classList.remove("active"));
+    document.querySelectorAll("#extractor .extract-panel").forEach((p) => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.tab + "Panel").classList.add("active");
+  });
+});
+
+function setProgress(pct, status) {
+  barFill.style.width = pct + "%";
+  procStatus.textContent = status;
+}
+
+async function handleFile(file) {
+  if (!librariesReady()) return;
+  const nameLower = file.name.toLowerCase();
+  const isPdf = file.type === "application/pdf" || nameLower.endsWith(".pdf");
+  if (!isPdf) {
+    alert("Please choose a PDF file.");
+    return;
+  }
+  resultsEl.classList.remove("active");
+  processing.classList.add("active");
+  procFile.textContent = file.name;
+  setProgress(2, "Reading file…");
+
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await extractEverything(arrayBuffer, file.name, setProgress);
+    lastResult = result;
+    renderResults(result);
+    processing.classList.remove("active");
+    resultsEl.classList.add("active");
+  } catch (err) {
+    console.error(err);
+    setProgress(0, "Something went wrong: " + err.message);
+    processing.classList.add("active");
+  }
+}
+
+// ---------- core extraction ----------
+
+async function extractEverything(arrayBuffer, fileName, onProgress) {
+  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const pdfDoc = await loadingTask.promise;
+  const numPages = pdfDoc.numPages;
+
+  const metaObj = await pdfDoc.getMetadata().catch(() => ({ info: {} }));
+
+  const pages = [];
+  const images = []; // {blob, name, page, width, height, kind:'embedded'|'render'}
+  const tableRows = []; // {page, rows: [[...cells]]}
+  let totalWords = 0;
+  let totalLinks = 0;
+
+  for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+    onProgress(
+      5 + Math.round((pageNum - 1) / numPages * 90),
+      `Scanning page ${pageNum} of ${numPages}…`
+    );
+
+    const page = await pdfDoc.getPage(pageNum);
+
+    // --- text content ---
+    const textContent = await page.getTextContent();
+    const items = textContent.items.filter((it) => it.str !== undefined);
+
+    // group into lines by y position
+    const lineMap = new Map();
+    for (const it of items) {
+      const y = Math.round(it.transform[5]);
+      const key = Math.round(y / 3) * 3; // tolerance bucket
+      if (!lineMap.has(key)) lineMap.set(key, []);
+      lineMap.get(key).push(it);
+    }
+    const sortedKeys = Array.from(lineMap.keys()).sort((a, b) => b - a);
+    const lines = sortedKeys.map((k) => {
+      const lineItems = lineMap.get(k).sort((a, b) => a.transform[4] - b.transform[4]);
+      return lineItems;
+    });
+
+    const plainText = lines
+      .map((lineItems) => lineItems.map((it) => it.str).join(""))
+      .join("\n");
+
+    const wordCount = plainText.trim().length
+      ? plainText.trim().split(/\s+/).length
+      : 0;
+    totalWords += wordCount;
+
+    // --- heuristic column-aware rows (for the "tables" export) ---
+    const pageRows = [];
+    for (const lineItems of lines) {
+      if (lineItems.length < 2) continue; // needs 2+ fragments to look tabular
+      const cells = [];
+      let current = lineItems[0].str;
+      let prevEnd = lineItems[0].transform[4] + (lineItems[0].width || 0);
+      for (let i = 1; i < lineItems.length; i++) {
+        const it = lineItems[i];
+        const gap = it.transform[4] - prevEnd;
+        const fontSize = Math.abs(it.transform[3]) || 10;
+        if (gap > fontSize * 0.9) {
+          cells.push(current.trim());
+          current = it.str;
+        } else {
+          current += it.str;
+        }
+        prevEnd = it.transform[4] + (it.width || 0);
+      }
+      cells.push(current.trim());
+      if (cells.length >= 2) pageRows.push(cells);
+    }
+    if (pageRows.length >= 2) {
+      tableRows.push({ page: pageNum, rows: pageRows });
+    }
+
+    // --- links + annotations ---
+    const annots = await page.getAnnotations().catch(() => []);
+    const links = annots
+      .filter((a) => a.subtype === "Link" && a.url)
+      .map((a) => ({ url: a.url, rect: a.rect }));
+    totalLinks += links.length;
+    const notes = annots
+      .filter((a) => a.contents && a.contents.trim())
+      .map((a) => ({ type: a.subtype, content: a.contents }));
+
+    // --- render the full page first (needed both as fallback and as the source for cropping real images out) ---
+    let renderCanvas = null;
+    const viewport = page.getViewport({ scale: 2 });
+    try {
+      renderCanvas = document.createElement("canvas");
+      renderCanvas.width = viewport.width;
+      renderCanvas.height = viewport.height;
+      const ctx = renderCanvas.getContext("2d");
+      await page.render({ canvasContext: ctx, viewport }).promise;
+    } catch (e) {
+      renderCanvas = null;
+    }
+
+    // --- embedded image extraction: locate where each image is painted (via the operator list's
+    // transform matrix), then crop that exact region out of the rendered page. This sidesteps having
+    // to decode raw PDF image data ourselves, and always matches what's visually on the page. ---
+    let embeddedCount = 0;
+    if (renderCanvas) {
+      try {
+        const opList = await page.getOperatorList();
+        const OPS = pdfjsLib.OPS;
+        const Util = pdfjsLib.Util;
+        let ctm = [1, 0, 0, 1, 0, 0];
+        const stack = [];
+        let imgIndex = 0;
+
+        for (let i = 0; i < opList.fnArray.length; i++) {
+          const fn = opList.fnArray[i];
+          const args = opList.argsArray[i];
+
+          if (fn === OPS.save) {
+            stack.push(ctm.slice());
+          } else if (fn === OPS.restore) {
+            ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+          } else if (fn === OPS.transform) {
+            ctm = Util.transform(ctm, args);
+          } else if (fn === OPS.paintImageXObject || fn === OPS.paintJpegXObject) {
+            const full = Util.transform(viewport.transform, ctm);
+            const corners = [
+              [0, 0],
+              [1, 0],
+              [1, 1],
+              [0, 1],
+            ].map((p) => Util.applyTransform(p, full));
+            const xs = corners.map((c) => c[0]);
+            const ys = corners.map((c) => c[1]);
+            let x0 = Math.max(0, Math.min(...xs));
+            let y0 = Math.max(0, Math.min(...ys));
+            let x1 = Math.min(renderCanvas.width, Math.max(...xs));
+            let y1 = Math.min(renderCanvas.height, Math.max(...ys));
+            const w = Math.round(x1 - x0);
+            const h = Math.round(y1 - y0);
+
+            // skip slivers/decorative lines — real photos and figures are bigger than this
+            if (w >= 40 && h >= 40) {
+              try {
+                const cropCanvas = document.createElement("canvas");
+                cropCanvas.width = w;
+                cropCanvas.height = h;
+                const cctx = cropCanvas.getContext("2d");
+                cctx.drawImage(renderCanvas, x0, y0, w, h, 0, 0, w, h);
+                const blob = await new Promise((res) => cropCanvas.toBlob(res, "image/png"));
+                if (blob) {
+                  imgIndex++;
+                  embeddedCount++;
+                  images.push({
+                    blob,
+                    name: `page${pageNum}_img${imgIndex}.png`,
+                    page: pageNum,
+                    width: w,
+                    height: h,
+                    kind: "embedded",
+                  });
+                }
+              } catch (e) {
+                /* skip this crop, keep going */
+              }
+            }
+          }
+        }
+      } catch (e) {
+        /* operator list failed — page render fallback below still covers this page */
+      }
+    }
+
+    // --- full page render (always included, reliable fallback) ---
+    if (renderCanvas) {
+      try {
+        const renderBlob = await new Promise((res) => renderCanvas.toBlob(res, "image/png"));
+        if (!renderBlob) throw new Error("Page rendering failed");
+        images.push({
+          blob: renderBlob,
+          name: `page${pageNum}_render.png`,
+          page: pageNum,
+          width: renderCanvas.width,
+          height: renderCanvas.height,
+          kind: "render",
+          dataUrl: renderCanvas.toDataURL("image/png"),
+        });
+      } catch (e) {
+        /* ignore render failure */
+      }
+    }
+
+    pages.push({
+      page_number: pageNum,
+      text: plainText,
+      word_count: wordCount,
+      embedded_images: embeddedCount,
+      links,
+      annotations: notes,
+    });
+  }
+
+  onProgress(98, "Assembling results…");
+
+  // build small dataURL thumbnails for embedded images too (needed for grid display)
+  for (const img of images) {
+    if (!img.dataUrl) {
+      img.dataUrl = await blobToDataUrl(img.blob);
+    }
+  }
+
+  const info = metaObj.info || {};
+
+  onProgress(100, "Done.");
+
+  return {
+    fileName,
+    numPages,
+    totalWords,
+    totalLinks,
+    metadata: info,
+    pages,
+    images,
+    tableRows,
+    unitLabel: "Page",
+  };
+}
+
+function getImageDims(dataUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
+    img.onerror = reject;
+    img.src = dataUrl;
+  });
+}
+
+function blobToDataUrl(blob) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+}
+
+// ---------- rendering ----------
+
+function renderResults(result) {
+  document.getElementById("statPages").textContent = result.numPages;
+  const pagesLabelEl = document.querySelector("#statPages").nextElementSibling;
+  if (pagesLabelEl) pagesLabelEl.textContent = (result.unitLabel || "Page") + "s";
+  document.getElementById("statWords").textContent = result.totalWords.toLocaleString();
+  document.getElementById("statImages").textContent = result.images.length;
+  const totalRows = result.tableRows.reduce((s, t) => s + t.rows.length, 0);
+  document.getElementById("statTables").textContent = totalRows;
+  document.getElementById("statLinks").textContent = result.totalLinks;
+
+  renderText(result);
+  renderImages(result);
+  renderTables(result);
+  renderMeta(result);
+}
+
+function renderText(result) {
+  const el = document.getElementById("textPanel");
+  el.innerHTML = "";
+  const unit = (result.unitLabel || "Page").toUpperCase();
+  result.pages.forEach((p) => {
+    const block = document.createElement("div");
+    block.className = "page-block";
+    block.innerHTML = `
+      <div class="page-block-head">
+        <span class="tag">${unit} ${p.page_number}</span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-faint)">${p.word_count} words</span>
+      </div>
+      <pre>${escapeHtml(p.text || "(no extractable text on this page)")}</pre>
+    `;
+    el.appendChild(block);
+  });
+}
+
+function renderImages(result) {
+  const el = document.getElementById("imagesPanel");
+  if (!result.images.length) {
+    el.innerHTML = `<div class="empty">No images found.</div>`;
+    return;
+  }
+  const embedded = result.images.filter((i) => i.kind === "embedded");
+  const renders = result.images.filter((i) => i.kind === "render");
+
+  const header = document.createElement("div");
+  header.style.cssText =
+    "display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:10px;";
+  header.innerHTML = `
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-muted)">
+      ${embedded.length} extracted image${embedded.length === 1 ? "" : "s"} · ${renders.length} page render${renders.length === 1 ? "" : "s"}
+    </span>
+    <button class="btn" id="downloadImagesOnly">Download images only (.zip)</button>
+  `;
+
+  el.innerHTML = "";
+  el.appendChild(header);
+
+  const unit = result.unitLabel === "Slide" ? "S" : "P";
+  el.appendChild(buildImageSection("Images extracted from the file", embedded, unit));
+  el.appendChild(
+    buildImageSection(
+      result.unitLabel === "Slide" ? "Full-slide screenshots" : "Full-page screenshots",
+      renders,
+      unit
+    )
+  );
+
+  document.getElementById("downloadImagesOnly").addEventListener("click", (e) => {
+    downloadImagesOnly(result, e.target);
+  });
+}
+
+function buildImageSection(title, imgs, unit) {
+  const section = document.createElement("div");
+  section.style.marginBottom = "28px";
+
+  const heading = document.createElement("div");
+  heading.style.cssText =
+    "font-family:var(--font-display);font-weight:600;font-size:14.5px;margin-bottom:12px;";
+  heading.textContent = title;
+  section.appendChild(heading);
+
+  if (!imgs.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.style.padding = "6px 0 0";
+    empty.textContent = "None found.";
+    section.appendChild(empty);
+    return section;
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  imgs.forEach((img) => {
+    const cell = document.createElement("div");
+    cell.className = "thumb";
+    const tagClass = img.kind === "embedded" ? "" : "amber";
+    const pageBadge = img.page ? ` · ${unit}${img.page}` : "";
+    const tagLabel = img.kind === "embedded" ? `IMG${pageBadge}` : `RENDER${pageBadge}`;
+    const imgEl = document.createElement("img");
+    imgEl.src = img.dataUrl;
+    imgEl.loading = "lazy";
+    imgEl.style.cursor = "zoom-in";
+    imgEl.title = "Click to open full size in a new tab";
+    imgEl.addEventListener("click", () => openImage(img));
+
+    const meta = document.createElement("div");
+    meta.className = "thumb-meta";
+    meta.innerHTML = `<span class="tag ${tagClass}">${tagLabel}</span>`;
+    const dl = document.createElement("a");
+    dl.className = "thumb-dl";
+    dl.download = img.name;
+    dl.href = img.dataUrl;
+    dl.textContent = "↓";
+    meta.appendChild(dl);
+
+    cell.appendChild(imgEl);
+    cell.appendChild(meta);
+    grid.appendChild(cell);
+  });
+  section.appendChild(grid);
+  return section;
+}
+
+function openImage(img) {
+  const url = URL.createObjectURL(img.blob);
+  window.open(url, "_blank");
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+
+async function downloadImagesOnly(result, btn) {
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = "Zipping…";
+  try {
+    const zip = new JSZip();
+    const embeddedFolder = zip.folder("images");
+    const renderFolder = zip.folder("page_renders");
+    for (const img of result.images) {
+      if (img.kind === "embedded") {
+        embeddedFolder.file(img.name, img.blob);
+      } else {
+        renderFolder.file(img.name, img.blob);
+      }
+    }
+    const blob = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const base = result.fileName.replace(/\.pdf$/i, "");
+    a.href = url;
+    a.download = `${base}_images.zip`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+function renderTables(result) {
+  const el = document.getElementById("tablesPanel");
+  if (!result.tableRows.length) {
+    el.innerHTML = `<div class="empty">No table-like row/column structure detected.</div>`;
+    return;
+  }
+  el.innerHTML = "";
+  const unit = (result.unitLabel || "Page").toUpperCase();
+  result.tableRows.forEach((t, idx) => {
+    const block = document.createElement("div");
+    block.className = "table-block";
+    const maxCols = Math.max(...t.rows.map((r) => r.length));
+    let rowsHtml = t.rows
+      .map((r) => {
+        const cells = r.map((c) => `<td>${escapeHtml(c)}</td>`).join("");
+        const pad = "<td></td>".repeat(Math.max(0, maxCols - r.length));
+        return `<tr>${cells}${pad}</tr>`;
+      })
+      .join("");
+    block.innerHTML = `
+      <div class="table-block-head">
+        <span class="tag">${unit} ${t.page}</span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-faint)">${t.rows.length} rows detected</span>
+      </div>
+      <table class="data">${rowsHtml}</table>
+    `;
+    el.appendChild(block);
+  });
+}
+
+function renderMeta(result) {
+  const el = document.getElementById("metaPanel");
+  const entries = Object.entries(result.metadata || {}).filter(([, v]) => v);
+  entries.push(["File name", result.fileName]);
+  entries.push(["Page count", result.numPages]);
+  if (!entries.length) {
+    el.innerHTML = `<div class="empty">No metadata embedded in this PDF.</div>`;
+    return;
+  }
+  el.innerHTML = `<table class="meta-table">${entries
+    .map(([k, v]) => `<tr><td>${escapeHtml(k)}</td><td>${escapeHtml(String(v))}</td></tr>`)
+    .join("")}</table>`;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+// ---------- zip download ----------
+
+downloadAllBtn.addEventListener("click", async () => {
+  if (!lastResult) return;
+  downloadAllBtn.disabled = true;
+  downloadAllBtn.textContent = "Zipping…";
+  try {
+    await buildAndDownloadZip(lastResult);
+  } finally {
+    downloadAllBtn.disabled = false;
+    downloadAllBtn.textContent = "Download all (.zip)";
+  }
+});
+
+async function buildAndDownloadZip(result) {
+  const zip = new JSZip();
+
+  const fullText = result.pages
+    .map((p) => `--- Page ${p.page_number} ---\n${p.text}`)
+    .join("\n\n");
+  zip.file("full_text.txt", fullText);
+
+  const embeddedFolder = zip.folder("images");
+  const renderFolder = zip.folder("page_renders");
+  for (const img of result.images) {
+    if (img.kind === "embedded") {
+      embeddedFolder.file(img.name, img.blob);
+    } else {
+      renderFolder.file(img.name, img.blob);
+    }
+  }
+
+  zip.file("tables.json", JSON.stringify(result.tableRows, null, 2));
+
+  const summary = {
+    file_name: result.fileName,
+    page_count: result.numPages,
+    total_words: result.totalWords,
+    total_links: result.totalLinks,
+    metadata: result.metadata,
+    pages: result.pages,
+  };
+  zip.file("extraction_summary.json", JSON.stringify(summary, null, 2));
+
+  const blob = await zip.generateAsync({ type: "blob" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const base = result.fileName.replace(/\.pdf$/i, "");
+  a.href = url;
+  a.download = `${base}_extracted.zip`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+})();
+</script>
+</body>
+</html>
